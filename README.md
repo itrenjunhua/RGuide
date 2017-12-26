@@ -13,38 +13,26 @@ Android 应用新手操作引导实现
 ## 使用示例
 > 引导布局
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/id_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+    <?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
     
-        <Button
-            android:id="@+id/id_btn_amazing"
+        <ImageView
+            android:id="@+id/id_iv_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="16dp"
-            android:text="账户信息" />
-    
-        <Button
-            android:id="@+id/go_next"
+            android:src="@mipmap/jt_up"/>
+
+        <TextView
+            android:layout_below="@id/id_iv_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="16dp"
-            android:text="进入下一页" />
+            android:text="个人中心在这里"
+            android:textColor="@android:color/white"/>
     
-        <Button
-            android:id="@+id/id_btn_important"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_margin="16dp"
-            android:text="个人中心" />
-    
-    </RelativeLayout>
+    </LinearLayout>
 > Java代码
 
     HighLight highLight = new HighLight(this)
