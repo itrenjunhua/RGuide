@@ -53,14 +53,14 @@ public class SecondActivity extends Activity {
     private void addHightView() {
         // 使用默认的设置
         HighLight highLight = new HighLight(this)
-                .setMyBroderType(HighLight.MyType.FULL_LINE) // 使用实线
+                .setBroderLineType(HighLight.BorderLineType.FULL_LINE) // 使用实线
                 .addHighLight(R.id.iv_hight, R.layout.layout_hight, new HighLight.OnPosCallback() {
                     @Override
                     public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
                         marginInfo.rightMargin = rightMargin;
                         marginInfo.bottomMargin = bottomMargin + view.getHeight();
                     }
-                }, HighLight.MyShape.CIRCULAR);// 圆形高亮
+                }, HighLight.HightLightShape.CIRCULAR);// 圆形高亮
         highLight.show();
     }
 }

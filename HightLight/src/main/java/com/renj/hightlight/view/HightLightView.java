@@ -94,9 +94,9 @@ public class HightLightView extends FrameLayout {
      */
     private int borderColor = maskColor;
     /**
-     * 边框类型,默认虚线 HighLight.MyType.DASH_LINE
+     * 边框类型,默认虚线 HighLight.BorderLineType.DASH_LINE
      */
-    private HighLight.MyType myType = HighLight.MyType.DASH_LINE;
+    private HighLight.BorderLineType borderLineType = HighLight.BorderLineType.DASH_LINE;
     /**
      * 边框宽度，单位：dp，默认3dp
      */
@@ -106,7 +106,7 @@ public class HightLightView extends FrameLayout {
      */
     private int phase = 1;
     /**
-     * 虚线的排列方式，需要setIsNeedBorder(true)并且边框类型为HighLight.MyType.DASH_LINE，该样式才能生效
+     * 虚线的排列方式，需要setIsNeedBorder(true)并且边框类型为HighLight.BorderLineType.DASH_LINE，该样式才能生效
      */
     private float[] intervals;
 
@@ -154,10 +154,10 @@ public class HightLightView extends FrameLayout {
     /**
      * 设置边框类型，需要setIsNeedBorder(true)，该方法才能生效
      *
-     * @param myType
+     * @param borderLineType
      */
-    public void setMyType(HighLight.MyType myType) {
-        this.myType = myType;
+    public void setBorderLineType(HighLight.BorderLineType borderLineType) {
+        this.borderLineType = borderLineType;
     }
 
     /**
@@ -179,7 +179,7 @@ public class HightLightView extends FrameLayout {
     }
 
     /**
-     * 设置虚线边框的样式，需要setIsNeedBorder(true)并且边框类型为HighLight.MyType.DASH_LINE，该方法才能生效；不需要转换单位，默认dp
+     * 设置虚线边框的样式，需要setIsNeedBorder(true)并且边框类型为HighLight.BorderLineType.DASH_LINE，该方法才能生效；不需要转换单位，默认dp
      * <p/>
      * 必须是偶数长度,且>=2,指定了多少长度的实线之后再画多少长度的空白.
      * 如在 new float[] { 1, 2, 4, 8}中,表示先绘制长度1的实线,再绘制长度2的空白,再绘制长度4的实线,再绘制长度8的空白,依次重复
@@ -281,9 +281,9 @@ public class HightLightView extends FrameLayout {
         mHighLight.updateInfo();
 
         for (HighLight.ViewPosInfo viewPosInfo : mViewRects) {
-            if (viewPosInfo.myShape != null) {
+            if (viewPosInfo.hightLightShape != null) {
 
-                switch (viewPosInfo.myShape) {
+                switch (viewPosInfo.hightLightShape) {
                     case CIRCULAR:// 圆形
 
                         float width = viewPosInfo.rectF.width();
@@ -336,7 +336,7 @@ public class HightLightView extends FrameLayout {
     private void drawCircleBorder(Canvas canvas, HighLight.ViewPosInfo viewPosInfo, float circle_center1, float circle_center2, int radius) {
         Paint paint = new Paint();
         paint.reset();
-        if (this.myType == HighLight.MyType.DASH_LINE) {
+        if (this.borderLineType == HighLight.BorderLineType.DASH_LINE) {
             DashPathEffect pathEffect = new DashPathEffect(intervals, this.phase);
             paint.setPathEffect(pathEffect);
         }
@@ -360,7 +360,7 @@ public class HightLightView extends FrameLayout {
     private void drawRectBorder(Canvas canvas, HighLight.ViewPosInfo viewPosInfo) {
         Paint paint = new Paint();
         paint.reset();
-        if (this.myType == HighLight.MyType.DASH_LINE) {
+        if (this.borderLineType == HighLight.BorderLineType.DASH_LINE) {
             DashPathEffect pathEffect = new DashPathEffect(intervals, this.phase);
             paint.setPathEffect(pathEffect);
         }

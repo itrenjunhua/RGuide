@@ -88,15 +88,15 @@ public class HighLight {
      */
     private int radius = DEFAULT_RADIUS;
     /**
-     * 边框类型,默认虚线 HighLight.MyType.DASH_LINE
+     * 边框类型,默认虚线 HighLight.BorderLineType.DASH_LINE
      */
-    private HighLight.MyType myType = HighLight.MyType.DASH_LINE;
+    private BorderLineType borderLineType = BorderLineType.DASH_LINE;
     /**
      * 边框宽度，单位：dp，默认3dp
      */
     private float borderWidth = 3;
     /**
-     * 虚线的排列方式，需要setIsNeedBorder(true)并且边框类型为HighLight.MyType.DASH_LINE，该样式才能生效
+     * 虚线的排列方式，需要setIsNeedBorder(true)并且边框类型为HighLight.BorderLineType.DASH_LINE，该样式才能生效
      */
     private float[] intervals = new float[]{4, 4};
 
@@ -104,7 +104,7 @@ public class HighLight {
     /**
      * 表示需要高亮的形状，圆形、矩形
      */
-    public enum MyShape {
+    public enum HightLightShape {
         /**
          * 圆形
          */
@@ -118,7 +118,7 @@ public class HighLight {
     /**
      * 边框的样式，实线、虚线
      */
-    public enum MyType {
+    public enum BorderLineType {
         /**
          * 实线
          */
@@ -139,7 +139,7 @@ public class HighLight {
         public MarginInfo marginInfo;
         public View view;
         public OnPosCallback onPosCallback;
-        public MyShape myShape;
+        public HightLightShape hightLightShape;
     }
 
     /**
@@ -249,11 +249,11 @@ public class HighLight {
     /**
      * 设置边框类型，需要setIsNeedBorder(true)，该方法才能生效
      *
-     * @param myType
+     * @param borderLineType
      * @return
      */
-    public HighLight setMyBroderType(HighLight.MyType myType) {
-        this.myType = myType;
+    public HighLight setBroderLineType(BorderLineType borderLineType) {
+        this.borderLineType = borderLineType;
         return this;
     }
 
@@ -269,7 +269,7 @@ public class HighLight {
     }
 
     /**
-     * 设置虚线边框的样式，需要setIsNeedBorder(true)并且边框类型为HighLight.MyType.DASH_LINE，该方法才能生效；不需要转换单位，默认dp
+     * 设置虚线边框的样式，需要setIsNeedBorder(true)并且边框类型为HighLight.BorderLineType.DASH_LINE，该方法才能生效；不需要转换单位，默认dp
      * <p/>
      * 必须是偶数长度,且>=2,指定了多少长度的实线之后再画多少长度的空白.
      * 如在 new float[] { 1, 2, 4, 8}中,表示先绘制长度1的实线,再绘制长度2的空白,再绘制长度4的实线,再绘制长度8的空白,依次重复
@@ -355,7 +355,7 @@ public class HighLight {
      * @param shape         指定高亮的形状，枚举类型
      * @return
      */
-    public HighLight addHighLight(int viewId, int decorLayoutId, OnPosCallback onPosCallback, MyShape shape) {
+    public HighLight addHighLight(int viewId, int decorLayoutId, OnPosCallback onPosCallback, HightLightShape shape) {
         ViewGroup parent = (ViewGroup) mAnchor;
         View view = parent.findViewById(viewId);
         addHighLight(view, decorLayoutId, onPosCallback, shape);
@@ -371,7 +371,7 @@ public class HighLight {
      * @param shape         指定高亮的形状，枚举类型
      * @return
      */
-    public HighLight addHighLight(View view, int decorLayoutId, OnPosCallback onPosCallback, MyShape shape) {
+    public HighLight addHighLight(View view, int decorLayoutId, OnPosCallback onPosCallback, HightLightShape shape) {
         ViewGroup parent = (ViewGroup) mAnchor;
         RectF rect = new RectF(viewUtils.getLocationInView(parent, view));
         ViewPosInfo viewPosInfo = new ViewPosInfo();
@@ -384,7 +384,7 @@ public class HighLight {
         MarginInfo marginInfo = new MarginInfo();
         onPosCallback.getPos(parent.getWidth() - rect.right, parent.getHeight() - rect.bottom, rect, marginInfo);
         viewPosInfo.marginInfo = marginInfo;
-        viewPosInfo.myShape = shape;
+        viewPosInfo.hightLightShape = shape;
         viewPosInfo.onPosCallback = onPosCallback;
         mViewRects.add(viewPosInfo);
 
@@ -467,8 +467,8 @@ public class HighLight {
         if (this.isNeedBorder) {
             hightLightView.setBorderColor(this.borderColor);
             hightLightView.setBorderWidth(this.borderWidth);
-            hightLightView.setMyType(this.myType);
-            if (this.myType == MyType.DASH_LINE)// 是虚线才需要设置虚线样式
+            hightLightView.setBorderLineType(this.borderLineType);
+            if (this.borderLineType == BorderLineType.DASH_LINE)// 是虚线才需要设置虚线样式
                 hightLightView.setIntervals(this.intervals);
         }
         hightLightView.setRadius(this.radius);
