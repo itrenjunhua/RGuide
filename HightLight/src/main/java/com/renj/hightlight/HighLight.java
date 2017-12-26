@@ -20,7 +20,7 @@ import java.util.List;
  * <p/>
  * 创建时间：2016-08-02    17:18
  * <p/>
- * 描述：
+ * 描述：操作引导工具类入口类
  * <p/>
  * 修订历史：
  * <p/>
@@ -185,7 +185,7 @@ public class HighLight {
      */
     public HighLight(Activity activity) {
         mContext = activity;
-        viewUtils = ViewUtils.getInstance(activity);
+        viewUtils = ViewUtils.newInstance(activity);
         mViewRects = new ArrayList<ViewPosInfo>();
         mAnchor = activity.findViewById(android.R.id.content);
     }

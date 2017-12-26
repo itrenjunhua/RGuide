@@ -15,45 +15,45 @@ import android.util.Log;
  * <p/>
  * ======================================================================
  */
-public class RLog {
+public class Logger {
     /**
-     * Application TAG,use "logcat -s TAG"
+     * 打印日志时显示的TAG
      */
-    private static String TAG = "RLog";
-
-
-    private static boolean IS_FULL_CLASSNAME;
-
+    private static String TAG = "Logger";
     /**
-     * log level
+     * 是否显示类的全路径名
+     */
+    private static boolean IS_FULL_CLASSNAME;
+    /**
+     *
      */
     private static int LOG_LEVEL = Log.VERBOSE;
 
     /**
-     * print full class name or not
+     * 设置是打印类的全路径名，默认 false
      *
      * @param isFullClassName
      */
     public static void setFullClassName(boolean isFullClassName) {
-        RLog.IS_FULL_CLASSNAME = isFullClassName;
+        Logger.IS_FULL_CLASSNAME = isFullClassName;
     }
 
     /**
-     * set log level, default Log.VERBOSE
+     * 设置日志打印级别，如果不想打印任何日志，level 大于 7 即可
      *
      * @param level
      */
     public static void setLogLevel(int level) {
-        RLog.LOG_LEVEL = level;
+        Logger.LOG_LEVEL = level;
     }
 
     /**
-     * set application TAG, default "RLog"
+     * 设置打印的 TAG 名
      *
      * @param tag
      */
     public static void setAppTAG(String tag) {
-        RLog.TAG = tag;
+        Logger.TAG = tag;
     }
 
 
@@ -89,7 +89,7 @@ public class RLog {
     }
 
     /**
-     * make log title
+     * 根据是否需要打印类的全路径名获取打印日志的基本信息
      *
      * @return
      */

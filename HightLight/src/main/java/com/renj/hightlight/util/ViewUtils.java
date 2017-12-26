@@ -45,7 +45,7 @@ public class ViewUtils {
      * @param activity
      * @return
      */
-    public static ViewUtils getInstance(Activity activity) {
+    public static ViewUtils newInstance(Activity activity) {
         mActivity = activity;
         return viewUtils;
     }

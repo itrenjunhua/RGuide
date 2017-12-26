@@ -26,7 +26,7 @@ import java.util.List;
  * <p/>
  * 创建时间：2016-08-02    17:26
  * <p/>
- * 描述：
+ * 描述：绘制高亮View
  * <p/>
  * 修订历史：
  * <p/>
@@ -443,7 +443,6 @@ public class HightLightView extends FrameLayout {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
         canvas.drawBitmap(mMaskBitmap, 0, 0, null);
         super.onDraw(canvas);
 

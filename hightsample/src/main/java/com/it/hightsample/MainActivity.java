@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.renj.hightlight.HighLight;
-import com.renj.hightlight.util.RLog;
+import com.renj.hightlight.util.Logger;
 
 
 public class MainActivity extends Activity {
@@ -50,15 +50,15 @@ public class MainActivity extends Activity {
                 .addHighLight(R.id.id_btn_important, R.layout.info_up, new HighLight.OnPosCallback() {
                     @Override
                     public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
-                        RLog.e("rectF.right" + rectF.right);
-                        RLog.e("rectF.width()" + rectF.width());
-                        RLog.e("rectF.bottom" + rectF.bottom);
-                        RLog.e("--------------------------------------------------------------------");
+                        Logger.e("rectF.right" + rectF.right);
+                        Logger.e("rectF.width()" + rectF.width());
+                        Logger.e("rectF.bottom" + rectF.bottom);
+                        Logger.e("--------------------------------------------------------------------");
 
                         marginInfo.leftMargin = rectF.right - rectF.width() / 2;
                         marginInfo.topMargin = rectF.bottom;
 
-                        RLog.e("1. " + marginInfo.leftMargin + "  :  " + marginInfo.topMargin);
+                        Logger.e("1. " + marginInfo.leftMargin + "  :  " + marginInfo.topMargin);
                     }
                 })
                 .addHighLight(R.id.id_btn_amazing, R.layout.info_down, new HighLight.OnPosCallback() {
@@ -75,15 +75,15 @@ public class MainActivity extends Activity {
                     @Override
                     public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
 
-                        RLog.e("rightMargin" + rightMargin);
-                        RLog.e("rectF.width()" + rectF.width());
-                        RLog.e("rectF.height()" + rectF.height());
-                        RLog.e("bottomMargin" + bottomMargin);
-                        RLog.e("--------------------------------------------------------------------");
+                        Logger.e("rightMargin" + rightMargin);
+                        Logger.e("rectF.width()" + rectF.width());
+                        Logger.e("rectF.height()" + rectF.height());
+                        Logger.e("bottomMargin" + bottomMargin);
+                        Logger.e("--------------------------------------------------------------------");
                         marginInfo.rightMargin = rightMargin + rectF.width() / 2;
                         marginInfo.bottomMargin = bottomMargin + rectF.height();
 
-                        RLog.e("2. " + marginInfo.leftMargin + "  :  " + marginInfo.topMargin);
+                        Logger.e("2. " + marginInfo.leftMargin + "  :  " + marginInfo.topMargin);
                     }
                 });
 
