@@ -3,6 +3,8 @@ package com.renj.hightlight.util;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -22,7 +24,7 @@ import android.widget.FrameLayout;
  */
 public class ViewUtils {
     private static final String FRAGMENT_CON = "NoSaveStateFrameLayout";
-    private static ViewUtils viewUtils = new ViewUtils();
+    private volatile static ViewUtils viewUtils = new ViewUtils();
     private static Activity mActivity;
 
     private OnViewClickListener clickLisstener;
@@ -32,7 +34,7 @@ public class ViewUtils {
      *
      * @param clickLisstener
      */
-    public void setOnViewClickListener(OnViewClickListener clickLisstener) {
+    public void setOnViewClickListener(@NonNull OnViewClickListener clickLisstener) {
         this.clickLisstener = clickLisstener;
     }
 
@@ -45,7 +47,7 @@ public class ViewUtils {
      * @param activity
      * @return
      */
-    public static ViewUtils newInstance(Activity activity) {
+    public static ViewUtils newInstance(@NonNull Activity activity) {
         mActivity = activity;
         return viewUtils;
     }
@@ -69,7 +71,7 @@ public class ViewUtils {
      *
      * @param layoutId 布局id
      */
-    public void addView(int layoutId) {
+    public void addView(@LayoutRes int layoutId) {
         final View view = View.inflate(mActivity, layoutId, null);
         FrameLayout frameLayout = (FrameLayout) getRootView();
         frameLayout.addView(view);
@@ -91,7 +93,7 @@ public class ViewUtils {
      *
      * @param view 需要移出的视图
      */
-    public void removeView(View view) {
+    public void removeView(@NonNull View view) {
         FrameLayout frameLayout = (FrameLayout) getRootView();
         frameLayout.removeView(view);
     }
@@ -103,7 +105,7 @@ public class ViewUtils {
      * @param child  子View
      * @return Rect对象
      */
-    public Rect getLocationInView(View parent, View child) {
+    public Rect getLocationInView(@NonNull View parent, @NonNull View child) {
         if (child == null || parent == null) {
             throw new IllegalArgumentException(
                     "parent and child can not be null .");
@@ -148,6 +150,6 @@ public class ViewUtils {
          *
          * @param view
          */
-        void onClick(View view);
+        void onClick(@NonNull View view);
     }
 }

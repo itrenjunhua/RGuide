@@ -2,6 +2,8 @@ package com.renj.hightlight;
 
 import android.app.Activity;
 import android.graphics.RectF;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -165,7 +167,7 @@ public class HighLight {
          * @param rectF
          * @param marginInfo
          */
-        void getPos(float rightMargin, float bottomMargin, RectF rectF, MarginInfo marginInfo);
+        void getPos(float rightMargin, float bottomMargin, @NonNull RectF rectF, @NonNull MarginInfo marginInfo);
     }
 
     /**
@@ -183,7 +185,7 @@ public class HighLight {
      *
      * @param activity Activity
      */
-    public HighLight(Activity activity) {
+    public HighLight(@NonNull Activity activity) {
         mContext = activity;
         viewUtils = ViewUtils.newInstance(activity);
         mViewRects = new ArrayList<ViewPosInfo>();
@@ -197,7 +199,7 @@ public class HighLight {
      * @param clickCallback 设置整个引导的点击事件
      * @return
      */
-    public HighLight setOnClickCallback(OnClickCallback clickCallback) {
+    public HighLight setOnClickCallback(@NonNull OnClickCallback clickCallback) {
         this.clickCallback = clickCallback;
         return this;
     }
@@ -208,7 +210,7 @@ public class HighLight {
      * @param anchor
      * @return
      */
-    public HighLight anchor(View anchor) {
+    public HighLight anchor(@NonNull View anchor) {
         mAnchor = anchor;
         return this;
     }
@@ -252,7 +254,7 @@ public class HighLight {
      * @param borderLineType
      * @return
      */
-    public HighLight setBroderLineType(BorderLineType borderLineType) {
+    public HighLight setBroderLineType(@NonNull BorderLineType borderLineType) {
         this.borderLineType = borderLineType;
         return this;
     }
@@ -339,7 +341,8 @@ public class HighLight {
      * @param onPosCallback 回调，用于设置位置
      * @return
      */
-    public HighLight addHighLight(int viewId, int decorLayoutId, OnPosCallback onPosCallback) {
+    public HighLight addHighLight(int viewId, @LayoutRes int decorLayoutId,
+                                  @NonNull OnPosCallback onPosCallback) {
         ViewGroup parent = (ViewGroup) mAnchor;
         View view = parent.findViewById(viewId);
         addHighLight(view, decorLayoutId, onPosCallback);
@@ -355,7 +358,8 @@ public class HighLight {
      * @param shape         指定高亮的形状，枚举类型
      * @return
      */
-    public HighLight addHighLight(int viewId, int decorLayoutId, OnPosCallback onPosCallback, HightLightShape shape) {
+    public HighLight addHighLight(int viewId, @LayoutRes int decorLayoutId,
+                                  @NonNull OnPosCallback onPosCallback, @NonNull HightLightShape shape) {
         ViewGroup parent = (ViewGroup) mAnchor;
         View view = parent.findViewById(viewId);
         addHighLight(view, decorLayoutId, onPosCallback, shape);
@@ -371,7 +375,8 @@ public class HighLight {
      * @param shape         指定高亮的形状，枚举类型
      * @return
      */
-    public HighLight addHighLight(View view, int decorLayoutId, OnPosCallback onPosCallback, HightLightShape shape) {
+    public HighLight addHighLight(View view, @LayoutRes int decorLayoutId,
+                                  @NonNull OnPosCallback onPosCallback, @NonNull HightLightShape shape) {
         ViewGroup parent = (ViewGroup) mAnchor;
         RectF rect = new RectF(viewUtils.getLocationInView(parent, view));
         ViewPosInfo viewPosInfo = new ViewPosInfo();
@@ -397,7 +402,7 @@ public class HighLight {
      * @param onPosCallback 回调，用于设置位置
      * @return
      */
-    public HighLight addHighLight(View view, int decorLayoutId, OnPosCallback onPosCallback) {
+    public HighLight addHighLight(View view, @LayoutRes int decorLayoutId, @NonNull OnPosCallback onPosCallback) {
         ViewGroup parent = (ViewGroup) mAnchor;
         RectF rect = new RectF(viewUtils.getLocationInView(parent, view));
         ViewPosInfo viewPosInfo = new ViewPosInfo();
@@ -424,7 +429,7 @@ public class HighLight {
      * @param onPosCallback 回调，用于设置位置
      * @return
      */
-    public HighLight addHighLight(RectF rect, int decorLayoutId, OnPosCallback onPosCallback) {
+    public HighLight addHighLight(RectF rect, @LayoutRes int decorLayoutId, @NonNull OnPosCallback onPosCallback) {
         ViewGroup parent = (ViewGroup) mAnchor;
         ViewPosInfo viewPosInfo = new ViewPosInfo();
         viewPosInfo.layoutId = decorLayoutId;
@@ -528,7 +533,7 @@ public class HighLight {
      * @param layoutId 布局文件资源id
      * @return
      */
-    public HighLight addLayout(int layoutId) {
+    public HighLight addLayout(@LayoutRes int layoutId) {
         viewUtils.addView(layoutId);
 
         viewUtils.setOnViewClickListener(new ViewUtils.OnViewClickListener() {

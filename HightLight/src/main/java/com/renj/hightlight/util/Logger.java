@@ -1,5 +1,6 @@
 package com.renj.hightlight.util;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 /**
@@ -25,14 +26,14 @@ public class Logger {
      */
     private static boolean IS_FULL_CLASSNAME;
     /**
-     *
+     * 打印级别
      */
     private static int LOG_LEVEL = Log.VERBOSE;
 
     /**
-     * 设置是打印类的全路径名，默认 false
+     * 设置是否打印类的全路径名，默认 false
      *
-     * @param isFullClassName
+     * @param isFullClassName 是否打印类的全路径名，默认 false
      */
     public static void setFullClassName(boolean isFullClassName) {
         Logger.IS_FULL_CLASSNAME = isFullClassName;
@@ -41,7 +42,7 @@ public class Logger {
     /**
      * 设置日志打印级别，如果不想打印任何日志，level 大于 7 即可
      *
-     * @param level
+     * @param level 日志打印级别，如果不想打印任何日志，level 大于 7 即可
      */
     public static void setLogLevel(int level) {
         Logger.LOG_LEVEL = level;
@@ -50,39 +51,38 @@ public class Logger {
     /**
      * 设置打印的 TAG 名
      *
-     * @param tag
+     * @param tag 打印的 TAG 名
      */
-    public static void setAppTAG(String tag) {
+    public static void setAppTAG(@NonNull String tag) {
         Logger.TAG = tag;
     }
 
 
-    public static void v(String msg) {
+    public static void v(@NonNull String msg) {
         if (LOG_LEVEL <= Log.VERBOSE) {
             Log.v(TAG, getLogTitle() + msg);
         }
     }
 
-
-    public static void d(String msg) {
+    public static void d(@NonNull String msg) {
         if (LOG_LEVEL <= Log.DEBUG) {
             Log.d(TAG, getLogTitle() + msg);
         }
     }
 
-    public static void i(String msg) {
+    public static void i(@NonNull String msg) {
         if (LOG_LEVEL <= Log.INFO) {
             Log.i(TAG, getLogTitle() + msg);
         }
     }
 
-    public static void w(String msg) {
+    public static void w(@NonNull String msg) {
         if (LOG_LEVEL <= Log.WARN) {
             Log.w(TAG, getLogTitle() + msg);
         }
     }
 
-    public static void e(String msg) {
+    public static void e(@NonNull String msg) {
         if (LOG_LEVEL <= Log.ERROR) {
             Log.e(TAG, getLogTitle() + msg);
         }
@@ -91,8 +91,9 @@ public class Logger {
     /**
      * 根据是否需要打印类的全路径名获取打印日志的基本信息
      *
-     * @return
+     * @return 打印日志的基本信息
      */
+    @NonNull
     private static String getLogTitle() {
         StackTraceElement elm = Thread.currentThread().getStackTrace()[4];
         String className = elm.getClassName();
