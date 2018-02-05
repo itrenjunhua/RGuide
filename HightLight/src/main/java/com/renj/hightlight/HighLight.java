@@ -2,6 +2,7 @@ package com.renj.hightlight;
 
 import android.app.Activity;
 import android.graphics.RectF;
+import android.support.annotation.ColorRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -162,12 +163,12 @@ public class HighLight {
         /**
          * 增加高亮View的回调方法，封装了高亮View的位置信息
          *
-         * @param rightMargin
-         * @param bottomMargin
-         * @param rectF
-         * @param marginInfo
+         * @param rightMargin  高亮位置右边距
+         * @param bottomMargin 高亮位置下边距
+         * @param rectF        高亮位置的 {@link RectF} 值
+         * @param marginInfo   {@link MarginInfo} 对象信息
          */
-        void getPos(float rightMargin, float bottomMargin, @NonNull RectF rectF, @NonNull MarginInfo marginInfo);
+        void getPos(float rightMargin, float bottomMargin, RectF rectF, MarginInfo marginInfo);
     }
 
     /**
@@ -187,8 +188,9 @@ public class HighLight {
      */
     public HighLight(@NonNull Activity activity) {
         mContext = activity;
-        viewUtils = ViewUtils.newInstance(activity);
-        mViewRects = new ArrayList<ViewPosInfo>();
+        viewUtils = ViewUtils.newInstance();
+        viewUtils.initActivity(activity);
+        mViewRects = new ArrayList<>();
         mAnchor = activity.findViewById(android.R.id.content);
     }
 
@@ -197,7 +199,7 @@ public class HighLight {
      * 添加点击事件，将每次点击传给应用逻辑
      *
      * @param clickCallback 设置整个引导的点击事件
-     * @return
+     * @return {@link HighLight} 类对象
      */
     public HighLight setOnClickCallback(@NonNull OnClickCallback clickCallback) {
         this.clickCallback = clickCallback;
@@ -207,8 +209,8 @@ public class HighLight {
     /**
      * 绑定根布局，需要高亮显示部分区域时需要第一个调用的方法(如果是在Activity中调用，可以不调用)
      *
-     * @param anchor
-     * @return
+     * @param anchor 根布局
+     * @return {@link HighLight} 类对象
      */
     public HighLight anchor(@NonNull View anchor) {
         mAnchor = anchor;
@@ -218,8 +220,8 @@ public class HighLight {
     /**
      * 设置是否需要拦截点击事件
      *
-     * @param intercept
-     * @return
+     * @param intercept 是否需要拦截点击事件 true：拦截 false：不拦截
+     * @return {@link HighLight} 类对象
      */
     public HighLight setIntercept(boolean intercept) {
         this.intercept = intercept;
@@ -229,8 +231,8 @@ public class HighLight {
     /**
      * 设置是否需要模糊化边框，默认不需要
      *
-     * @param shadow
-     * @return
+     * @param shadow 是否需要模糊边框 true：需要 false：不需要
+     * @return {@link HighLight} 类对象
      */
     public HighLight setShadow(boolean shadow) {
         this.shadow = shadow;
@@ -240,8 +242,8 @@ public class HighLight {
     /**
      * 设置背景颜色，默认 99000000
      *
-     * @param maskColor
-     * @return
+     * @param maskColor 背景颜色(遮挡颜色)
+     * @return {@link HighLight} 类对象
      */
     public HighLight setMaskColor(int maskColor) {
         this.maskColor = maskColor;
@@ -249,10 +251,10 @@ public class HighLight {
     }
 
     /**
-     * 设置边框类型，需要setIsNeedBorder(true)，该方法才能生效
+     * 设置边框类型，需要调用 {@link #setIsNeedBorder(boolean)} 方法设置为 {@code true}，该方法才能生效
      *
-     * @param borderLineType
-     * @return
+     * @param borderLineType 边框类型 {@link BorderLineType}
+     * @return {@link HighLight} 类对象
      */
     public HighLight setBroderLineType(@NonNull BorderLineType borderLineType) {
         this.borderLineType = borderLineType;
@@ -260,10 +262,11 @@ public class HighLight {
     }
 
     /**
-     * 设置边框宽度，需要setIsNeedBorder(true)，该方法才能生效；不需要转换单位，默认dp
+     * 设置边框宽度，需要调用 {@link #setIsNeedBorder(boolean)} 方法设置为 {@code true}，该方法才能生效；
+     * 不需要转换单位，默认dp
      *
-     * @param borderWidth
-     * @return
+     * @param borderWidth 边框宽度
+     * @return {@link HighLight} 类对象
      */
     public HighLight setBorderWidth(float borderWidth) {
         this.borderWidth = borderWidth;
@@ -271,15 +274,16 @@ public class HighLight {
     }
 
     /**
-     * 设置虚线边框的样式，需要setIsNeedBorder(true)并且边框类型为HighLight.BorderLineType.DASH_LINE，该方法才能生效；不需要转换单位，默认dp
+     * 设置虚线边框的样式，需要调用 {@link #setIsNeedBorder(boolean)} 方法设置为 {@code true}
+     * 并且边框类型为 {@link HighLight.BorderLineType#DASH_LINE}，该方法才能生效；不需要转换单位，默认dp
      * <p/>
      * 必须是偶数长度,且>=2,指定了多少长度的实线之后再画多少长度的空白.
      * 如在 new float[] { 1, 2, 4, 8}中,表示先绘制长度1的实线,再绘制长度2的空白,再绘制长度4的实线,再绘制长度8的空白,依次重复
      *
-     * @param intervals
-     * @return
+     * @param intervals 虚线数组对象
+     * @return {@link HighLight} 类对象
      */
-    public HighLight setIntervals(float[] intervals) {
+    public HighLight setIntervals(@NonNull float[] intervals) {
         int length = intervals.length;
         if ((length >= 2) && (length % 2 == 0)) {
             this.intervals = intervals;
@@ -292,8 +296,8 @@ public class HighLight {
     /**
      * 设置圆角度数
      *
-     * @param radius
-     * @return
+     * @param radius 圆角度数
+     * @return {@link HighLight} 类对象
      */
     public HighLight setRadius(int radius) {
         this.radius = radius;
@@ -301,10 +305,10 @@ public class HighLight {
     }
 
     /**
-     * 设置模糊边界的宽度，需要setIsBlur(true)，该方法才能生效
+     * 设置模糊边界的宽度，需要调用 {@link #setShadow(boolean)} 方法设置为 {@code true}，该方法才能生效
      *
-     * @param blurSize
-     * @return
+     * @param blurSize 模糊边界宽度
+     * @return {@link HighLight} 类对象
      */
     public HighLight setBlurWidth(int blurSize) {
         this.blurSize = blurSize;
@@ -314,8 +318,8 @@ public class HighLight {
     /**
      * 设置是否需要边框
      *
-     * @param isNeedBorder
-     * @return
+     * @param isNeedBorder 是否需要边框  true：需要 false：不需要
+     * @return {@link HighLight} 类对象
      */
     public HighLight setIsNeedBorder(boolean isNeedBorder) {
         this.isNeedBorder = isNeedBorder;
@@ -323,12 +327,12 @@ public class HighLight {
     }
 
     /**
-     * 设置边框颜色，需要setIsNeedBorder(true)，该方法才能生效
+     * 设置边框颜色，需要调用 {@link #setIsNeedBorder(boolean)} 方法设置为 {@code true}，该方法才能生效
      *
-     * @param borderColor
-     * @return
+     * @param borderColor 边框颜色
+     * @return {@link HighLight} 类对象
      */
-    public HighLight setBorderColor(int borderColor) {
+    public HighLight setBorderColor(@ColorRes int borderColor) {
         this.borderColor = borderColor;
         return this;
     }
@@ -339,7 +343,7 @@ public class HighLight {
      * @param viewId        需要高亮的控件id
      * @param decorLayoutId 布局文件资源id
      * @param onPosCallback 回调，用于设置位置
-     * @return
+     * @return {@link HighLight} 类对象
      */
     public HighLight addHighLight(int viewId, @LayoutRes int decorLayoutId,
                                   @NonNull OnPosCallback onPosCallback) {
@@ -356,7 +360,7 @@ public class HighLight {
      * @param decorLayoutId 布局文件资源id
      * @param onPosCallback 回调，用于设置位置
      * @param shape         指定高亮的形状，枚举类型
-     * @return
+     * @return {@link HighLight} 类对象
      */
     public HighLight addHighLight(int viewId, @LayoutRes int decorLayoutId,
                                   @NonNull OnPosCallback onPosCallback, @NonNull HightLightShape shape) {
@@ -373,7 +377,7 @@ public class HighLight {
      * @param decorLayoutId 布局文件资源id
      * @param onPosCallback 回调，用于设置位置
      * @param shape         指定高亮的形状，枚举类型
-     * @return
+     * @return {@link HighLight} 类对象
      */
     public HighLight addHighLight(View view, @LayoutRes int decorLayoutId,
                                   @NonNull OnPosCallback onPosCallback, @NonNull HightLightShape shape) {
@@ -400,7 +404,7 @@ public class HighLight {
      * @param view          需要高亮的View
      * @param decorLayoutId 布局文件资源id
      * @param onPosCallback 回调，用于设置位置
-     * @return
+     * @return {@link HighLight} 类对象
      */
     public HighLight addHighLight(View view, @LayoutRes int decorLayoutId, @NonNull OnPosCallback onPosCallback) {
         ViewGroup parent = (ViewGroup) mAnchor;
@@ -427,7 +431,7 @@ public class HighLight {
      * @param rect          高亮布局的位置
      * @param decorLayoutId 布局文件资源id
      * @param onPosCallback 回调，用于设置位置
-     * @return
+     * @return {@link HighLight} 类对象
      */
     public HighLight addHighLight(RectF rect, @LayoutRes int decorLayoutId, @NonNull OnPosCallback onPosCallback) {
         ViewGroup parent = (ViewGroup) mAnchor;
@@ -531,7 +535,7 @@ public class HighLight {
      * 将一个布局文件加到根布局上，默认点击移除视图
      *
      * @param layoutId 布局文件资源id
-     * @return
+     * @return {@link HighLight} 类对象
      */
     public HighLight addLayout(@LayoutRes int layoutId) {
         viewUtils.addView(layoutId);

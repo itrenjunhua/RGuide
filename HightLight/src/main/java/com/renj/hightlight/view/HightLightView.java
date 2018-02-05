@@ -96,7 +96,7 @@ public class HightLightView extends FrameLayout {
      */
     private int borderColor = maskColor;
     /**
-     * 边框类型,默认虚线 HighLight.BorderLineType.DASH_LINE
+     * 边框类型,默认虚线 {@link HighLight.BorderLineType#DASH_LINE}
      */
     private HighLight.BorderLineType borderLineType = HighLight.BorderLineType.DASH_LINE;
     /**
@@ -108,7 +108,8 @@ public class HightLightView extends FrameLayout {
      */
     private int phase = 1;
     /**
-     * 虚线的排列方式，需要setIsNeedBorder(true)并且边框类型为HighLight.BorderLineType.DASH_LINE，该样式才能生效
+     * 虚线的排列方式，需要调用 {@link #setIsNeedBorder(boolean)} 方法设置为 {@code true} 并且
+     * 边框类型为 {@link HighLight.BorderLineType#DASH_LINE}，该样式才能生效
      */
     private float[] intervals;
 
@@ -116,25 +117,25 @@ public class HightLightView extends FrameLayout {
     /**
      * 设置是否需要边框
      *
-     * @param isNeedBorder
+     * @param isNeedBorder 是否需要边框 true:需要 false:不需要
      */
     public void setIsNeedBorder(boolean isNeedBorder) {
         this.isNeedBorder = isNeedBorder;
     }
 
     /**
-     * 是否需要模糊边界
+     * 设置是否需要模糊边界
      *
-     * @param isBlur
+     * @param isBlur 是否需要模糊边界 true:需要 false:不需要
      */
     public void setIsBlur(boolean isBlur) {
         this.isBlur = isBlur;
     }
 
     /**
-     * 设置模糊边界的宽度，需要setIsBlur(true)，该方法才能生效
+     * 设置模糊边界的宽度，需要调用 {@link #setIsBlur(boolean)} 方法设置为 {@code true}，该方法才能生效
      *
-     * @param blurSize
+     * @param blurSize 模糊边界的宽度
      */
     public void setBlurWidth(int blurSize) {
         this.blurSize = blurSize;
@@ -145,18 +146,18 @@ public class HightLightView extends FrameLayout {
     }
 
     /**
-     * 设置边框颜色，需要setIsNeedBorder(true)，该方法才能生效
+     * 设置边框颜色，需要调用 {@link #setIsNeedBorder(boolean)} 方法设置为 {@code true}，该方法才能生效
      *
-     * @param borderColor
+     * @param borderColor 边框颜色
      */
     public void setBorderColor(int borderColor) {
         this.borderColor = borderColor;
     }
 
     /**
-     * 设置边框类型，需要setIsNeedBorder(true)，该方法才能生效
+     * 设置边框类型，需要调用 {@link #setIsNeedBorder(boolean)} 方法设置为 {@code true}，该方法才能生效
      *
-     * @param borderLineType
+     * @param borderLineType 边框类型 {@link HighLight.BorderLineType}
      */
     public void setBorderLineType(HighLight.BorderLineType borderLineType) {
         this.borderLineType = borderLineType;
@@ -165,28 +166,31 @@ public class HightLightView extends FrameLayout {
     /**
      * 设置背景颜色
      *
-     * @param maskColor
+     * @param maskColor 背景颜色
      */
     public void setMaskColor(int maskColor) {
         this.maskColor = maskColor;
     }
 
     /**
-     * 设置边框宽度，需要setIsNeedBorder(true)，该方法才能生效；不需要转换单位，默认dp
+     * 设置边框宽度，需要调用 {@link #setIsNeedBorder(boolean)} 方法设置为 {@code true}，
+     * 该方法才能生效；不需要转换单位，默认dp
      *
-     * @param borderWidth
+     * @param borderWidth 边框宽度
      */
     public void setBorderWidth(float borderWidth) {
         this.borderWidth = borderWidth;
     }
 
     /**
-     * 设置虚线边框的样式，需要setIsNeedBorder(true)并且边框类型为HighLight.BorderLineType.DASH_LINE，该方法才能生效；不需要转换单位，默认dp
+     * 设置虚线边框的样式，需要调用 {@link #setIsNeedBorder(boolean)} 方法设置为 {@code true}并且
+     * 边框类型为 {@link HighLight.BorderLineType#DASH_LINE}，该方法才能生效；不需要转换单位，默认dp
      * <p/>
      * 必须是偶数长度,且>=2,指定了多少长度的实线之后再画多少长度的空白.
-     * 如在 new float[] { 1, 2, 4, 8}中,表示先绘制长度1的实线,再绘制长度2的空白,再绘制长度4的实线,再绘制长度8的空白,依次重复
+     * 如在 new float[] { 1, 2, 4, 8}中,表示先绘制长度1的实线,再绘制长度2的空白,再绘制长度4的实线,
+     * 再绘制长度8的空白,依次重复
      *
-     * @param intervals
+     * @param intervals 虚线边框的样式
      */
     public void setIntervals(@NonNull float[] intervals) {
         int length = intervals.length;
@@ -203,7 +207,7 @@ public class HightLightView extends FrameLayout {
     /**
      * 设置圆角度数
      *
-     * @param radius
+     * @param radius 圆角度数
      */
     public void setRadius(int radius) {
         this.radius = radius;
@@ -254,9 +258,9 @@ public class HightLightView extends FrameLayout {
             lp.bottomMargin = (int) viewPosInfo.marginInfo.bottomMargin;
 
             if (lp.rightMargin != 0) {
-                lp.gravity = Gravity.RIGHT;
+                lp.gravity = Gravity.END;
             } else {
-                lp.gravity = Gravity.LEFT;
+                lp.gravity = Gravity.START;
             }
 
             if (lp.bottomMargin != 0) {
@@ -329,12 +333,6 @@ public class HightLightView extends FrameLayout {
 
     /**
      * 绘制圆形边框
-     *
-     * @param canvas
-     * @param viewPosInfo
-     * @param circle_center1
-     * @param circle_center2
-     * @param radius
      */
     private void drawCircleBorder(Canvas canvas, HighLight.ViewPosInfo viewPosInfo, float circle_center1, float circle_center2, int radius) {
         Paint paint = new Paint();
@@ -356,9 +354,6 @@ public class HightLightView extends FrameLayout {
 
     /**
      * 绘制矩形边框
-     *
-     * @param canvas
-     * @param viewPosInfo
      */
     private void drawRectBorder(Canvas canvas, HighLight.ViewPosInfo viewPosInfo) {
         Paint paint = new Paint();
@@ -432,9 +427,9 @@ public class HightLightView extends FrameLayout {
         lp.bottomMargin = (int) viewPosInfo.marginInfo.bottomMargin;
 
         if (lp.rightMargin != 0) {
-            lp.gravity = Gravity.RIGHT;
+            lp.gravity = Gravity.END;
         } else {
-            lp.gravity = Gravity.LEFT;
+            lp.gravity = Gravity.START;
         }
 
         if (lp.bottomMargin != 0) {

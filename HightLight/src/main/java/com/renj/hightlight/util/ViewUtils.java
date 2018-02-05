@@ -25,14 +25,14 @@ import android.widget.FrameLayout;
 public class ViewUtils {
     private static final String FRAGMENT_CON = "NoSaveStateFrameLayout";
     private volatile static ViewUtils viewUtils = new ViewUtils();
-    private static Activity mActivity;
+    private Activity mActivity;
 
     private OnViewClickListener clickLisstener;
 
     /**
      * 设置点击监听
      *
-     * @param clickLisstener
+     * @param clickLisstener {@link OnViewClickListener} 类
      */
     public void setOnViewClickListener(@NonNull OnViewClickListener clickLisstener) {
         this.clickLisstener = clickLisstener;
@@ -42,19 +42,28 @@ public class ViewUtils {
     }
 
     /**
-     * 获取ViewUtils的实例
+     * 获取 {@link ViewUtils} 的实例
      *
-     * @param activity
-     * @return
+     * @return {@link ViewUtils} 的实例
      */
-    public static ViewUtils newInstance(@NonNull Activity activity) {
-        mActivity = activity;
+    @org.jetbrains.annotations.Contract(pure = true)
+    public static ViewUtils newInstance() {
         return viewUtils;
+    }
+
+    /**
+     * 初始化Activity
+     *
+     * @param activity {@link Activity} 对象
+     */
+    public void initActivity(@NonNull Activity activity) {
+        this.mActivity = activity;
     }
 
     /**
      * @return 返回最顶层视图
      */
+    @SuppressWarnings("deprecation")
     public ViewGroup getDeCorView() {
         return (ViewGroup) mActivity.getWindow().getDecorView();
     }
@@ -62,7 +71,7 @@ public class ViewUtils {
     /**
      * @return 返回内容区域根视图
      */
-    public ViewGroup getRootView() {
+    private ViewGroup getRootView() {
         return (ViewGroup) mActivity.findViewById(android.R.id.content);
     }
 
@@ -93,7 +102,7 @@ public class ViewUtils {
      *
      * @param view 需要移出的视图
      */
-    public void removeView(@NonNull View view) {
+    private void removeView(@NonNull View view) {
         FrameLayout frameLayout = (FrameLayout) getRootView();
         frameLayout.removeView(view);
     }
@@ -105,7 +114,7 @@ public class ViewUtils {
      * @param child  子View
      * @return Rect对象
      */
-    public Rect getLocationInView(@NonNull View parent, @NonNull View child) {
+    public Rect getLocationInView(View parent, View child) {
         if (child == null || parent == null) {
             throw new IllegalArgumentException(
                     "parent and child can not be null .");
@@ -148,8 +157,8 @@ public class ViewUtils {
         /**
          * 单击监听回调
          *
-         * @param view
+         * @param view 点击的View
          */
-        void onClick(@NonNull View view);
+        void onClick(View view);
     }
 }
