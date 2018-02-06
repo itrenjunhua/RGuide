@@ -23,8 +23,7 @@ import android.widget.FrameLayout;
  * ======================================================================
  */
 public class ViewUtils {
-    private static final String FRAGMENT_CON = "NoSaveStateFrameLayout";
-    private volatile static ViewUtils viewUtils = new ViewUtils();
+    private volatile static ViewUtils viewUtils;
     private Activity mActivity;
 
     private OnViewClickListener clickLisstener;
@@ -48,6 +47,13 @@ public class ViewUtils {
      */
     @org.jetbrains.annotations.Contract(pure = true)
     public static ViewUtils newInstance() {
+        if (viewUtils == null) {
+            synchronized (ViewUtils.class) {
+                if (viewUtils == null) {
+                    viewUtils = new ViewUtils();
+                }
+            }
+        }
         return viewUtils;
     }
 
@@ -63,7 +69,7 @@ public class ViewUtils {
     /**
      * @return 返回最顶层视图
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("unused")
     public ViewGroup getDeCorView() {
         return (ViewGroup) mActivity.getWindow().getDecorView();
     }
@@ -136,9 +142,10 @@ public class ViewUtils {
             return result;
         }
 
+        String noSaveStateFrameLayout = "android.support.v4.app.NoSaveStateFrameLayout";
         while (tmp != decorView && tmp != parent) {
             tmp.getHitRect(tmpRect);
-            if (!tmp.getClass().equals(FRAGMENT_CON)) {
+            if (!noSaveStateFrameLayout.equals(tmp.getClass().getName())) {
                 result.left += tmpRect.left;
                 result.top += tmpRect.top;
             }

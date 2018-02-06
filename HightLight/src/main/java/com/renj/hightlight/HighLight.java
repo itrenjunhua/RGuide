@@ -141,7 +141,7 @@ public class HighLight {
         public RectF rectF;
         public MarginInfo marginInfo;
         public View view;
-        public OnPosCallback onPosCallback;
+        private OnPosCallback onPosCallback;
         public HightLightShape hightLightShape;
     }
 
@@ -212,6 +212,7 @@ public class HighLight {
      * @param anchor 根布局
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight anchor(@NonNull View anchor) {
         mAnchor = anchor;
         return this;
@@ -223,6 +224,7 @@ public class HighLight {
      * @param intercept 是否需要拦截点击事件 true：拦截 false：不拦截
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight setIntercept(boolean intercept) {
         this.intercept = intercept;
         return this;
@@ -234,6 +236,7 @@ public class HighLight {
      * @param shadow 是否需要模糊边框 true：需要 false：不需要
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight setShadow(boolean shadow) {
         this.shadow = shadow;
         return this;
@@ -245,6 +248,7 @@ public class HighLight {
      * @param maskColor 背景颜色(遮挡颜色)
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight setMaskColor(int maskColor) {
         this.maskColor = maskColor;
         return this;
@@ -256,6 +260,7 @@ public class HighLight {
      * @param borderLineType 边框类型 {@link BorderLineType}
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight setBroderLineType(@NonNull BorderLineType borderLineType) {
         this.borderLineType = borderLineType;
         return this;
@@ -268,6 +273,7 @@ public class HighLight {
      * @param borderWidth 边框宽度
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight setBorderWidth(float borderWidth) {
         this.borderWidth = borderWidth;
         return this;
@@ -283,6 +289,7 @@ public class HighLight {
      * @param intervals 虚线数组对象
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight setIntervals(@NonNull float[] intervals) {
         int length = intervals.length;
         if ((length >= 2) && (length % 2 == 0)) {
@@ -299,6 +306,7 @@ public class HighLight {
      * @param radius 圆角度数
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight setRadius(int radius) {
         this.radius = radius;
         return this;
@@ -310,6 +318,7 @@ public class HighLight {
      * @param blurSize 模糊边界宽度
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight setBlurWidth(int blurSize) {
         this.blurSize = blurSize;
         return this;
@@ -321,6 +330,7 @@ public class HighLight {
      * @param isNeedBorder 是否需要边框  true：需要 false：不需要
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight setIsNeedBorder(boolean isNeedBorder) {
         this.isNeedBorder = isNeedBorder;
         return this;
@@ -332,6 +342,7 @@ public class HighLight {
      * @param borderColor 边框颜色
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight setBorderColor(@ColorRes int borderColor) {
         this.borderColor = borderColor;
         return this;
@@ -345,6 +356,7 @@ public class HighLight {
      * @param onPosCallback 回调，用于设置位置
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight addHighLight(int viewId, @LayoutRes int decorLayoutId,
                                   @NonNull OnPosCallback onPosCallback) {
         ViewGroup parent = (ViewGroup) mAnchor;
@@ -362,6 +374,7 @@ public class HighLight {
      * @param shape         指定高亮的形状，枚举类型
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight addHighLight(int viewId, @LayoutRes int decorLayoutId,
                                   @NonNull OnPosCallback onPosCallback, @NonNull HightLightShape shape) {
         ViewGroup parent = (ViewGroup) mAnchor;
@@ -379,6 +392,7 @@ public class HighLight {
      * @param shape         指定高亮的形状，枚举类型
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight addHighLight(View view, @LayoutRes int decorLayoutId,
                                   @NonNull OnPosCallback onPosCallback, @NonNull HightLightShape shape) {
         ViewGroup parent = (ViewGroup) mAnchor;
@@ -406,6 +420,7 @@ public class HighLight {
      * @param onPosCallback 回调，用于设置位置
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight addHighLight(View view, @LayoutRes int decorLayoutId, @NonNull OnPosCallback onPosCallback) {
         ViewGroup parent = (ViewGroup) mAnchor;
         RectF rect = new RectF(viewUtils.getLocationInView(parent, view));
@@ -433,6 +448,7 @@ public class HighLight {
      * @param onPosCallback 回调，用于设置位置
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight addHighLight(RectF rect, @LayoutRes int decorLayoutId, @NonNull OnPosCallback onPosCallback) {
         ViewGroup parent = (ViewGroup) mAnchor;
         ViewPosInfo viewPosInfo = new ViewPosInfo();
@@ -453,6 +469,7 @@ public class HighLight {
     /**
      * 更新位置信息
      */
+    @SuppressWarnings("unused")
     public void updateInfo() {
         ViewGroup parent = (ViewGroup) mAnchor;
         for (HighLight.ViewPosInfo viewPosInfo : mViewRects) {
@@ -463,6 +480,7 @@ public class HighLight {
     /**
      * 显示含有高亮区域的页面
      */
+    @SuppressWarnings("unused")
     public void show() {
         if (mHightLightView != null) return;
 
@@ -516,7 +534,8 @@ public class HighLight {
     /**
      * 移除含有高亮区域的页面
      */
-    public void remove() {
+    @SuppressWarnings("unused")
+    private void remove() {
         if (mHightLightView == null) return;
         ViewGroup parent = (ViewGroup) mHightLightView.getParent();
         if (parent instanceof RelativeLayout || parent instanceof FrameLayout) {
@@ -537,6 +556,7 @@ public class HighLight {
      * @param layoutId 布局文件资源id
      * @return {@link HighLight} 类对象
      */
+    @SuppressWarnings("unused")
     public HighLight addLayout(@LayoutRes int layoutId) {
         viewUtils.addView(layoutId);
 
