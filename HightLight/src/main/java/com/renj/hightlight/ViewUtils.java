@@ -1,4 +1,4 @@
-package com.renj.hightlight.util;
+package com.renj.hightlight;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,83 +22,51 @@ import android.widget.FrameLayout;
  * <p/>
  * ======================================================================
  */
-public class ViewUtils {
-    private volatile static ViewUtils viewUtils;
-    private Activity mActivity;
-
-    private OnViewClickListener clickLisstener;
-
-    /**
-     * 设置点击监听
-     *
-     * @param clickLisstener {@link OnViewClickListener} 类
-     */
-    public void setOnViewClickListener(@NonNull OnViewClickListener clickLisstener) {
-        this.clickLisstener = clickLisstener;
-    }
+/*public*/ class ViewUtils {
 
     private ViewUtils() {
     }
 
     /**
-     * 获取 {@link ViewUtils} 的实例
+     * 获取最顶层视图
      *
-     * @return {@link ViewUtils} 的实例
-     */
-    @org.jetbrains.annotations.Contract(pure = true)
-    public static ViewUtils newInstance() {
-        if (viewUtils == null) {
-            synchronized (ViewUtils.class) {
-                if (viewUtils == null) {
-                    viewUtils = new ViewUtils();
-                }
-            }
-        }
-        return viewUtils;
-    }
-
-    /**
-     * 初始化Activity
-     *
-     * @param activity {@link Activity} 对象
-     */
-    public void initActivity(@NonNull Activity activity) {
-        this.mActivity = activity;
-    }
-
-    /**
+     * @param activity {@link Activity}
      * @return 返回最顶层视图
      */
     @SuppressWarnings("unused")
-    public ViewGroup getDeCorView() {
-        return (ViewGroup) mActivity.getWindow().getDecorView();
+    static ViewGroup getDeCorView(@NonNull Activity activity) {
+        return (ViewGroup) activity.getWindow().getDecorView();
     }
 
     /**
+     * 获取内容区域根视图
+     *
+     * @param activity {@link Activity}
      * @return 返回内容区域根视图
      */
-    private ViewGroup getRootView() {
-        return (ViewGroup) mActivity.findViewById(android.R.id.content);
+    private static ViewGroup getRootView(@NonNull Activity activity) {
+        return (ViewGroup) activity.findViewById(android.R.id.content);
     }
 
     /**
      * 在整个窗体上面增加一层布局
      *
-     * @param layoutId 布局id
+     * @param activity       {@link Activity}
+     * @param layoutId       layoutId 布局id
+     * @param clickLisstener {@link OnViewClickListener} 监听对象
      */
-    public void addView(@LayoutRes int layoutId) {
-        final View view = View.inflate(mActivity, layoutId, null);
-        FrameLayout frameLayout = (FrameLayout) getRootView();
+    static void addView(@NonNull final Activity activity, @LayoutRes int layoutId,
+                        @NonNull final OnViewClickListener clickLisstener) {
+        final View view = View.inflate(activity, layoutId, null);
+        FrameLayout frameLayout = (FrameLayout) getRootView(activity);
         frameLayout.addView(view);
 
         // 设置整个布局的单击监听
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeView(view);
-                if (clickLisstener != null) {
-                    clickLisstener.onClick(view);
-                }
+                removeView(activity, view);
+                clickLisstener.onClick(view);
             }
         });
     }
@@ -106,10 +74,11 @@ public class ViewUtils {
     /**
      * 移除View
      *
-     * @param view 需要移出的视图
+     * @param activity {@link Activity}
+     * @param view     需要移出的视图
      */
-    private void removeView(@NonNull View view) {
-        FrameLayout frameLayout = (FrameLayout) getRootView();
+    private static void removeView(@NonNull Activity activity, @NonNull View view) {
+        FrameLayout frameLayout = (FrameLayout) getRootView(activity);
         frameLayout.removeView(view);
     }
 
@@ -120,7 +89,8 @@ public class ViewUtils {
      * @param child  子View
      * @return Rect对象
      */
-    public Rect getLocationInView(View parent, View child) {
+    @org.jetbrains.annotations.Contract("_, null -> fail; null, !null -> fail")
+    static Rect getLocationInView(View parent, View child) {
         if (child == null || parent == null) {
             throw new IllegalArgumentException(
                     "parent and child can not be null .");
@@ -160,7 +130,7 @@ public class ViewUtils {
     /**
      * 单击视图监听，用于多个引导页面时连续调用
      */
-    public interface OnViewClickListener {
+    interface OnViewClickListener {
         /**
          * 单击监听回调
          *

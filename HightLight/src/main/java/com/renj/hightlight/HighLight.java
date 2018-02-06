@@ -10,9 +10,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.renj.hightlight.util.ViewUtils;
-import com.renj.hightlight.view.HightLightView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,10 +67,6 @@ public class HighLight {
      * 默认背景颜色
      */
     private int maskColor = 0x99000000;
-    /**
-     * ViewUtils对象
-     */
-    private ViewUtils viewUtils;
     /**
      * 设置是否需要边框，默认需要
      */
@@ -135,14 +128,13 @@ public class HighLight {
     /**
      * 封装了需要高亮View的信息
      */
-    public static class ViewPosInfo {
-
-        public int layoutId = -1;
-        public RectF rectF;
-        public MarginInfo marginInfo;
-        public View view;
-        private OnPosCallback onPosCallback;
-        public HightLightShape hightLightShape;
+    static class ViewPosInfo {
+        int layoutId = -1;
+        RectF rectF;
+        MarginInfo marginInfo;
+        View view;
+        OnPosCallback onPosCallback;
+        HightLightShape hightLightShape;
     }
 
     /**
@@ -188,8 +180,6 @@ public class HighLight {
      */
     public HighLight(@NonNull Activity activity) {
         mContext = activity;
-        viewUtils = ViewUtils.newInstance();
-        viewUtils.initActivity(activity);
         mViewRects = new ArrayList<>();
         mAnchor = activity.findViewById(android.R.id.content);
     }
@@ -396,7 +386,7 @@ public class HighLight {
     public HighLight addHighLight(View view, @LayoutRes int decorLayoutId,
                                   @NonNull OnPosCallback onPosCallback, @NonNull HightLightShape shape) {
         ViewGroup parent = (ViewGroup) mAnchor;
-        RectF rect = new RectF(viewUtils.getLocationInView(parent, view));
+        RectF rect = new RectF(ViewUtils.getLocationInView(parent, view));
         ViewPosInfo viewPosInfo = new ViewPosInfo();
         viewPosInfo.layoutId = decorLayoutId;
         viewPosInfo.rectF = rect;
@@ -423,7 +413,7 @@ public class HighLight {
     @SuppressWarnings("unused")
     public HighLight addHighLight(View view, @LayoutRes int decorLayoutId, @NonNull OnPosCallback onPosCallback) {
         ViewGroup parent = (ViewGroup) mAnchor;
-        RectF rect = new RectF(viewUtils.getLocationInView(parent, view));
+        RectF rect = new RectF(ViewUtils.getLocationInView(parent, view));
         ViewPosInfo viewPosInfo = new ViewPosInfo();
         viewPosInfo.layoutId = decorLayoutId;
         viewPosInfo.rectF = rect;
@@ -558,9 +548,7 @@ public class HighLight {
      */
     @SuppressWarnings("unused")
     public HighLight addLayout(@LayoutRes int layoutId) {
-        viewUtils.addView(layoutId);
-
-        viewUtils.setOnViewClickListener(new ViewUtils.OnViewClickListener() {
+        ViewUtils.addView(mContext, layoutId, new ViewUtils.OnViewClickListener() {
             @Override
             public void onClick(View view) {
                 if (intercept && (HighLight.this.clickCallback != null)) {

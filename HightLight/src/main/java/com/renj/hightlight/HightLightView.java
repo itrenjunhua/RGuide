@@ -1,4 +1,4 @@
-package com.renj.hightlight.view;
+package com.renj.hightlight;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -17,8 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.renj.hightlight.HighLight;
-
 import java.util.List;
 
 /**
@@ -34,7 +32,7 @@ import java.util.List;
  * <p/>
  * ======================================================================
  */
-public class HightLightView extends FrameLayout {
+/*public*/ class HightLightView extends FrameLayout {
     /**
      * 默认模糊边界的大小
      */
