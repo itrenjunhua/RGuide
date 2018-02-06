@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
+import com.it.hightsample.utils.Logger;
 import com.renj.hightlight.HighLight;
-import com.renj.hightlight.util.Logger;
 
 
 public class MainActivity extends Activity {

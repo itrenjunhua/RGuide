@@ -1,4 +1,4 @@
-package com.renj.hightlight.util;
+package com.it.hightsample.utils;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -25,10 +25,6 @@ public class Logger {
      * 是否显示类的全路径名
      */
     private static boolean IS_FULL_CLASSNAME;
-    /**
-     * 打印级别
-     */
-    private static int LOG_LEVEL = Log.VERBOSE;
 
     /**
      * 设置是否打印类的全路径名，默认 false
@@ -37,15 +33,6 @@ public class Logger {
      */
     public static void setFullClassName(boolean isFullClassName) {
         Logger.IS_FULL_CLASSNAME = isFullClassName;
-    }
-
-    /**
-     * 设置日志打印级别，如果不想打印任何日志，level 大于 7 即可
-     *
-     * @param level 日志打印级别，如果不想打印任何日志，level 大于 7 即可
-     */
-    public static void setLogLevel(int level) {
-        Logger.LOG_LEVEL = level;
     }
 
     /**
@@ -59,31 +46,31 @@ public class Logger {
 
 
     public static void v(@NonNull String msg) {
-        if (LOG_LEVEL <= Log.VERBOSE) {
+        if (UIUtils.isApkInDebug()) {
             Log.v(TAG, getLogTitle() + msg);
         }
     }
 
     public static void d(@NonNull String msg) {
-        if (LOG_LEVEL <= Log.DEBUG) {
+        if (UIUtils.isApkInDebug()) {
             Log.d(TAG, getLogTitle() + msg);
         }
     }
 
     public static void i(@NonNull String msg) {
-        if (LOG_LEVEL <= Log.INFO) {
+        if (UIUtils.isApkInDebug()) {
             Log.i(TAG, getLogTitle() + msg);
         }
     }
 
     public static void w(@NonNull String msg) {
-        if (LOG_LEVEL <= Log.WARN) {
+        if (UIUtils.isApkInDebug()) {
             Log.w(TAG, getLogTitle() + msg);
         }
     }
 
     public static void e(@NonNull String msg) {
-        if (LOG_LEVEL <= Log.ERROR) {
+        if (UIUtils.isApkInDebug()) {
             Log.e(TAG, getLogTitle() + msg);
         }
     }
@@ -105,5 +92,4 @@ public class Logger {
         }
         return className + "." + elm.getMethodName() + "(" + elm.getLineNumber() + ")" + ": ";
     }
-
 }
