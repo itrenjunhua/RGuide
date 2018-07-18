@@ -100,7 +100,7 @@ public class HighLight {
     /**
      * 表示需要高亮的形状，圆形、矩形
      */
-    public enum HightLightShape {
+    public enum HighLightShape {
         /**
          * 圆形
          */
@@ -134,7 +134,7 @@ public class HighLight {
         MarginInfo marginInfo;
         View view;
         OnPosCallback onPosCallback;
-        HightLightShape hightLightShape;
+        HighLightShape highLightShape;
     }
 
     /**
@@ -251,7 +251,7 @@ public class HighLight {
      * @return {@link HighLight} 类对象
      */
     @SuppressWarnings("unused")
-    public HighLight setBroderLineType(@NonNull BorderLineType borderLineType) {
+    public HighLight setBorderLineType(@NonNull BorderLineType borderLineType) {
         this.borderLineType = borderLineType;
         return this;
     }
@@ -366,7 +366,7 @@ public class HighLight {
      */
     @SuppressWarnings("unused")
     public HighLight addHighLight(int viewId, @LayoutRes int decorLayoutId,
-                                  @NonNull OnPosCallback onPosCallback, @NonNull HightLightShape shape) {
+                                  @NonNull OnPosCallback onPosCallback, @NonNull HighLightShape shape) {
         ViewGroup parent = (ViewGroup) mAnchor;
         View view = parent.findViewById(viewId);
         addHighLight(view, decorLayoutId, onPosCallback, shape);
@@ -384,7 +384,7 @@ public class HighLight {
      */
     @SuppressWarnings("unused")
     public HighLight addHighLight(View view, @LayoutRes int decorLayoutId,
-                                  @NonNull OnPosCallback onPosCallback, @NonNull HightLightShape shape) {
+                                  @NonNull OnPosCallback onPosCallback, @NonNull HighLightShape shape) {
         ViewGroup parent = (ViewGroup) mAnchor;
         RectF rect = new RectF(ViewUtils.getLocationInView(parent, view));
         ViewPosInfo viewPosInfo = new ViewPosInfo();
@@ -397,7 +397,7 @@ public class HighLight {
         MarginInfo marginInfo = new MarginInfo();
         onPosCallback.getPos(parent.getWidth() - rect.right, parent.getHeight() - rect.bottom, rect, marginInfo);
         viewPosInfo.marginInfo = marginInfo;
-        viewPosInfo.hightLightShape = shape;
+        viewPosInfo.highLightShape = shape;
         viewPosInfo.onPosCallback = onPosCallback;
         mViewRects.add(viewPosInfo);
 

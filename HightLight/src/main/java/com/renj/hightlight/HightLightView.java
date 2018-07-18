@@ -286,9 +286,9 @@ import java.util.List;
         mHighLight.updateInfo();
 
         for (HighLight.ViewPosInfo viewPosInfo : mViewRects) {
-            if (viewPosInfo.hightLightShape != null) {
+            if (viewPosInfo.highLightShape != null) {
 
-                switch (viewPosInfo.hightLightShape) {
+                switch (viewPosInfo.highLightShape) {
                     case CIRCULAR:// 圆形
 
                         float width = viewPosInfo.rectF.width();

@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
                 .setShadow(false)
                 .setIsNeedBorder(true)
                 .setShadow(false)
-                .setBroderLineType(HighLight.BorderLineType.DASH_LINE)
+                .setBorderLineType(HighLight.BorderLineType.DASH_LINE)
                 .addHighLight(R.id.id_btn_important, R.layout.info_up, new HighLight.OnPosCallback() {
                     @Override
                     public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
