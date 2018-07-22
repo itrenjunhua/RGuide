@@ -26,6 +26,7 @@ import com.renj.hightlight.HighLight;
 public class SecondActivity extends Activity {
 
     private View view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,7 @@ public class SecondActivity extends Activity {
         findViewById(R.id.bt_go_three).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SecondActivity.this,ThreeActivity.class);
+                Intent intent = new Intent(SecondActivity.this, ThreeActivity.class);
                 startActivity(intent);
             }
         });
@@ -52,8 +53,10 @@ public class SecondActivity extends Activity {
 
     private void addHightView() {
         // 使用默认的设置
-        HighLight highLight = new HighLight(this)
+        HighLight highLight = new HighLight.Builder(this)
                 .setBorderLineType(HighLight.BorderLineType.FULL_LINE) // 使用实线
+                .build();
+        highLight
                 .addHighLight(R.id.iv_hight, R.layout.layout_hight, new HighLight.OnPosCallback() {
                     @Override
                     public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {

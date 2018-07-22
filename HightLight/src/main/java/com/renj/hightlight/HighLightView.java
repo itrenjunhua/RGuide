@@ -32,7 +32,7 @@ import java.util.List;
  * <p/>
  * ======================================================================
  */
-/*public*/ class HightLightView extends FrameLayout {
+/*public*/ class HighLightView extends FrameLayout {
     /**
      * 默认模糊边界的大小
      */
@@ -211,13 +211,13 @@ import java.util.List;
         this.radius = radius;
     }
 
-    public HightLightView(@NonNull Context context, @NonNull HighLight highLight, int maskColor,
-                          @NonNull List<HighLight.ViewPosInfo> viewRects) {
+    public HighLightView(@NonNull Context context, @NonNull HighLight highLight, int maskColor,
+                         @NonNull List<HighLight.ViewPosInfo> viewReacts) {
         super(context);
         this.context = context;
         mHighLight = highLight;
         mInflater = LayoutInflater.from(context);
-        mViewRects = viewRects;
+        mViewRects = viewReacts;
         this.maskColor = maskColor;
         setWillNotDraw(false);
         init();// 初始化参数

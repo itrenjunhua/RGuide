@@ -20,7 +20,7 @@ import com.renj.hightlight.HighLight;
  * <p/>
  * ======================================================================
  */
-public class ThreeActivity extends Activity{
+public class ThreeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,13 +30,14 @@ public class ThreeActivity extends Activity{
     }
 
     private void addViewToLayout() {
-        HighLight highLight = new HighLight(this)
+        HighLight highLight = new HighLight.Builder(this)
                 .setOnClickCallback(new HighLight.OnClickCallback() {
                     @Override
                     public void onClick() {
-                        Toast.makeText(ThreeActivity.this,"覆盖层被点击了",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ThreeActivity.this, "覆盖层被点击了", Toast.LENGTH_SHORT).show();
                     }
                 })
+                .build()
                 .addLayout(R.layout.layout_three);
     }
 }

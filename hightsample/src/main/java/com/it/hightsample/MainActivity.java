@@ -22,31 +22,34 @@ public class MainActivity extends Activity {
 
         view = findViewById(R.id.id_btn_important);
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-           @Override
-           public void onGlobalLayout() {
-               view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-               addHightView();
-           }
-       });
+            @Override
+            public void onGlobalLayout() {
+                view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                addHighView();
+            }
+        });
 
 
         findViewById(R.id.go_next).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,SecondActivity.class);
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    private void addHightView() {
-        HighLight highLight = new HighLight(this)
+    private void addHighView() {
+        HighLight highLight = new HighLight.Builder(this)
                 .anchor(findViewById(R.id.id_container)) //绑定根布局，在Activity中可不写
                 .setIntercept(true) // 查看注释和代码，可设置其他属性
                 .setShadow(false)
                 .setIsNeedBorder(true)
                 .setShadow(false)
                 .setBorderLineType(HighLight.BorderLineType.DASH_LINE)
+                .build();
+
+        highLight
                 .addHighLight(R.id.id_btn_important, R.layout.info_up, new HighLight.OnPosCallback() {
                     @Override
                     public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
