@@ -35,52 +35,84 @@ Android 应用新手操作引导实现
     </LinearLayout>
 > Java代码
 
-    HighLight highLight = new HighLight(this)
-                    .anchor(findViewById(R.id.id_container)) // 绑定根布局，在Activity中可不写
-                    .setIntercept(true) 
+     HighLight highLight = new HighLight.Builder(this)
+                    .anchor(findViewById(R.id.id_container)) //绑定根布局，在Activity中可不写
+                    .setIntercept(true) // 查看注释和代码，可设置其他属性
                     .setShadow(false)
                     .setIsNeedBorder(true)
                     .setShadow(false)
-                    .setBroderLineType(HighLight.BorderLineType.DASH_LINE)
-                    .addHighLight(R.id.id_btn_important, R.layout.info_up, new HighLight.OnPosCallback() {
-                        @Override
-                        public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
-                            marginInfo.leftMargin = rectF.right - rectF.width() / 2;
-                            marginInfo.topMargin = rectF.bottom;
-                        }
-                    })
-                    .addHighLight(R.id.id_btn_amazing, R.layout.info_down, new HighLight.OnPosCallback() {
-                        @Override
-                        public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
-                            marginInfo.rightMargin = rightMargin + rectF.width() / 2;
-                            marginInfo.bottomMargin = bottomMargin + rectF.height();
-                        }
-                    });
-    
-            highLight.show(); // 开始显示
+                    .setBorderLineType(HighLight.BorderLineType.DASH_LINE)
+                    .build();
+
+    highLight
+            .addHighLight(R.id.id_btn_important, R.layout.info_up, new HighLight.OnPosCallback() {
+                @Override
+                public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+                    Logger.e("rectF.right" + rectF.right);
+                    Logger.e("rectF.width()" + rectF.width());
+                    Logger.e("rectF.bottom" + rectF.bottom);
+                    Logger.e("--------------------------------------------------------------------");
+
+                    marginInfo.leftMargin = rectF.right - rectF.width() / 2;
+                    marginInfo.topMargin = rectF.bottom;
+
+                    Logger.e("1. " + marginInfo.leftMargin + "  :  " + marginInfo.topMargin);
+                }
+            })
+            .addHighLight(R.id.id_btn_amazing, R.layout.info_down, new HighLight.OnPosCallback() {
+                /**
+                 * @param rightMargin
+                 *            高亮view在anchor中的右边距
+                 * @param bottomMargin
+                 *            高亮view在anchor中的下边距
+                 * @param rectF
+                 *            高亮view的l,t,r,b,w,h都有
+                 * @param marginInfo
+                 *            设置你的布局的位置，一般设置l,t或者r,b
+                 */
+                @Override
+                public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+
+                    Logger.e("rightMargin" + rightMargin);
+                    Logger.e("rectF.width()" + rectF.width());
+                    Logger.e("rectF.height()" + rectF.height());
+                    Logger.e("bottomMargin" + bottomMargin);
+                    Logger.e("--------------------------------------------------------------------");
+                    marginInfo.rightMargin = rightMargin + rectF.width() / 2;
+                    marginInfo.bottomMargin = bottomMargin + rectF.height();
+
+                    Logger.e("2. " + marginInfo.leftMargin + "  :  " + marginInfo.topMargin);
+                }
+            });
+
+    highLight.show();
 
 > 绘制圆形高亮区域设置(布局代码省略)
 
-    HighLight highLight = new HighLight(this)
-                    .setBroderLineType(HighLight.BorderLineType.FULL_LINE) // 使用实线
-                    .addHighLight(R.id.iv_hight, R.layout.layout_hight, new HighLight.OnPosCallback() {
-                        @Override
-                        public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
-                            marginInfo.rightMargin = rightMargin;
-                            marginInfo.bottomMargin = bottomMargin + view.getHeight();
-                        }
-                    }, HighLight.HightLightShape.CIRCULAR);// 圆形高亮
-            highLight.show();
+    // 使用默认的设置
+    HighLight highLight = new HighLight.Builder(this)
+            .setBorderLineType(HighLight.BorderLineType.FULL_LINE) // 使用实线
+            .build();
+    highLight
+            .addHighLight(R.id.iv_hight, R.layout.layout_hight, new HighLight.OnPosCallback() {
+                @Override
+                public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+                    marginInfo.rightMargin = rightMargin;
+                    marginInfo.bottomMargin = bottomMargin + view.getHeight();
+                }
+            }, HighLight.HighLightShape.CIRCULAR);// 圆形高亮
+    highLight.show();
             
 > 使整个界面都成半透明状态(没有高亮区域，不需要xml布局文件)
 
-    HighLight highLight = new HighLight(this)
-                    .setOnClickCallback(new HighLight.OnClickCallback() {
-                        @Override
-                        public void onClick() {
-                            Toast.makeText(ThreeActivity.this,"覆盖层被点击了",Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addLayout(R.layout.layout_three);
+    HighLight highLight = new HighLight.Builder(this)
+                   .setOnClickCallback(new HighLight.OnClickCallback() {
+                       @Override
+                       public void onClick() {
+                           Toast.makeText(ThreeActivity.this, "覆盖层被点击了", Toast.LENGTH_SHORT).show();
+                       }
+                   })
+                   .build()
+                   .addLayout(R.layout.layout_three);
 ## 博客说明
 博客说明地址：<http://blog.csdn.net/itrenj/article/details/53890118>
