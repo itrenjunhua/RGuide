@@ -53,10 +53,10 @@ import android.widget.FrameLayout;
      *
      * @param activity       {@link Activity}
      * @param layoutId       layoutId 布局id
-     * @param clickLisstener {@link OnViewClickListener} 监听对象
+     * @param clickListener {@link OnViewClickListener} 监听对象
      */
     static void addView(@NonNull final Activity activity, @LayoutRes int layoutId,
-                        @NonNull final OnViewClickListener clickLisstener) {
+                        @NonNull final OnViewClickListener clickListener) {
         final View view = View.inflate(activity, layoutId, null);
         FrameLayout frameLayout = (FrameLayout) getRootView(activity);
         frameLayout.addView(view);
@@ -66,7 +66,7 @@ import android.widget.FrameLayout;
             @Override
             public void onClick(View v) {
                 removeView(activity, view);
-                clickLisstener.onClick(view);
+                clickListener.onClick(view);
             }
         });
     }

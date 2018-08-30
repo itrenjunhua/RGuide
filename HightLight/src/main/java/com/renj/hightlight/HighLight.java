@@ -256,8 +256,8 @@ public class HighLight {
 
         HighLightView highLightView = new HighLightView(builder.activity, this, builder.maskColor, mViewReacts);
         // 设置是否需要模糊边界和模糊边界的大小
-        highLightView.setIsBlur(builder.shadow);
-        if (builder.shadow) highLightView.setBlurWidth(builder.blurSize);
+        highLightView.setIsBlur(builder.isBlur);
+        if (builder.isBlur) highLightView.setBlurWidth(builder.blurSize);
 
         // 设置边框的相关配置
         highLightView.setIsNeedBorder(builder.isNeedBorder);
@@ -359,10 +359,6 @@ public class HighLight {
          */
         private boolean intercept = true;
         /**
-         * 是否需要模糊化边界，默认不需要
-         */
-        private boolean shadow = false;
-        /**
          * 背景颜色
          */
         private int maskColor = 0x99000000;
@@ -441,12 +437,12 @@ public class HighLight {
         /**
          * 设置是否需要模糊化边框，默认不需要
          *
-         * @param shadow 是否需要模糊边框 true：需要 false：不需要
+         * @param isBlur 是否需要模糊边框 true：需要 false：不需要
          * @return {@link HighLight} 类对象
          */
         @SuppressWarnings("unused")
-        public Builder setShadow(boolean shadow) {
-            this.shadow = shadow;
+        public Builder isBlur(boolean isBlur) {
+            this.isBlur = isBlur;
             return this;
         }
 

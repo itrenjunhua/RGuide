@@ -56,7 +56,7 @@ import java.util.List;
     /**
      * 用于保存高亮View的集合
      */
-    private List<HighLight.ViewPosInfo> mViewRects;
+    private List<HighLight.ViewPosInfo> mViewReacts;
     /**
      * HighLight对象
      */
@@ -217,7 +217,7 @@ import java.util.List;
         this.context = context;
         mHighLight = highLight;
         mInflater = LayoutInflater.from(context);
-        mViewRects = viewReacts;
+        mViewReacts = viewReacts;
         this.maskColor = maskColor;
         setWillNotDraw(false);
         init();// 初始化参数
@@ -242,7 +242,7 @@ import java.util.List;
      * 将需要高亮的View增加到帧布局上方
      */
     private void addViewForTip() {
-        for (HighLight.ViewPosInfo viewPosInfo : mViewRects) {
+        for (HighLight.ViewPosInfo viewPosInfo : mViewReacts) {
             View view = mInflater.inflate(viewPosInfo.layoutId, this, false);
             FrameLayout.LayoutParams lp = buildTipLayoutParams(view,
                     viewPosInfo);
@@ -285,7 +285,7 @@ import java.util.List;
                     BlurMaskFilter.Blur.SOLID));
         mHighLight.updateInfo();
 
-        for (HighLight.ViewPosInfo viewPosInfo : mViewRects) {
+        for (HighLight.ViewPosInfo viewPosInfo : mViewReacts) {
             if (viewPosInfo.highLightShape != null) {
 
                 switch (viewPosInfo.highLightShape) {
@@ -400,7 +400,7 @@ import java.util.List;
     private void updateTipPos() {
         for (int i = 0, n = getChildCount(); i < n; i++) {
             View view = getChildAt(i);
-            HighLight.ViewPosInfo viewPosInfo = mViewRects.get(i);
+            HighLight.ViewPosInfo viewPosInfo = mViewReacts.get(i);
 
             LayoutParams lp = buildTipLayoutParams(view, viewPosInfo);
             if (lp == null)
