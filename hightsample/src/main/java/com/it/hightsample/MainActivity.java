@@ -43,9 +43,8 @@ public class MainActivity extends Activity {
         HighLight highLight = new HighLight.Builder(this)
                 .anchor(findViewById(R.id.id_container)) //绑定根布局，在Activity中可不写
                 .setIntercept(true) // 查看注释和代码，可设置其他属性
-                .setShadow(false)
+                .isBlur(false)
                 .setIsNeedBorder(true)
-                .setShadow(false)
                 .setBorderLineType(HighLight.BorderLineType.DASH_LINE)
                 .build();
 
