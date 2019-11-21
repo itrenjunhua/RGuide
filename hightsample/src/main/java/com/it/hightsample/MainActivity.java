@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.it.hightsample.utils.Logger;
-import com.renj.hightlight.HighLight;
+import com.renj.hightlight.HighLightBuilder;
+import com.renj.hightlight.HighLightManager;
+import com.renj.hightlight.callback.OnPosCallback;
+import com.renj.hightlight.type.BorderLineType;
 
 
 public class MainActivity extends Activity {
@@ -40,18 +43,18 @@ public class MainActivity extends Activity {
     }
 
     private void addHighView() {
-        HighLight highLight = new HighLight.Builder(this)
+        HighLightManager highLightManager = HighLightBuilder.newInstance(this)
                 .anchor(findViewById(R.id.id_container)) //绑定根布局，在Activity中可不写
                 .setIntercept(true) // 查看注释和代码，可设置其他属性
                 .isBlur(false)
                 .setIsNeedBorder(true)
-                .setBorderLineType(HighLight.BorderLineType.DASH_LINE)
+                .setBorderLineType(BorderLineType.DASH_LINE)
                 .build();
 
-        highLight
-                .addHighLight(R.id.id_btn_important, R.layout.info_up, new HighLight.OnPosCallback() {
+        highLightManager
+                .addHighLight(R.id.id_btn_important, R.layout.info_up, new OnPosCallback() {
                     @Override
-                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLightManager.MarginInfo marginInfo) {
                         Logger.e("rectF.right" + rectF.right);
                         Logger.e("rectF.width()" + rectF.width());
                         Logger.e("rectF.bottom" + rectF.bottom);
@@ -63,7 +66,7 @@ public class MainActivity extends Activity {
                         Logger.e("1. " + marginInfo.leftMargin + "  :  " + marginInfo.topMargin);
                     }
                 })
-                .addHighLight(R.id.id_btn_amazing, R.layout.info_down, new HighLight.OnPosCallback() {
+                .addHighLight(R.id.id_btn_amazing, R.layout.info_down, new OnPosCallback() {
                     /**
                      * @param rightMargin
                      *            高亮view在anchor中的右边距
@@ -75,7 +78,7 @@ public class MainActivity extends Activity {
                      *            设置你的布局的位置，一般设置l,t或者r,b
                      */
                     @Override
-                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLightManager.MarginInfo marginInfo) {
 
                         Logger.e("rightMargin" + rightMargin);
                         Logger.e("rectF.width()" + rectF.width());
@@ -89,6 +92,6 @@ public class MainActivity extends Activity {
                     }
                 });
 
-        highLight.show();
+        highLightManager.show();
     }
 }

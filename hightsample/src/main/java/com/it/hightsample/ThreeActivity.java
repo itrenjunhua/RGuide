@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.renj.hightlight.HighLight;
+import com.renj.hightlight.HighLightBuilder;
+import com.renj.hightlight.HighLightManager;
+import com.renj.hightlight.callback.OnClickCallback;
 
 
 /**
@@ -30,8 +32,8 @@ public class ThreeActivity extends Activity {
     }
 
     private void addViewToLayout() {
-        HighLight highLight = new HighLight.Builder(this)
-                .setOnClickCallback(new HighLight.OnClickCallback() {
+        HighLightBuilder.newInstance(this)
+                .setOnClickCallback(new OnClickCallback() {
                     @Override
                     public void onClick() {
                         Toast.makeText(ThreeActivity.this, "覆盖层被点击了", Toast.LENGTH_SHORT).show();

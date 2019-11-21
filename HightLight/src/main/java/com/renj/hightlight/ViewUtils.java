@@ -96,20 +96,19 @@ import android.widget.FrameLayout;
                     "parent and child can not be null .");
         }
 
-        View decorView = null;
-        Context context = child.getContext();
-        if (context instanceof Activity) {
-            decorView = ((Activity) context).getWindow().getDecorView();
-        }
-
         Rect result = new Rect();
-        Rect tmpRect = new Rect();
-
-        View tmp = child;
-
         if (child == parent) {
             child.getHitRect(result);
             return result;
+        }
+
+        View tmp = child;
+        Rect tmpRect = new Rect();
+        View decorView = null;
+
+        Context context = child.getContext();
+        if (context instanceof Activity) {
+            decorView = ((Activity) context).getWindow().getDecorView();
         }
 
         String noSaveStateFrameLayout = "android.support.v4.app.NoSaveStateFrameLayout";

@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.renj.hightlight.type.BorderLineType;
+
 import java.util.List;
 
 /**
@@ -56,11 +58,11 @@ import java.util.List;
     /**
      * 用于保存高亮View的集合
      */
-    private List<HighLight.ViewPosInfo> mViewReacts;
+    private List<HighLightManager.ViewPosInfo> mViewReacts;
     /**
      * HighLight对象
      */
-    private HighLight mHighLight;
+    private HighLightManager mHighLightManager;
     /**
      * 打气筒
      */
@@ -94,9 +96,9 @@ import java.util.List;
      */
     private int borderColor = maskColor;
     /**
-     * 边框类型,默认虚线 {@link HighLight.BorderLineType#DASH_LINE}
+     * 边框类型,默认虚线 {@link BorderLineType#DASH_LINE}
      */
-    private HighLight.BorderLineType borderLineType = HighLight.BorderLineType.DASH_LINE;
+    private BorderLineType borderLineType = BorderLineType.DASH_LINE;
     /**
      * 边框宽度，单位：dp，默认3dp
      */
@@ -107,7 +109,7 @@ import java.util.List;
     private int phase = 1;
     /**
      * 虚线的排列方式，需要调用 {@link #setIsNeedBorder(boolean)} 方法设置为 {@code true} 并且
-     * 边框类型为 {@link HighLight.BorderLineType#DASH_LINE}，该样式才能生效
+     * 边框类型为 {@link BorderLineType#DASH_LINE}，该样式才能生效
      */
     private float[] intervals;
 
@@ -155,9 +157,9 @@ import java.util.List;
     /**
      * 设置边框类型，需要调用 {@link #setIsNeedBorder(boolean)} 方法设置为 {@code true}，该方法才能生效
      *
-     * @param borderLineType 边框类型 {@link HighLight.BorderLineType}
+     * @param borderLineType 边框类型 {@link BorderLineType}
      */
-    public void setBorderLineType(HighLight.BorderLineType borderLineType) {
+    public void setBorderLineType(BorderLineType borderLineType) {
         this.borderLineType = borderLineType;
     }
 
@@ -182,7 +184,7 @@ import java.util.List;
 
     /**
      * 设置虚线边框的样式，需要调用 {@link #setIsNeedBorder(boolean)} 方法设置为 {@code true}并且
-     * 边框类型为 {@link HighLight.BorderLineType#DASH_LINE}，该方法才能生效；不需要转换单位，默认dp
+     * 边框类型为 {@link BorderLineType#DASH_LINE}，该方法才能生效；不需要转换单位，默认dp
      * <p/>
      * 必须是偶数长度,且>=2,指定了多少长度的实线之后再画多少长度的空白.
      * 如在 new float[] { 1, 2, 4, 8}中,表示先绘制长度1的实线,再绘制长度2的空白,再绘制长度4的实线,
@@ -211,11 +213,11 @@ import java.util.List;
         this.radius = radius;
     }
 
-    public HighLightView(@NonNull Context context, @NonNull HighLight highLight, int maskColor,
-                         @NonNull List<HighLight.ViewPosInfo> viewReacts) {
+    public HighLightView(@NonNull Context context, @NonNull HighLightManager highLightManager, int maskColor,
+                         @NonNull List<HighLightManager.ViewPosInfo> viewReacts) {
         super(context);
         this.context = context;
-        mHighLight = highLight;
+        mHighLightManager = highLightManager;
         mInflater = LayoutInflater.from(context);
         mViewReacts = viewReacts;
         this.maskColor = maskColor;
@@ -242,7 +244,7 @@ import java.util.List;
      * 将需要高亮的View增加到帧布局上方
      */
     private void addViewForTip() {
-        for (HighLight.ViewPosInfo viewPosInfo : mViewReacts) {
+        for (HighLightManager.ViewPosInfo viewPosInfo : mViewReacts) {
             View view = mInflater.inflate(viewPosInfo.layoutId, this, false);
             FrameLayout.LayoutParams lp = buildTipLayoutParams(view,
                     viewPosInfo);
@@ -283,9 +285,9 @@ import java.util.List;
         if (isBlur)
             mPaint.setMaskFilter(new BlurMaskFilter(this.blurSize,
                     BlurMaskFilter.Blur.SOLID));
-        mHighLight.updateInfo();
+        mHighLightManager.updateInfo();
 
-        for (HighLight.ViewPosInfo viewPosInfo : mViewReacts) {
+        for (HighLightManager.ViewPosInfo viewPosInfo : mViewReacts) {
             if (viewPosInfo.highLightShape != null) {
 
                 switch (viewPosInfo.highLightShape) {
@@ -332,10 +334,10 @@ import java.util.List;
     /**
      * 绘制圆形边框
      */
-    private void drawCircleBorder(Canvas canvas, HighLight.ViewPosInfo viewPosInfo, float circle_center1, float circle_center2, int radius) {
+    private void drawCircleBorder(Canvas canvas, HighLightManager.ViewPosInfo viewPosInfo, float circle_center1, float circle_center2, int radius) {
         Paint paint = new Paint();
         paint.reset();
-        if (this.borderLineType == HighLight.BorderLineType.DASH_LINE) {
+        if (this.borderLineType == BorderLineType.DASH_LINE) {
             DashPathEffect pathEffect = new DashPathEffect(intervals, this.phase);
             paint.setPathEffect(pathEffect);
         }
@@ -353,10 +355,10 @@ import java.util.List;
     /**
      * 绘制矩形边框
      */
-    private void drawRectBorder(Canvas canvas, HighLight.ViewPosInfo viewPosInfo) {
+    private void drawRectBorder(Canvas canvas, HighLightManager.ViewPosInfo viewPosInfo) {
         Paint paint = new Paint();
         paint.reset();
-        if (this.borderLineType == HighLight.BorderLineType.DASH_LINE) {
+        if (this.borderLineType == BorderLineType.DASH_LINE) {
             DashPathEffect pathEffect = new DashPathEffect(intervals, this.phase);
             paint.setPathEffect(pathEffect);
         }
@@ -400,7 +402,7 @@ import java.util.List;
     private void updateTipPos() {
         for (int i = 0, n = getChildCount(); i < n; i++) {
             View view = getChildAt(i);
-            HighLight.ViewPosInfo viewPosInfo = mViewReacts.get(i);
+            HighLightManager.ViewPosInfo viewPosInfo = mViewReacts.get(i);
 
             LayoutParams lp = buildTipLayoutParams(view, viewPosInfo);
             if (lp == null)
@@ -411,7 +413,7 @@ import java.util.List;
 
     @Nullable
     private LayoutParams buildTipLayoutParams(View view,
-                                              HighLight.ViewPosInfo viewPosInfo) {
+                                              HighLightManager.ViewPosInfo viewPosInfo) {
         LayoutParams lp = (LayoutParams) view.getLayoutParams();
         if (lp.leftMargin == (int) viewPosInfo.marginInfo.leftMargin
                 && lp.topMargin == (int) viewPosInfo.marginInfo.topMargin

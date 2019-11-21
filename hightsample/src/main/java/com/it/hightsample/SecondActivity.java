@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.renj.hightlight.HighLight;
+import com.renj.hightlight.HighLightBuilder;
+import com.renj.hightlight.HighLightManager;
+import com.renj.hightlight.callback.OnPosCallback;
+import com.renj.hightlight.type.BorderLineType;
+import com.renj.hightlight.type.HighLightShape;
 
 
 /**
@@ -37,7 +41,7 @@ public class SecondActivity extends Activity {
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                addHightView();
+                addHighView();
                 view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
             }
         });
@@ -51,19 +55,19 @@ public class SecondActivity extends Activity {
         });
     }
 
-    private void addHightView() {
+    private void addHighView() {
         // 使用默认的设置
-        HighLight highLight = new HighLight.Builder(this)
-                .setBorderLineType(HighLight.BorderLineType.FULL_LINE) // 使用实线
+        HighLightManager highLightManager = HighLightBuilder.newInstance(this)
+                .setBorderLineType(BorderLineType.FULL_LINE) // 使用实线
                 .build();
-        highLight
-                .addHighLight(R.id.iv_hight, R.layout.layout_hight, new HighLight.OnPosCallback() {
+        highLightManager
+                .addHighLight(R.id.iv_hight, R.layout.layout_hight, HighLightShape.CIRCULAR, new OnPosCallback() {
                     @Override
-                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLight.MarginInfo marginInfo) {
+                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLightManager.MarginInfo marginInfo) {
                         marginInfo.rightMargin = rightMargin;
                         marginInfo.bottomMargin = bottomMargin + view.getHeight();
                     }
-                }, HighLight.HighLightShape.CIRCULAR);// 圆形高亮
-        highLight.show();
+                });// 圆形高亮
+        highLightManager.show();
     }
 }
