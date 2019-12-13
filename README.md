@@ -113,5 +113,15 @@ Android 应用新手操作引导实现
                     })
                     .build()
                     .addLayout(R.layout.layout_three);
+
+## 混淆
+
+    -keep class com.renj.hightlight.**{*;}
+    -keep emum com.renj.hightlight.type.* {
+        **[] $VALUES;
+        public *;
+    }
+    -dontwarn com.renj.hightlight.**
+
 ## 博客说明
 博客说明地址：<http://blog.csdn.net/itrenj/article/details/53890118>

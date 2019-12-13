@@ -3,10 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HightLight/HightLight.iml" filepath="$PROJECT_DIR$/HightLight/HightLight.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MyCodeLibrary-MyHightLight.iml" filepath="$PROJECT_DIR$/MyCodeLibrary-MyHightLight.iml" />
       <module fileurl="file://$PROJECT_DIR$/MyHightLight.iml" filepath="$PROJECT_DIR$/MyHightLight.iml" />
-      <module fileurl="file://$PROJECT_DIR$/HightLight/MyHightLight-HightLight.iml" filepath="$PROJECT_DIR$/HightLight/MyHightLight-HightLight.iml" />
-      <module fileurl="file://$PROJECT_DIR$/hightsample/MyHightLight-hightsample.iml" filepath="$PROJECT_DIR$/hightsample/MyHightLight-hightsample.iml" />
       <module fileurl="file://$PROJECT_DIR$/hightsample/hightsample.iml" filepath="$PROJECT_DIR$/hightsample/hightsample.iml" />
     </modules>
   </component>
