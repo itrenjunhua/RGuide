@@ -2,11 +2,11 @@
 ext {
     android = [
             compileSdk   : 27,
-            applicationId: "com.it.hightsample",
+            applicationId: "com.renj.sample",
             minSdk       : 19,
             targetSdk    : 27,
-            versionCode  : 1,
-            versionName  : "1.0.0"
+            versionCode  : 20000,
+            versionName  : "2.0.0"
     ]
 
     def dependVersion = [
@@ -14,7 +14,6 @@ ext {
             junitSupport            : "4.12",
             supportTestRunner       : "1.0.1",
             supportTestEspresso     : "3.0.1",
-            jetbrainsAnnotations    : "13.0",
     ]
 
     dependencies = [
@@ -24,7 +23,5 @@ ext {
             "junitSupport"            : "junit:junit:${dependVersion.junitSupport}",
             "supportTestRunner"       : "com.android.support.test:runner:${dependVersion.supportTestRunner}",
             "supportTestEspresso"     : "com.android.support.test.espresso:espresso-core:${dependVersion.supportTestEspresso}",
-            // jetbrains 注解
-            "jetbrainsAnnotations"    : "org.jetbrains:annotations:${dependVersion.jetbrainsAnnotations}",
     ]
 }

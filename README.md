@@ -116,8 +116,8 @@ Android 应用新手操作引导实现
 
 ## 混淆
 
-    -keep class com.renj.hightlight.**{*;}
-    -keep emum com.renj.hightlight.type.* {
+    -keep class com.renj.highlight.**{*;}
+    -keep emum com.renj.highlight.type.* {
         **[] $VALUES;
         public *;
     }
