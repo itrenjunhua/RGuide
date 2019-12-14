@@ -8,11 +8,10 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.renj.highlight.HighLightMarginInfo;
-import com.renj.highlight.RHighLightBgParams;
 import com.renj.highlight.RHighLightManager;
+import com.renj.highlight.RHighLightPageParams;
 import com.renj.highlight.RHighLightViewParams;
 import com.renj.highlight.callback.OnPosCallback;
-import com.renj.highlight.type.BorderLineType;
 import com.renj.highlight.type.HighLightShape;
 
 
@@ -58,7 +57,7 @@ public class SecondActivity extends Activity {
     }
 
     private void addHighView() {
-        RHighLightBgParams highLightBgParams = RHighLightBgParams.create(this);
+        RHighLightPageParams rHighLightPageParams = RHighLightPageParams.create(this);
 
         RHighLightViewParams rHighLightViewParams = RHighLightViewParams.create()
                 .setHighView(R.id.id_btn_important)
@@ -66,16 +65,15 @@ public class SecondActivity extends Activity {
                 .setBlurShow(false)
                 .setBorderShow(true)
                 .setHighLightShape(HighLightShape.CIRCULAR)
-                .setBorderLineType(BorderLineType.DASH_LINE)
                 .setHighView(R.id.iv_hight)
                 .setDecorLayoutId(R.layout.layout_hight)
                 .setOnPosCallback(new OnPosCallback() {
                     @Override
-                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLightMarginInfo marginInfo) {
+                    public void decorPosInfo(float rightMargin, float bottomMargin, RectF rectF, HighLightMarginInfo marginInfo) {
                         marginInfo.rightMargin = rightMargin;
                         marginInfo.bottomMargin = bottomMargin + view.getHeight();
                     }
                 });
-        RHighLightManager.getInstance().addHighLightView(highLightBgParams, rHighLightViewParams, true).show();
+        RHighLightManager.getInstance().addHighLightView(rHighLightPageParams, rHighLightViewParams, true).show();
     }
 }

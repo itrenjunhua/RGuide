@@ -33,7 +33,6 @@ import android.widget.FrameLayout;
      * @param activity {@link Activity}
      * @return 返回最顶层视图
      */
-    @SuppressWarnings("unused")
     static ViewGroup getDeCorView(@NonNull Activity activity) {
         return (ViewGroup) activity.getWindow().getDecorView();
     }

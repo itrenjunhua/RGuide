@@ -13,13 +13,13 @@ import com.renj.highlight.callback.OnClickCallback;
  * <p>
  * 创建时间：2019-12-13   14:13
  * <p>
- * 描述：高亮页面参数
+ * 描述：高亮页面参数，页面根布局、Activity、遮罩层颜色等
  * <p>
  * 修订历史：
  * <p>
  * ======================================================================
  */
-public class RHighLightBgParams {
+public class RHighLightPageParams {
     Activity activity;
     /**
      * 需要增加高亮区域的根布局
@@ -34,27 +34,28 @@ public class RHighLightBgParams {
      */
     OnClickCallback onClickCallback;
 
-    public RHighLightBgParams(Activity activity) {
+    private RHighLightPageParams(Activity activity) {
         this.activity = activity;
         anchor = activity.findViewById(android.R.id.content);
     }
 
-
     /**
-     * 闯进啊 {@link RHighLightBgParams}
+     * 创建 {@link RHighLightPageParams}
      */
-    public static RHighLightBgParams create(@NonNull Activity activity) {
+    public static RHighLightPageParams create(@NonNull Activity activity) {
         if (activity == null)
             throw new IllegalArgumentException("Params activity is null!");
-        return new RHighLightBgParams(activity);
+        return new RHighLightPageParams(activity);
     }
+
+    /* ------------------ 设置属性方法 ----------------------*/
 
     /**
      * 设置背景颜色
      *
      * @param maskColor 背景颜色
      */
-    public RHighLightBgParams setMaskColor(int maskColor) {
+    public RHighLightPageParams setMaskColor(int maskColor) {
         this.maskColor = maskColor;
         return this;
     }
@@ -64,7 +65,7 @@ public class RHighLightBgParams {
      *
      * @param anchor 根布局，Activity中可以不设置
      */
-    public RHighLightBgParams setAnchor(View anchor) {
+    public RHighLightPageParams setAnchor(View anchor) {
         this.anchor = anchor;
         return this;
     }
@@ -75,8 +76,23 @@ public class RHighLightBgParams {
      * @param onClickCallback
      * @return
      */
-    public RHighLightBgParams setOnClickCallback(OnClickCallback onClickCallback) {
+    public RHighLightPageParams setOnClickCallback(OnClickCallback onClickCallback) {
         this.onClickCallback = onClickCallback;
         return this;
+    }
+
+    /* ------------------ 深度克隆方法 ----------------------*/
+
+    /**
+     * 深度克隆出一个新的 {@link RHighLightPageParams} 对象，可以在继承老的参数之后进行部分修改
+     *
+     * @return
+     */
+    public RHighLightPageParams cloneParams() {
+        RHighLightPageParams cloneRHighLightPageParams = RHighLightPageParams.create(this.activity);
+        cloneRHighLightPageParams.anchor = this.anchor;
+        cloneRHighLightPageParams.maskColor = this.maskColor;
+        cloneRHighLightPageParams.onClickCallback = this.onClickCallback;
+        return cloneRHighLightPageParams;
     }
 }

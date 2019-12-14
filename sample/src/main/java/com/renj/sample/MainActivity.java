@@ -2,18 +2,19 @@ package com.renj.sample;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.renj.highlight.HighLightMarginInfo;
-import com.renj.highlight.RHighLightBgParams;
 import com.renj.highlight.RHighLightManager;
+import com.renj.highlight.RHighLightPageParams;
 import com.renj.highlight.RHighLightViewParams;
 import com.renj.highlight.callback.OnPosCallback;
 import com.renj.highlight.type.BorderLineType;
-import com.renj.sample.utils.Logger;
+import com.renj.highlight.type.HighLightShape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,43 +65,34 @@ public class MainActivity extends Activity {
     }
 
     private void showHighView(boolean together) {
-        RHighLightBgParams highLightBgParams = RHighLightBgParams.create(this)
+        RHighLightPageParams highLightPageParams = RHighLightPageParams.create(this)
                 .setAnchor(findViewById(R.id.id_container)); //绑定根布局，在Activity中可不写;
         RHighLightViewParams rHighLightViewParams1 = RHighLightViewParams.create()
                 .setHighView(R.id.id_btn_important)
                 .setDecorLayoutId(R.layout.info_up)
-                .setBlurShow(false)
+                .setBlurShow(true)
+                .setBlurWidth(8)
                 .setBorderShow(true)
-                .setBorderLineType(BorderLineType.DASH_LINE)
+                .setBorderColor(Color.RED)
+                .setRadius(5)
+                .setHighLightShape(HighLightShape.RECTANGULAR)
                 .setOnPosCallback(new OnPosCallback() {
                     @Override
-                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLightMarginInfo marginInfo) {
-                        Logger.e("rectF.right => " + rectF.right);
-                        Logger.e("rectF.width() => " + rectF.width());
-                        Logger.e("rectF.bottom => " + rectF.bottom);
-                        Logger.e("--------------------------------------------------------------------");
-
+                    public void decorPosInfo(float rightMargin, float bottomMargin, RectF rectF, HighLightMarginInfo marginInfo) {
                         marginInfo.leftMargin = rectF.right - rectF.width() / 2;
                         marginInfo.topMargin = rectF.bottom;
-
-                        Logger.e("1 => leftMargin:" + marginInfo.leftMargin + "; topMargin: " + marginInfo.topMargin);
                     }
                 });
         RHighLightViewParams rHighLightViewParams2 = RHighLightViewParams.create()
                 .setHighView(R.id.id_btn_amazing)
                 .setDecorLayoutId(R.layout.info_down)
+                .setBorderLineType(BorderLineType.DASH_LINE)
+                .setIntervals(new float[]{12, 12})
                 .setOnPosCallback(new OnPosCallback() {
                     @Override
-                    public void getPos(float rightMargin, float bottomMargin, RectF rectF, HighLightMarginInfo marginInfo) {
-                        Logger.e("rightMargin => " + rightMargin);
-                        Logger.e("rectF.width() => " + rectF.width());
-                        Logger.e("rectF.height() => " + rectF.height());
-                        Logger.e("bottomMargin => " + bottomMargin);
-                        Logger.e("--------------------------------------------------------------------");
+                    public void decorPosInfo(float rightMargin, float bottomMargin, RectF rectF, HighLightMarginInfo marginInfo) {
                         marginInfo.rightMargin = rightMargin + rectF.width() / 2;
                         marginInfo.bottomMargin = bottomMargin + rectF.height();
-
-                        Logger.e("2 => leftMargin: " + marginInfo.leftMargin + " ; topMargin: " + marginInfo.topMargin);
                     }
                 });
 
@@ -109,11 +101,11 @@ public class MainActivity extends Activity {
             List<RHighLightViewParams> lightBgParams = new ArrayList<>();
             lightBgParams.add(rHighLightViewParams1);
             lightBgParams.add(rHighLightViewParams2);
-            RHighLightManager.getInstance().addHighLightView(highLightBgParams, lightBgParams, true).show();
+            RHighLightManager.getInstance().addHighLightView(highLightPageParams, lightBgParams, true).show();
         } else {
             RHighLightManager.getInstance()
-                    .addHighLightView(highLightBgParams, rHighLightViewParams1, true) // 分开添加，表示分步显示
-                    .addHighLightView(highLightBgParams, rHighLightViewParams2, true)
+                    .addHighLightView(highLightPageParams, rHighLightViewParams1) // 分开添加，表示分步显示
+                    .addHighLightView(highLightPageParams, rHighLightViewParams2)
                     .show();
         }
     }

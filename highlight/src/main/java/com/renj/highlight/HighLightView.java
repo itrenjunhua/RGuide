@@ -14,7 +14,6 @@ import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.renj.highlight.type.BorderLineType;
@@ -47,21 +46,25 @@ import java.util.List;
      * 绘制高亮区域的画笔
      */
     private Paint mPaint;
-    private RHighLightBgParams rHighLightBgParams;
     /**
-     * 用于保存高亮View的集合
+     * 高亮页面参数
      */
-    private List<RHighLightViewParams> mHighLightBgInfoList;
+    private RHighLightPageParams rHighLightPageParams;
+    /**
+     * 用于保存高亮View的集合，因为一个页面可能有多个高亮的地方同时显示
+     */
+    private List<RHighLightViewParams> rHighLightViewParamsList;
     /**
      * 打气筒
      */
     private LayoutInflater mInflater;
 
-    public HighLightView(RHighLightBgParams rHighLightBgParams, @NonNull List<RHighLightViewParams> viewReacts) {
-        super(rHighLightBgParams.activity);
-        this.rHighLightBgParams = rHighLightBgParams;
-        this.mHighLightBgInfoList = viewReacts;
-        this.mInflater = LayoutInflater.from(rHighLightBgParams.activity);
+    public HighLightView(@NonNull RHighLightPageParams rHighLightPageParams,
+                         @NonNull List<RHighLightViewParams> rHighLightViewParamsList) {
+        super(rHighLightPageParams.activity);
+        this.rHighLightPageParams = rHighLightPageParams;
+        this.rHighLightViewParamsList = rHighLightViewParamsList;
+        this.mInflater = LayoutInflater.from(rHighLightPageParams.activity);
         setWillNotDraw(false);
         init();// 初始化参数
     }
@@ -82,17 +85,17 @@ import java.util.List;
      * 将需要高亮的View增加到帧布局上方
      */
     private void addViewForTip() {
-        for (RHighLightViewParams viewPosInfo : mHighLightBgInfoList) {
-            View view = mInflater.inflate(viewPosInfo.decorLayoutId, this, false);
-            FrameLayout.LayoutParams lp = buildTipLayoutParams(view, viewPosInfo);
+        for (RHighLightViewParams rHighLightViewParams : rHighLightViewParamsList) {
+            View view = mInflater.inflate(rHighLightViewParams.decorLayoutId, this, false);
+            FrameLayout.LayoutParams lp = buildTipLayoutParams(view, rHighLightViewParams);
 
             if (lp == null)
                 continue;
 
-            lp.leftMargin = (int) viewPosInfo.marginInfo.leftMargin;
-            lp.topMargin = (int) viewPosInfo.marginInfo.topMargin;
-            lp.rightMargin = (int) viewPosInfo.marginInfo.rightMargin;
-            lp.bottomMargin = (int) viewPosInfo.marginInfo.bottomMargin;
+            lp.leftMargin = (int) rHighLightViewParams.marginInfo.leftMargin;
+            lp.topMargin = (int) rHighLightViewParams.marginInfo.topMargin;
+            lp.rightMargin = (int) rHighLightViewParams.marginInfo.rightMargin;
+            lp.bottomMargin = (int) rHighLightViewParams.marginInfo.bottomMargin;
 
             if (lp.rightMargin != 0) {
                 lp.gravity = Gravity.END;
@@ -109,6 +112,55 @@ import java.util.List;
         }
     }
 
+    @Nullable
+    private LayoutParams buildTipLayoutParams(View view, RHighLightViewParams viewPosInfo) {
+        LayoutParams lp = (LayoutParams) view.getLayoutParams();
+        if (lp.leftMargin == (int) viewPosInfo.marginInfo.leftMargin
+                && lp.topMargin == (int) viewPosInfo.marginInfo.topMargin
+                && lp.rightMargin == (int) viewPosInfo.marginInfo.rightMargin
+                && lp.bottomMargin == (int) viewPosInfo.marginInfo.bottomMargin)
+            return lp;
+
+        lp.leftMargin = (int) viewPosInfo.marginInfo.leftMargin;
+        lp.topMargin = (int) viewPosInfo.marginInfo.topMargin;
+        lp.rightMargin = (int) viewPosInfo.marginInfo.rightMargin;
+        lp.bottomMargin = (int) viewPosInfo.marginInfo.bottomMargin;
+
+        if (lp.rightMargin != 0) {
+            lp.gravity = Gravity.END;
+        } else {
+            lp.gravity = Gravity.START;
+        }
+
+        if (lp.bottomMargin != 0) {
+            lp.gravity |= Gravity.BOTTOM;
+        } else {
+            lp.gravity |= Gravity.TOP;
+        }
+        return lp;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int height = MeasureSpec.getSize(heightMeasureSpec);
+
+        measureChildren(
+                MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),//
+                MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
+        setMeasuredDimension(width, height);
+
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right,
+                            int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        if (changed) {
+            buildMask();
+        }
+    }
+
     /**
      * 绘制高亮区域
      */
@@ -118,56 +170,44 @@ import java.util.List;
         Canvas canvas = new Canvas(mMaskBitmap);
         mPaint.setXfermode(MODE_DST_OUT);
         mPaint.setColor(Color.parseColor("#00000000"));
-        canvas.drawColor(rHighLightBgParams.maskColor);
-        updateInfo();
+        canvas.drawColor(rHighLightPageParams.maskColor);
 
-        for (RHighLightViewParams viewPosInfo : mHighLightBgInfoList) {
-
-            if (viewPosInfo.blurShow)
-                mPaint.setMaskFilter(new BlurMaskFilter(viewPosInfo.blurSize, BlurMaskFilter.Blur.SOLID));
-            if (viewPosInfo.highLightShape != null) {
-                switch (viewPosInfo.highLightShape) {
+        for (RHighLightViewParams rHighLightViewParams : rHighLightViewParamsList) {
+            if (rHighLightViewParams.blurShow)
+                mPaint.setMaskFilter(new BlurMaskFilter(dip2px(rHighLightViewParams.blurSize), BlurMaskFilter.Blur.SOLID));
+            else
+                mPaint.setMaskFilter(null);
+            if (rHighLightViewParams.highLightShape != null) {
+                switch (rHighLightViewParams.highLightShape) {
                     case CIRCULAR:// 圆形
-                        float width = viewPosInfo.rectF.width();
-                        float height = viewPosInfo.rectF.height();
+                        float width = rHighLightViewParams.rectF.width();
+                        float height = rHighLightViewParams.rectF.height();
                         float circle_center1;
                         float circle_center2;
                         double radius = Math.sqrt(Math.pow(width / 2, 2)
                                 + Math.pow(height / 2, 2));
                         circle_center1 = width / 2;
                         circle_center2 = height / 2;
-                        canvas.drawCircle(viewPosInfo.rectF.right - circle_center1,
-                                viewPosInfo.rectF.bottom - circle_center2,
+                        canvas.drawCircle(rHighLightViewParams.rectF.right - circle_center1,
+                                rHighLightViewParams.rectF.bottom - circle_center2,
                                 (int) radius, mPaint);
 
-                        if (viewPosInfo.borderShow)
-                            drawCircleBorder(viewPosInfo, canvas, circle_center1, circle_center2, (int) radius);
+                        if (rHighLightViewParams.borderShow)
+                            drawCircleBorder(rHighLightViewParams, canvas, circle_center1, circle_center2, (int) radius);
 
                         break;
                     case RECTANGULAR:
-                        canvas.drawRoundRect(viewPosInfo.rectF, dip2px(viewPosInfo.radius), dip2px(viewPosInfo.radius), mPaint);
-                        if (viewPosInfo.borderShow)
-                            drawRectBorder(viewPosInfo, canvas);
+                        canvas.drawRoundRect(rHighLightViewParams.rectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), mPaint);
+                        if (rHighLightViewParams.borderShow)
+                            drawRectBorder(rHighLightViewParams, canvas);
                         break;
                 }
             } else {
-                canvas.drawRoundRect(viewPosInfo.rectF, dip2px(viewPosInfo.radius), dip2px(viewPosInfo.radius), mPaint);
-                if (viewPosInfo.borderShow)
-                    drawRectBorder(viewPosInfo, canvas);
+                canvas.drawRoundRect(rHighLightViewParams.rectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), mPaint);
+                if (rHighLightViewParams.borderShow)
+                    drawRectBorder(rHighLightViewParams, canvas);
             }
 
-        }
-    }
-
-    /**
-     * 更新位置信息
-     */
-    private void updateInfo() {
-        for (RHighLightViewParams highLightBgParams : mHighLightBgInfoList) {
-            ViewGroup parent = (ViewGroup) rHighLightBgParams.anchor;
-            highLightBgParams.onPosCallback.getPos(parent.getWidth() - highLightBgParams.rectF.right,
-                    parent.getHeight() - highLightBgParams.rectF.bottom, highLightBgParams.rectF,
-                    highLightBgParams.marginInfo);
         }
     }
 
@@ -207,82 +247,18 @@ import java.util.List;
         paint.setAntiAlias(true);
         paint.setColor(rHighLightViewParams.borderColor);
         Path path = new Path();
-        path.addRect(rHighLightViewParams.rectF, Path.Direction.CW);
+        path.addRoundRect(rHighLightViewParams.rectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), Path.Direction.CW);
         canvas.drawPath(path, paint);
-    }
-
-    public int dip2px(float dpValue) {
-        final float scale = getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int width = MeasureSpec.getSize(widthMeasureSpec);
-        int height = MeasureSpec.getSize(heightMeasureSpec);
-
-        measureChildren(
-                MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),//
-                MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
-        setMeasuredDimension(width, height);
-
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right,
-                            int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-        if (changed) {
-            buildMask();
-            updateTipPos();
-        }
-
-    }
-
-    private void updateTipPos() {
-        for (int i = 0, n = getChildCount(); i < n; i++) {
-            View view = getChildAt(i);
-            RHighLightViewParams viewPosInfo = mHighLightBgInfoList.get(i);
-
-            LayoutParams lp = buildTipLayoutParams(view, viewPosInfo);
-            if (lp == null)
-                continue;
-            view.setLayoutParams(lp);
-        }
-    }
-
-    @Nullable
-    private LayoutParams buildTipLayoutParams(View view,
-                                              RHighLightViewParams viewPosInfo) {
-        LayoutParams lp = (LayoutParams) view.getLayoutParams();
-        if (lp.leftMargin == (int) viewPosInfo.marginInfo.leftMargin
-                && lp.topMargin == (int) viewPosInfo.marginInfo.topMargin
-                && lp.rightMargin == (int) viewPosInfo.marginInfo.rightMargin
-                && lp.bottomMargin == (int) viewPosInfo.marginInfo.bottomMargin)
-            return null;
-
-        lp.leftMargin = (int) viewPosInfo.marginInfo.leftMargin;
-        lp.topMargin = (int) viewPosInfo.marginInfo.topMargin;
-        lp.rightMargin = (int) viewPosInfo.marginInfo.rightMargin;
-        lp.bottomMargin = (int) viewPosInfo.marginInfo.bottomMargin;
-
-        if (lp.rightMargin != 0) {
-            lp.gravity = Gravity.END;
-        } else {
-            lp.gravity = Gravity.START;
-        }
-
-        if (lp.bottomMargin != 0) {
-            lp.gravity |= Gravity.BOTTOM;
-        } else {
-            lp.gravity |= Gravity.TOP;
-        }
-        return lp;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(mMaskBitmap, 0, 0, null);
         super.onDraw(canvas);
+    }
+
+    public int dip2px(float dpValue) {
+        final float scale = getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
 }

@@ -25,13 +25,13 @@ import java.util.List;
 class HighLightViewHelp {
 
     private List<RHighLightViewParams> highLightViewParams;
-    private RHighLightBgParams rHighLightBgParams;
+    private RHighLightPageParams rHighLightPageParams;
 
     /**
      * 构造函数
      */
-    HighLightViewHelp(RHighLightBgParams rHighLightBgParams) {
-        this.rHighLightBgParams = rHighLightBgParams;
+    HighLightViewHelp(RHighLightPageParams rHighLightPageParams) {
+        this.rHighLightPageParams = rHighLightPageParams;
         highLightViewParams = new ArrayList<>();
     }
 
@@ -42,49 +42,36 @@ class HighLightViewHelp {
      * @return {@link HighLightViewHelp} 类对象
      */
     HighLightViewHelp addHighLight(RHighLightViewParams rHighLightViewParams) {
-        ViewGroup parent = (ViewGroup) rHighLightBgParams.anchor;
+        ViewGroup parent = (ViewGroup) rHighLightPageParams.anchor;
         if (rHighLightViewParams.highView == null)
             rHighLightViewParams.highView = parent.findViewById(rHighLightViewParams.highViewId);
-        checkParams(rHighLightViewParams);
-
-        RectF rect = new RectF(ViewUtils.getLocationInView(parent, rHighLightViewParams.highView));
-        HighLightMarginInfo marginInfo = new HighLightMarginInfo();
-        rHighLightViewParams.onPosCallback.getPos(parent.getWidth() - rect.right, parent.getHeight() - rect.bottom, rect, marginInfo);
-        rHighLightViewParams.setMarginInfo(marginInfo);
-        rHighLightViewParams.setRectF(rect);
-        highLightViewParams.add(rHighLightViewParams);
-        return this;
-    }
-
-    private void checkParams(RHighLightViewParams rHighLightViewParams) {
         if (rHighLightViewParams.highView == null)
             throw new IllegalArgumentException("Couldn't find the highlighted view." +
                     "Call the HighLightBgParams#setHighView(View)/ HighLightBgParams#setHighView(int) method.");
-
-        if (rHighLightViewParams.onPosCallback == null) {
-            throw new IllegalArgumentException("Params onPosCallback is null!");
-        }
-
-        if (rHighLightViewParams.decorLayoutId == -1) {
-            throw new IllegalArgumentException("Params decorLayoutId == -1 !");
-        }
+        RectF rect = new RectF(ViewUtils.getLocationInView(parent, rHighLightViewParams.highView));
+        HighLightMarginInfo marginInfo = new HighLightMarginInfo();
+        rHighLightViewParams.onPosCallback.decorPosInfo(parent.getWidth() - rect.right, parent.getHeight() - rect.bottom, rect, marginInfo);
+        rHighLightViewParams.setRectF(rect);
+        rHighLightViewParams.setMarginInfo(marginInfo);
+        highLightViewParams.add(rHighLightViewParams);
+        return this;
     }
 
     /**
      * 显示含有高亮区域的页面
      */
     void show() {
-        final HighLightView highLightView = new HighLightView(rHighLightBgParams, highLightViewParams);
-        if (rHighLightBgParams.anchor instanceof FrameLayout) {
+        final HighLightView highLightView = new HighLightView(rHighLightPageParams, highLightViewParams);
+        if (rHighLightPageParams.anchor instanceof FrameLayout) {
             ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            ((ViewGroup) rHighLightBgParams.anchor).addView(highLightView, ((ViewGroup) rHighLightBgParams.anchor).getChildCount(), lp);
+            ((ViewGroup) rHighLightPageParams.anchor).addView(highLightView, ((ViewGroup) rHighLightPageParams.anchor).getChildCount(), lp);
         } else {
-            FrameLayout frameLayout = new FrameLayout(rHighLightBgParams.activity);
-            ViewGroup parent = (ViewGroup) rHighLightBgParams.anchor.getParent();
-            parent.removeView(rHighLightBgParams.anchor);
-            parent.addView(frameLayout, rHighLightBgParams.anchor.getLayoutParams());
+            FrameLayout frameLayout = new FrameLayout(rHighLightPageParams.activity);
+            ViewGroup parent = (ViewGroup) rHighLightPageParams.anchor.getParent();
+            parent.removeView(rHighLightPageParams.anchor);
+            parent.addView(frameLayout, rHighLightPageParams.anchor.getLayoutParams());
             ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            frameLayout.addView(rHighLightBgParams.anchor, lp);
+            frameLayout.addView(rHighLightPageParams.anchor, lp);
 
             frameLayout.addView(highLightView);
         }
@@ -94,8 +81,8 @@ class HighLightViewHelp {
             @Override
             public void onClick(View v) {
                 remove(highLightView);
-                if (rHighLightBgParams.onClickCallback != null) {
-                    rHighLightBgParams.onClickCallback.onClick();
+                if (rHighLightPageParams.onClickCallback != null) {
+                    rHighLightPageParams.onClickCallback.onClick();
                 }
             }
         });

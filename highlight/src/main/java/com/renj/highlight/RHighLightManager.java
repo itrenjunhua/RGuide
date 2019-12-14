@@ -27,7 +27,6 @@ public class RHighLightManager {
      * 构造函数
      */
     private RHighLightManager() {
-
     }
 
     public static RHighLightManager getInstance() {
@@ -37,17 +36,32 @@ public class RHighLightManager {
     /**
      * 增加一个高亮的布局。调用 {@link #show()} 方法开始显示
      *
-     * @param rHighLightBgParams
-     * @param autoNextView       有多个高亮View时，点击消失之后是否自动进入下一个高亮View
+     * @param rHighLightPageParams {@link RHighLightPageParams} 对象
+     * @param rHighLightViewParams {@link RHighLightViewParams} 对象
      * @return {@link RHighLightManager} 类对象
+     * @see #addHighLightView(RHighLightPageParams, RHighLightViewParams, boolean)
      */
-    public RHighLightManager addHighLightView(@NonNull RHighLightBgParams rHighLightBgParams,
+    public RHighLightManager addHighLightView(@NonNull RHighLightPageParams rHighLightPageParams,
+                                              @NonNull RHighLightViewParams rHighLightViewParams) {
+        return addHighLightView(rHighLightPageParams, rHighLightViewParams, true);
+    }
+
+    /**
+     * 增加一个高亮的布局。调用 {@link #show()} 方法开始显示
+     *
+     * @param rHighLightPageParams {@link RHighLightPageParams} 对象
+     * @param rHighLightViewParams {@link RHighLightViewParams} 对象
+     * @param autoNextView         有多个高亮View时，点击消失之后是否自动进入下一个高亮View
+     * @return {@link RHighLightManager} 类对象
+     * @see #addHighLightView(RHighLightPageParams, RHighLightViewParams)
+     */
+    public RHighLightManager addHighLightView(@NonNull RHighLightPageParams rHighLightPageParams,
                                               @NonNull RHighLightViewParams rHighLightViewParams,
                                               final boolean autoNextView) {
-        if (rHighLightBgParams == null) {
-            throw new IllegalArgumentException("Params rHighLightBgParams is null!");
-        }
-        HighLightViewHelp highLightViewHelp = new HighLightViewHelp(rHighLightBgParams);
+        checkHighLightPageParams(rHighLightPageParams);
+        checkHighLightViewParams(rHighLightViewParams);
+
+        HighLightViewHelp highLightViewHelp = new HighLightViewHelp(rHighLightPageParams);
         highLightViewHelp.addHighLight(rHighLightViewParams);
         highLightViewHelp.setOnRemoveViewListener(new HighLightViewHelp.OnRemoveViewListener() {
             @Override
@@ -64,19 +78,38 @@ public class RHighLightManager {
     /**
      * 增加一个高亮的布局，一个界面需要有多个地方高亮时调用。调用 {@link #show()} 方法开始显示
      *
-     * @param rHighLightBgParamsList
+     * @param rHighLightPageParams   {@link RHighLightPageParams} 对象
+     * @param rHighLightBgParamsList {@link RHighLightViewParams} 对象集合
+     * @return {@link RHighLightManager} 类对象
+     * @see #addHighLightView(RHighLightPageParams, List, boolean)
+     */
+    public RHighLightManager addHighLightView(@NonNull RHighLightPageParams rHighLightPageParams,
+                                              @NonNull List<RHighLightViewParams> rHighLightBgParamsList) {
+        return addHighLightView(rHighLightPageParams, rHighLightBgParamsList, true);
+    }
+
+    /**
+     * 增加一个高亮的布局，一个界面需要有多个地方高亮时调用。调用 {@link #show()} 方法开始显示
+     *
+     * @param rHighLightPageParams   {@link RHighLightPageParams} 对象
+     * @param rHighLightBgParamsList {@link RHighLightViewParams} 对象集合
      * @param autoNextView           有多个高亮View时，点击消失之后是否自动进入下一个高亮View
      * @return {@link RHighLightManager} 类对象
+     * @see #addHighLightView(RHighLightPageParams, List)
      */
-    public RHighLightManager addHighLightView(@NonNull RHighLightBgParams rHighLightBgParams,
-                                              final @NonNull List<RHighLightViewParams> rHighLightBgParamsList, final boolean autoNextView) {
+    public RHighLightManager addHighLightView(@NonNull RHighLightPageParams rHighLightPageParams,
+                                              final @NonNull List<RHighLightViewParams> rHighLightBgParamsList,
+                                              final boolean autoNextView) {
+        checkHighLightPageParams(rHighLightPageParams);
+
         if (rHighLightBgParamsList == null) {
-            throw new IllegalArgumentException("Params rHighLightBgParams is null!");
+            throw new IllegalArgumentException("Params rHighLightBgParamsList is null!");
         }
         if (rHighLightBgParamsList.isEmpty()) return this;
 
-        HighLightViewHelp highLightViewHelp = new HighLightViewHelp(rHighLightBgParams);
+        HighLightViewHelp highLightViewHelp = new HighLightViewHelp(rHighLightPageParams);
         for (RHighLightViewParams rHighLightViewParams : rHighLightBgParamsList) {
+            checkHighLightViewParams(rHighLightViewParams);
             highLightViewHelp.addHighLight(rHighLightViewParams);
         }
         highLightViewHelp.setOnRemoveViewListener(new HighLightViewHelp.OnRemoveViewListener() {
@@ -105,6 +138,26 @@ public class RHighLightManager {
      */
     public void show() {
         showNext();
+    }
+
+    private void checkHighLightPageParams(RHighLightPageParams rHighLightPageParams) {
+        if (rHighLightPageParams == null) {
+            throw new IllegalArgumentException("addHighLightView() params rHighLightPageParams is null!");
+        }
+    }
+
+    private void checkHighLightViewParams(RHighLightViewParams rHighLightViewParams) {
+        if (rHighLightViewParams == null) {
+            throw new IllegalArgumentException("addHighLightView() params rHighLightViewParams is null!");
+        }
+        if (rHighLightViewParams.onPosCallback == null) {
+            throw new IllegalArgumentException("Couldn't find the OnPosCallback." +
+                    "Call the RHighLightViewParams#setOnPosCallback(OnPosCallback) method.");
+        }
+
+        if (rHighLightViewParams.decorLayoutId == -1) {
+            throw new IllegalArgumentException("Params decorLayoutId Exception !");
+        }
     }
 
     /**
