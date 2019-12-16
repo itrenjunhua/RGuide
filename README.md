@@ -11,7 +11,7 @@ Android 应用新手操作引导实现
 6. 覆盖整个页面的引导支持跳过后面引导或者移除当前引导后重新查看后面引导
 
 ## 效果图
-![操作引导效果图](https://raw.githubusercontent.com/itrenjunhua/MyHightLight/master/heightlight.gif)
+![高亮部分控件形式](https://raw.githubusercontent.com/itrenjunhua/MyHightLight/master/images/highlight.gif)        ![高亮部分控件形式](https://raw.githubusercontent.com/itrenjunhua/MyHightLight/master/images/coverview.gif)
 
 ## 使用/参数说明
 
@@ -20,13 +20,13 @@ Android 应用新手操作引导实现
 	// 创建高亮页面参数参数
 	RHighLightPageParams highLightPageParams = RHighLightPageParams.create(@NonNull Activity activity) 
             .setAnchor(findViewById(R.id.id_container)) // 绑定根布局，在Activity中可不写;
-			.setMaskColor(int maskColor) // 设置背景颜色
-			.setOnDecorClickListener(OnDecorClickListener onDecorClickListener); // 设置装饰布局点击回调
+            .setMaskColor(int maskColor) // 设置背景颜色
+            .setOnDecorClickListener(OnDecorClickListener onDecorClickListener); // 设置装饰布局点击回调
 			
 	// 创建高亮View相关参数
     RHighLightViewParams rHighLightViewParams = RHighLightViewParams.create()
             .setHighView(View highView) // 需要高亮的View。和方法 {@link #setHighView(int)} 二选一即可，若两个都设置了，该方法优先级更高
-			.setHighView(View highView) // 需要高亮的ViewId。和方法 {@link #setHighView(View)} 二选一即可，两个都设置了，该方法优先级更低
+            .setHighView(View highView) // 需要高亮的ViewId。和方法 {@link #setHighView(View)} 二选一即可，两个都设置了，该方法优先级更低
             .setDecorLayoutId(@LayoutRes int decorLayoutId) // 设置高亮背景装饰布局
             .setHighLightShape(HighLightShape highLightShape) // 设置高亮形状，默认 矩形
             .setRadius(int radius) // 设置圆角度数。只有当形状为 {@link HighLightShape#RECTANGULAR} 时生效，单位dp
