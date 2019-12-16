@@ -86,6 +86,10 @@ public class RHighLightViewParams {
      * 是否拦截点击事件
      */
     //boolean intercept = true;
+    /**
+     * 装饰布局初始化完成回调
+     */
+    OnDecorViewInflateFinish onDecorViewInflateFinish;
 
     /**
      * 高亮边距信息设置接口
@@ -268,6 +272,17 @@ public class RHighLightViewParams {
 //    }
 
     /**
+     * 设置装饰布局初始化完成回调
+     *
+     * @param onDecorViewInflateFinish
+     * @return
+     */
+    public RHighLightViewParams setOnDecorViewInflateFinish(OnDecorViewInflateFinish onDecorViewInflateFinish) {
+        this.onDecorViewInflateFinish = onDecorViewInflateFinish;
+        return this;
+    }
+
+    /**
      * 修正高亮控件和它的装饰控件相对位置
      *
      * @param onPosCallback
@@ -302,8 +317,21 @@ public class RHighLightViewParams {
         cloneRHighLightViewParams.intervals = this.intervals;
         cloneRHighLightViewParams.blurShow = this.blurShow;
         cloneRHighLightViewParams.blurSize = this.blurSize;
+        cloneRHighLightViewParams.onDecorViewInflateFinish = this.onDecorViewInflateFinish;
         cloneRHighLightViewParams.onPosCallback = this.onPosCallback;
         //cloneHighLightViewParams.intercept = this.intercept;
         return cloneRHighLightViewParams;
+    }
+
+    /**
+     * 装饰布局初始化完成回调
+     */
+    public interface OnDecorViewInflateFinish {
+        /**
+         * 装饰布局初始化完成回调
+         *
+         * @param decorLayoutView 装饰布局根控件
+         */
+        void onInflateFinish(View decorLayoutView);
     }
 }

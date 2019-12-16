@@ -57,8 +57,8 @@ public class CoverViewHelp {
         final RCoverViewParams rCoverViewParams = viewArrayList.get(0);
         final FrameLayout rootView = (FrameLayout) getRootView(rCoverViewParams.activity);
         final View coverView = View.inflate(rCoverViewParams.activity, rCoverViewParams.coverLayoutId, null);
-        if (rCoverViewParams.onCoverViewListener != null) {
-            rCoverViewParams.onCoverViewListener.onCoverView(rCoverViewParams, coverView);
+        if (rCoverViewParams.onCoverViewInflateFinish != null) {
+            rCoverViewParams.onCoverViewInflateFinish.onInflateFinish(rCoverViewParams, coverView);
         }
         coverView.setOnClickListener(new View.OnClickListener() {
             @Override

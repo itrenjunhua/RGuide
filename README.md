@@ -37,6 +37,7 @@ Android 应用新手操作引导实现
             .setIntervals(@NonNull float[] intervals) // 设置虚线边框的样式，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}并且边框类型为 {@link BorderLineType#DASH_LINE}，该方法才能生效
             .setBlurShow(boolean blurShow) // 设置是否需要模糊化边框，默认不显示
             .setBlurWidth(int blurSize) // 设置模糊边界的宽度，需要调用 {@link #setBlurShow(boolean)} 方法设置为 {@code true}，该方法才能生效，单位dp
+            .setOnDecorViewInflateFinish((decorLayoutView) -> {}) // 设置装饰布局初始化完成回调
             .setOnPosCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {}); // 修正高亮控件和它的装饰控件相对位置
 
 	// 添加和显示高亮View
@@ -52,7 +53,7 @@ Android 应用新手操作引导实现
 	// 创建覆盖页面类型参数
 	RCoverViewParams rCoverViewParams = RCoverViewParams.create(this)
 	        .setCoverLayoutId(@LayoutRes int coverLayoutId) // 设置覆盖布局
-	        .setOnCoverViewListener((rCoverViewParams, decorLayoutView) -> {}) // 遮罩层布局初始化完成回调
+	        .setOnCoverViewInflateFinish((rCoverViewParams, coverView) -> {}) // 遮罩层布局初始化完成回调
 	        .setOnDecorClickListener(() ->{}); // 设置遮罩层点击回调
 
 	// 添加和显示遮罩层

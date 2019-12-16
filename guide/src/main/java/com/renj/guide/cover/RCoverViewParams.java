@@ -31,7 +31,7 @@ public class RCoverViewParams {
     /**
      * 遮罩层布局初始化完成回调
      */
-    OnCoverViewListener onCoverViewListener;
+    OnCoverViewInflateFinish onCoverViewInflateFinish;
     /**
      * 遮罩层布局点击回调
      */
@@ -70,11 +70,11 @@ public class RCoverViewParams {
     /**
      * 遮罩层布局初始化完成回调
      *
-     * @param onCoverViewListener
+     * @param onCoverViewInflateFinish
      * @return
      */
-    public RCoverViewParams setOnCoverViewListener(OnCoverViewListener onCoverViewListener) {
-        this.onCoverViewListener = onCoverViewListener;
+    public RCoverViewParams setOnCoverViewInflateFinish(OnCoverViewInflateFinish onCoverViewInflateFinish) {
+        this.onCoverViewInflateFinish = onCoverViewInflateFinish;
         return this;
     }
 
@@ -99,7 +99,7 @@ public class RCoverViewParams {
     public RCoverViewParams cloneParams() {
         RCoverViewParams cloneCoverViewParams = RCoverViewParams.create(this.activity);
         cloneCoverViewParams.coverLayoutId = this.coverLayoutId;
-        cloneCoverViewParams.onCoverViewListener = this.onCoverViewListener;
+        cloneCoverViewParams.onCoverViewInflateFinish = this.onCoverViewInflateFinish;
         cloneCoverViewParams.onDecorClickListener = this.onDecorClickListener;
         return cloneCoverViewParams;
     }
@@ -107,13 +107,13 @@ public class RCoverViewParams {
     /**
      * 遮罩层布局初始化完成回调
      */
-    public interface OnCoverViewListener {
+    public interface OnCoverViewInflateFinish {
         /**
          * 遮罩层布局初始化完成回调
          *
          * @param rCoverViewParams 遮罩View信息
-         * @param decorLayoutView  遮罩View布局
+         * @param coverView        遮罩View布局
          */
-        void onCoverView(RCoverViewParams rCoverViewParams, View decorLayoutView);
+        void onInflateFinish(RCoverViewParams rCoverViewParams, View coverView);
     }
 }

@@ -108,6 +108,8 @@ import java.util.List;
             } else {
                 lp.gravity |= Gravity.TOP;
             }
+            if (rHighLightViewParams.onDecorViewInflateFinish != null)
+                rHighLightViewParams.onDecorViewInflateFinish.onInflateFinish(decorLayoutView);
             addView(decorLayoutView, lp);
         }
     }
