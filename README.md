@@ -11,7 +11,7 @@ Android 应用新手操作引导实现
 6. 覆盖整个页面的引导支持跳过后面引导或者移除当前引导后重新查看后面引导
 
 ## 效果图
-![高亮部分控件形式](https://raw.githubusercontent.com/itrenjunhua/MyHightLight/master/images/highlight.gif)        ![高亮部分控件形式](https://raw.githubusercontent.com/itrenjunhua/MyHightLight/master/images/coverview.gif)
+![高亮部分控件形式](https://raw.githubusercontent.com/itrenjunhua/RGuide/master/images/highlight.gif)        ![高亮部分控件形式](https://raw.githubusercontent.com/itrenjunhua/RGuide/master/images/coverview.gif)
 
 ## 使用/参数说明
 
