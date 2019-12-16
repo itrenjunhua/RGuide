@@ -8,17 +8,28 @@
         android:id="@+id/iv_hight"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@mipmap/shopping_cart_mall" />
 
     <Button
-        android:id="@+id/bt_go_three"
-        android:layout_width="wrap_content"
+        android:id="@+id/bt_show"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="进入下一页" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:text="重新显示" />
+
+    <Button
+        android:id="@+id/bt_back"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bt_show"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="返回上一页" />
+
 
 </RelativeLayout>

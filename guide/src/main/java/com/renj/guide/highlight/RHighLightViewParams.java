@@ -268,7 +268,7 @@ public class RHighLightViewParams {
 //    }
 
     /**
-     * 设置高亮控件和它的装饰控件相对位置
+     * 修正高亮控件和它的装饰控件相对位置
      *
      * @param onPosCallback
      * @return

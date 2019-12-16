@@ -1,15 +1,11 @@
 package com.renj.sample;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.RectF;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.renj.guide.RGuideViewManager;
-import com.renj.guide.callback.OnPosCallback;
-import com.renj.guide.highlight.HighLightMarginInfo;
 import com.renj.guide.highlight.RHighLightPageParams;
 import com.renj.guide.highlight.RHighLightViewParams;
 import com.renj.guide.highlight.type.HighLightShape;
@@ -28,7 +24,7 @@ import com.renj.guide.highlight.type.HighLightShape;
  * <p/>
  * ======================================================================
  */
-public class SecondActivity extends Activity {
+public class SecondActivity extends AppCompatActivity {
 
     private View view;
 
@@ -36,7 +32,6 @@ public class SecondActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-
 
         view = findViewById(R.id.iv_hight);
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -47,18 +42,12 @@ public class SecondActivity extends Activity {
             }
         });
 
-        findViewById(R.id.bt_go_three).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SecondActivity.this, ThreeActivity.class);
-                startActivity(intent);
-            }
-        });
+        findViewById(R.id.bt_show).setOnClickListener(v -> addHighView());
+        findViewById(R.id.bt_back).setOnClickListener(v -> finish());
     }
 
     private void addHighView() {
         RHighLightPageParams rHighLightPageParams = RHighLightPageParams.create(this);
-
         RHighLightViewParams rHighLightViewParams = RHighLightViewParams.create()
                 .setHighView(R.id.id_btn_important)
                 .setDecorLayoutId(R.layout.info_up)
@@ -67,12 +56,9 @@ public class SecondActivity extends Activity {
                 .setHighLightShape(HighLightShape.CIRCULAR)
                 .setHighView(R.id.iv_hight)
                 .setDecorLayoutId(R.layout.layout_hight)
-                .setOnPosCallback(new OnPosCallback() {
-                    @Override
-                    public void decorPosInfo(float rightMargin, float bottomMargin, RectF rectF, HighLightMarginInfo marginInfo) {
-                        marginInfo.rightMargin = rightMargin;
-                        marginInfo.bottomMargin = bottomMargin + view.getHeight();
-                    }
+                .setOnPosCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {
+                    marginInfo.rightMargin = rightMargin;
+                    marginInfo.bottomMargin = bottomMargin + view.getHeight();
                 });
         RGuideViewManager.getInstance().addHighLightView(rHighLightPageParams, rHighLightViewParams).showHighLightView();
     }

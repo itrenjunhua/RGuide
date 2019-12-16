@@ -3,7 +3,6 @@
     package="com.renj.sample">
 
     <application
-        android:name="com.renj.sample.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,8 +16,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.renj.sample.SecondActivity" />
-        <activity android:name="com.renj.sample.ThreeActivity" />
+        <activity
+            android:name="com.renj.sample.FirstActivity"
+            android:label="高亮类型" />
+        <activity
+            android:name="com.renj.sample.SecondActivity"
+            android:label="高亮类型" />
+        <activity
+            android:name="com.renj.sample.ThreeActivity"
+            android:label="遮罩类型" />
     </application>
 
 </manifest>
