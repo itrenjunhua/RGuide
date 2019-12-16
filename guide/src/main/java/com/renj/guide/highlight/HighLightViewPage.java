@@ -84,8 +84,8 @@ class HighLightViewPage {
             @Override
             public void onClick(View v) {
                 remove(highLightView);
-                if (rHighLightPageParams.onClickCallback != null) {
-                    rHighLightPageParams.onClickCallback.onClick();
+                if (rHighLightPageParams.onDecorClickListener != null) {
+                    rHighLightPageParams.onDecorClickListener.onClick();
                 }
             }
         });

@@ -107,7 +107,7 @@ Android 应用新手操作引导实现
     HighLightBuilder.newInstance(this)
                     .setOnClickCallback(new OnClickCallback() {
                         @Override
-                        public void onClick() {
+                        public void onCoverView() {
                             Toast.makeText(ThreeActivity.this, "覆盖层被点击了", Toast.LENGTH_SHORT).show();
                         }
                     })

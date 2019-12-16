@@ -3,9 +3,10 @@ package com.renj.guide.cover;
 import android.app.Activity;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.view.View;
 
+import com.renj.guide.callback.OnDecorClickListener;
 import com.renj.guide.highlight.RHighLightPageParams;
-import com.renj.guide.callback.OnClickCallback;
 
 /**
  * ======================================================================
@@ -28,9 +29,13 @@ public class RCoverViewParams {
     @LayoutRes
     int coverLayoutId;
     /**
-     * 点击回调
+     * 遮罩层布局初始化完成回调
      */
-    OnClickCallback onClickCallback;
+    OnCoverViewListener onCoverViewListener;
+    /**
+     * 遮罩层布局点击回调
+     */
+    OnDecorClickListener onDecorClickListener;
 
     private RCoverViewParams(Activity activity) {
         this.activity = activity;
@@ -63,13 +68,24 @@ public class RCoverViewParams {
     }
 
     /**
-     * 设置点击回调
+     * 遮罩层布局初始化完成回调
      *
-     * @param onClickCallback
+     * @param onCoverViewListener
      * @return
      */
-    public RCoverViewParams setOnClickCallback(OnClickCallback onClickCallback) {
-        this.onClickCallback = onClickCallback;
+    public RCoverViewParams setOnCoverViewListener(OnCoverViewListener onCoverViewListener) {
+        this.onCoverViewListener = onCoverViewListener;
+        return this;
+    }
+
+    /**
+     * 设置遮罩层点击回调
+     *
+     * @param onDecorClickListener
+     * @return
+     */
+    public RCoverViewParams setOnDecorClickListener(OnDecorClickListener onDecorClickListener) {
+        this.onDecorClickListener = onDecorClickListener;
         return this;
     }
 
@@ -81,9 +97,23 @@ public class RCoverViewParams {
      * @return
      */
     public RCoverViewParams cloneParams() {
-        RCoverViewParams rCoverViewParams = RCoverViewParams.create(this.activity);
-        rCoverViewParams.onClickCallback = this.onClickCallback;
-        rCoverViewParams.coverLayoutId = this.coverLayoutId;
-        return rCoverViewParams;
+        RCoverViewParams cloneCoverViewParams = RCoverViewParams.create(this.activity);
+        cloneCoverViewParams.coverLayoutId = this.coverLayoutId;
+        cloneCoverViewParams.onCoverViewListener = this.onCoverViewListener;
+        cloneCoverViewParams.onDecorClickListener = this.onDecorClickListener;
+        return cloneCoverViewParams;
+    }
+
+    /**
+     * 遮罩层布局初始化完成回调
+     */
+    public interface OnCoverViewListener {
+        /**
+         * 遮罩层布局初始化完成回调
+         *
+         * @param rCoverViewParams 遮罩View信息
+         * @param decorLayoutView  遮罩View布局
+         */
+        void onCoverView(RCoverViewParams rCoverViewParams, View decorLayoutView);
     }
 }

@@ -1,6 +1,7 @@
 package com.renj.guide;
 
 import android.support.annotation.NonNull;
+import android.view.View;
 
 import com.renj.guide.cover.CoverViewHelp;
 import com.renj.guide.cover.RCoverViewParams;
@@ -91,5 +92,51 @@ public class RGuideViewManager {
      */
     public void showCoverView() {
         coverViewHelp.show();
+    }
+
+    /**
+     * 移除指定的遮罩层，默认清除其他的遮罩层，{@link #removeCoverView(RCoverViewParams, View, boolean)}
+     *
+     * @param rCoverViewParams 需要移除的 {@link RCoverViewParams} 信息
+     * @param coverView        需要移除的遮罩层View
+     * @see #removeCoverView(RCoverViewParams, View, boolean)
+     * @see #skipAllCoverView()
+     */
+    public void removeCoverView(@NonNull RCoverViewParams rCoverViewParams, @NonNull View coverView) {
+        removeCoverView(rCoverViewParams, coverView, true);
+    }
+
+    /**
+     * 移除指定的遮罩层，并设置是否需要移除其他的遮罩层。<br/>
+     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     * 如果移除，那么该页面就不会在显示遮罩层了，除非再次添加和显示<br/>
+     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     * 如果不移除并且后面还有，那么可以继续调用 {@link #showCoverView()} 方法显示。<br/><br/>
+     * <b>特别注意：当当前页面不在需要显示并且后面还有未显示完的遮罩层时，必须清除其他的遮罩层，<br/>
+     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     * 方式1：该方法的参数{@code clearOtherCoverView} 值传 {@code true}；<br/>
+     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     * 方式2：手动调用 {@link #skipAllCoverView()} 方法跳过当前页面后面所有的遮罩层。<br/>
+     * 如果不试用上述的方法清除遮罩层，那么后面的遮罩层使用(包括当前页或者其他页面)将会出现问题</b>
+     *
+     * @param rCoverViewParams    需要移除的 {@link RCoverViewParams} 信息
+     * @param coverView           需要移除的遮罩层View
+     * @param clearOtherCoverView 是否清除其他的遮罩层
+     * @see #removeCoverView(RCoverViewParams, View)
+     * @see #skipAllCoverView()
+     */
+    public void removeCoverView(@NonNull RCoverViewParams rCoverViewParams, @NonNull View coverView, boolean clearOtherCoverView) {
+        coverViewHelp.removeCoverView(rCoverViewParams, coverView);
+        if (clearOtherCoverView) skipAllCoverView();
+    }
+
+    /**
+     * 跳过后面所有的遮罩层，移除后面的遮罩层
+     *
+     * @see #removeCoverView(RCoverViewParams, View)
+     * @see #removeCoverView(RCoverViewParams, View, boolean)
+     */
+    public void skipAllCoverView() {
+        coverViewHelp.skipAll();
     }
 }

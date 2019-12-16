@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.renj.guide.callback.OnClickCallback;
+import com.renj.guide.callback.OnDecorClickListener;
 
 /**
  * ======================================================================
@@ -30,9 +30,9 @@ public class RHighLightPageParams {
      */
     int maskColor = 0x99000000;
     /**
-     * 点击回调
+     * 装饰布局点击回调
      */
-    OnClickCallback onClickCallback;
+    OnDecorClickListener onDecorClickListener;
 
     private RHighLightPageParams(Activity activity) {
         this.activity = activity;
@@ -71,13 +71,13 @@ public class RHighLightPageParams {
     }
 
     /**
-     * 设置点击回调
+     * 设置装饰布局点击回调
      *
-     * @param onClickCallback
+     * @param onDecorClickListener
      * @return
      */
-    public RHighLightPageParams setOnClickCallback(OnClickCallback onClickCallback) {
-        this.onClickCallback = onClickCallback;
+    public RHighLightPageParams setOnDecorClickListener(OnDecorClickListener onDecorClickListener) {
+        this.onDecorClickListener = onDecorClickListener;
         return this;
     }
 
@@ -92,7 +92,7 @@ public class RHighLightPageParams {
         RHighLightPageParams cloneRHighLightPageParams = RHighLightPageParams.create(this.activity);
         cloneRHighLightPageParams.anchor = this.anchor;
         cloneRHighLightPageParams.maskColor = this.maskColor;
-        cloneRHighLightPageParams.onClickCallback = this.onClickCallback;
+        cloneRHighLightPageParams.onDecorClickListener = this.onDecorClickListener;
         return cloneRHighLightPageParams;
     }
 }

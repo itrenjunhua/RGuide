@@ -57,18 +57,40 @@ public class CoverViewHelp {
         final RCoverViewParams rCoverViewParams = viewArrayList.get(0);
         final FrameLayout rootView = (FrameLayout) getRootView(rCoverViewParams.activity);
         final View coverView = View.inflate(rCoverViewParams.activity, rCoverViewParams.coverLayoutId, null);
+        if (rCoverViewParams.onCoverViewListener != null) {
+            rCoverViewParams.onCoverViewListener.onCoverView(rCoverViewParams, coverView);
+        }
         coverView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 viewArrayList.remove(rCoverViewParams);
                 rootView.removeView(coverView);
                 showNext();
-                if (rCoverViewParams.onClickCallback != null) {
-                    rCoverViewParams.onClickCallback.onClick();
+                if (rCoverViewParams.onDecorClickListener != null) {
+                    rCoverViewParams.onDecorClickListener.onClick();
                 }
             }
         });
         rootView.addView(coverView);
+    }
+
+    /**
+     * 移除指定的遮罩层
+     *
+     * @param rCoverViewParams
+     * @param coverView
+     */
+    public void removeCoverView(@NonNull RCoverViewParams rCoverViewParams, @NonNull View coverView) {
+        FrameLayout rootView = (FrameLayout) getRootView(rCoverViewParams.activity);
+        viewArrayList.remove(rCoverViewParams);
+        rootView.removeView(coverView);
+    }
+
+    /**
+     * 跳过后面所有的遮罩层
+     */
+    public void skipAll() {
+        viewArrayList.clear();
     }
 
     /**
