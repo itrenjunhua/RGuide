@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RHighLight.iml" filepath="$PROJECT_DIR$/RHighLight.iml" />
-      <module fileurl="file://$PROJECT_DIR$/highlight/highlight.iml" filepath="$PROJECT_DIR$/highlight/highlight.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RGuide.iml" filepath="$PROJECT_DIR$/RGuide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/guide/guide.iml" filepath="$PROJECT_DIR$/guide/guide.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
     </modules>
   </component>

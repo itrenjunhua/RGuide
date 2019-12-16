@@ -1,1 +1,1 @@
-include ':highlight', ':sample'
+include ':guide', ':sample'

@@ -1,4 +1,4 @@
-package com.renj.highlight.type;
+package com.renj.guide.highlight.type;
 
 /**
  * ======================================================================

@@ -1,8 +1,9 @@
-package com.renj.highlight.callback;
+package com.renj.guide.callback;
 
 import android.graphics.RectF;
 
-import com.renj.highlight.HighLightMarginInfo;
+import com.renj.guide.highlight.HighLightMarginInfo;
+import com.renj.guide.highlight.RHighLightPageParams;
 
 /**
  * ======================================================================
@@ -25,7 +26,7 @@ public interface OnPosCallback {
      *
      * @param rightMargin  高亮控件右边距
      * @param bottomMargin 高亮控件下边距
-     * @param rectF        高亮控件在{@link com.renj.highlight.RHighLightPageParams#anchor} 中的 {@link RectF} 值
+     * @param rectF        高亮控件在{@link RHighLightPageParams#anchor} 中的 {@link RectF} 值
      * @param marginInfo   {@link HighLightMarginInfo} 对象信息
      */
     void decorPosInfo(float rightMargin, float bottomMargin, RectF rectF, HighLightMarginInfo marginInfo);

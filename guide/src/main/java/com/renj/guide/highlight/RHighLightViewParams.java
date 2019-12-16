@@ -1,4 +1,4 @@
-package com.renj.highlight;
+package com.renj.guide.highlight;
 
 import android.graphics.RectF;
 import android.support.annotation.IdRes;
@@ -6,9 +6,9 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.renj.highlight.callback.OnPosCallback;
-import com.renj.highlight.type.BorderLineType;
-import com.renj.highlight.type.HighLightShape;
+import com.renj.guide.callback.OnPosCallback;
+import com.renj.guide.highlight.type.BorderLineType;
+import com.renj.guide.highlight.type.HighLightShape;
 
 /**
  * ======================================================================
@@ -239,7 +239,7 @@ public class RHighLightViewParams {
      * 设置是否需要模糊化边框，默认不显示
      *
      * @param blurShow 是否显示模糊边框 true：显示 false：不显示
-     * @return {@link RHighLightManager} 类对象
+     * @return {@link HighLightViewHelp} 类对象
      */
     public RHighLightViewParams setBlurShow(boolean blurShow) {
         this.blurShow = blurShow;

@@ -7,12 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.renj.highlight.HighLightMarginInfo;
-import com.renj.highlight.RHighLightManager;
-import com.renj.highlight.RHighLightPageParams;
-import com.renj.highlight.RHighLightViewParams;
-import com.renj.highlight.callback.OnPosCallback;
-import com.renj.highlight.type.HighLightShape;
+import com.renj.guide.RGuideViewManager;
+import com.renj.guide.callback.OnPosCallback;
+import com.renj.guide.highlight.HighLightMarginInfo;
+import com.renj.guide.highlight.RHighLightPageParams;
+import com.renj.guide.highlight.RHighLightViewParams;
+import com.renj.guide.highlight.type.HighLightShape;
 
 
 /**
@@ -74,6 +74,6 @@ public class SecondActivity extends Activity {
                         marginInfo.bottomMargin = bottomMargin + view.getHeight();
                     }
                 });
-        RHighLightManager.getInstance().addHighLightView(rHighLightPageParams, rHighLightViewParams, true).show();
+        RGuideViewManager.getInstance().addHighLightView(rHighLightPageParams, rHighLightViewParams).showHighLightView();
     }
 }

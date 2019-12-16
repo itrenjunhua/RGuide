@@ -1,4 +1,4 @@
-package com.renj.highlight;
+package com.renj.guide.highlight;
 
 import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
@@ -16,7 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.renj.highlight.type.BorderLineType;
+import com.renj.guide.highlight.type.BorderLineType;
 
 import java.util.List;
 

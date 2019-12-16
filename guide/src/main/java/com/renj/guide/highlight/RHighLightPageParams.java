@@ -1,10 +1,10 @@
-package com.renj.highlight;
+package com.renj.guide.highlight;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.renj.highlight.callback.OnClickCallback;
+import com.renj.guide.callback.OnClickCallback;
 
 /**
  * ======================================================================
@@ -30,7 +30,7 @@ public class RHighLightPageParams {
      */
     int maskColor = 0x99000000;
     /**
-     * 拦截事件时点击回调
+     * 点击回调
      */
     OnClickCallback onClickCallback;
 

@@ -1,25 +1,21 @@
-package com.renj.highlight.type;
+package com.renj.guide.callback;
 
 /**
  * ======================================================================
  * <p>
  * 作者：Renj
  * <p>
- * 创建时间：2019-11-21   17:40
+ * 创建时间：2019-11-21   17:35
  * <p>
- * 描述：表示需要高亮的形状，圆形、矩形
+ * 描述：点击回调接口
  * <p>
  * 修订历史：
  * <p>
  * ======================================================================
  */
-public enum HighLightShape {
+public interface OnClickCallback {
     /**
-     * 圆形
+     * 点击回调方法，要想点击有效果，必须设置intercept为TRUE
      */
-    CIRCULAR,
-    /**
-     * 矩形
-     */
-    RECTANGULAR
+    void onClick();
 }

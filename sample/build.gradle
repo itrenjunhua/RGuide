@@ -28,5 +28,5 @@ dependencies {
     testImplementation rootProject.ext.dependencies["junitSupport"]
     androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]
     androidTestImplementation rootProject.ext.dependencies["supportTestEspresso"]
-    implementation project(':highlight')
+    implementation project(':guide')
 }

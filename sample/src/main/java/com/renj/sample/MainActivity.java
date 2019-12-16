@@ -8,13 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.renj.highlight.HighLightMarginInfo;
-import com.renj.highlight.RHighLightManager;
-import com.renj.highlight.RHighLightPageParams;
-import com.renj.highlight.RHighLightViewParams;
-import com.renj.highlight.callback.OnPosCallback;
-import com.renj.highlight.type.BorderLineType;
-import com.renj.highlight.type.HighLightShape;
+import com.renj.guide.RGuideViewManager;
+import com.renj.guide.callback.OnPosCallback;
+import com.renj.guide.highlight.HighLightMarginInfo;
+import com.renj.guide.highlight.RHighLightPageParams;
+import com.renj.guide.highlight.RHighLightViewParams;
+import com.renj.guide.highlight.type.BorderLineType;
+import com.renj.guide.highlight.type.HighLightShape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,12 +101,12 @@ public class MainActivity extends Activity {
             List<RHighLightViewParams> lightBgParams = new ArrayList<>();
             lightBgParams.add(rHighLightViewParams1);
             lightBgParams.add(rHighLightViewParams2);
-            RHighLightManager.getInstance().addHighLightView(highLightPageParams, lightBgParams, true).show();
+            RGuideViewManager.getInstance().addHighLightView(highLightPageParams, lightBgParams).showHighLightView();
         } else {
-            RHighLightManager.getInstance()
+            RGuideViewManager.getInstance()
                     .addHighLightView(highLightPageParams, rHighLightViewParams1) // 分开添加，表示分步显示
                     .addHighLightView(highLightPageParams, rHighLightViewParams2)
-                    .show();
+                    .showHighLightView();
         }
     }
 }

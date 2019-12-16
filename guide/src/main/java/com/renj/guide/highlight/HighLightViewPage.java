@@ -1,5 +1,8 @@
-package com.renj.highlight;
+package com.renj.guide.highlight;
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +19,13 @@ import java.util.List;
  * <p/>
  * 创建时间：2016-08-02    17:18
  * <p/>
- * 描述：操作引导工具帮助类
+ * 描述：高亮显示部分控件类型辅助页面
  * <p/>
  * 修订历史：
  * <p/>
  * ======================================================================
  */
-class HighLightViewHelp {
+class HighLightViewPage {
 
     private List<RHighLightViewParams> highLightViewParams;
     private RHighLightPageParams rHighLightPageParams;
@@ -30,7 +33,7 @@ class HighLightViewHelp {
     /**
      * 构造函数
      */
-    HighLightViewHelp(RHighLightPageParams rHighLightPageParams) {
+    HighLightViewPage(RHighLightPageParams rHighLightPageParams) {
         this.rHighLightPageParams = rHighLightPageParams;
         highLightViewParams = new ArrayList<>();
     }
@@ -39,16 +42,16 @@ class HighLightViewHelp {
      * 增加高亮布局。需要显示的话，<b>需要调用 {@link #show()} 方法</b>
      *
      * @param rHighLightViewParams
-     * @return {@link HighLightViewHelp} 类对象
+     * @return {@link HighLightViewPage} 类对象
      */
-    HighLightViewHelp addHighLight(RHighLightViewParams rHighLightViewParams) {
+    HighLightViewPage addHighLight(RHighLightViewParams rHighLightViewParams) {
         ViewGroup parent = (ViewGroup) rHighLightPageParams.anchor;
         if (rHighLightViewParams.highView == null)
             rHighLightViewParams.highView = parent.findViewById(rHighLightViewParams.highViewId);
         if (rHighLightViewParams.highView == null)
             throw new IllegalArgumentException("Couldn't find the highlighted view." +
                     "Call the HighLightBgParams#setHighView(View)/ HighLightBgParams#setHighView(int) method.");
-        RectF rect = new RectF(ViewUtils.getLocationInView(parent, rHighLightViewParams.highView));
+        RectF rect = new RectF(getLocationInView(parent, rHighLightViewParams.highView));
         HighLightMarginInfo marginInfo = new HighLightMarginInfo();
         rHighLightViewParams.onPosCallback.decorPosInfo(parent.getWidth() - rect.right, parent.getHeight() - rect.bottom, rect, marginInfo);
         rHighLightViewParams.setRectF(rect);
@@ -108,22 +111,48 @@ class HighLightViewHelp {
     }
 
     /**
-     * 将一个布局文件加到根布局上，默认点击移除视图。<b>不需要调用 {@link #show()} 方法</b>
+     * 获取子View在父View中的位置
      *
-     * @param layoutId 布局文件资源id
-     * @return {@link HighLightViewHelp} 类对象
+     * @param parent 父View
+     * @param child  子View
+     * @return Rect对象
      */
-//    void addLayout(@LayoutRes int layoutId) {
-//        ViewUtils.addView(highLightParams.activity, layoutId, new ViewUtils.OnViewClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (highLightParams.intercept && (highLightParams.onClickCallback != null)) {
-//                    highLightParams.onClickCallback.onClick();
-//                }
-//            }
-//        });
-//    }
+    private Rect getLocationInView(View parent, View child) {
+        if (child == null || parent == null) {
+            throw new IllegalArgumentException("parent and child can not be null .");
+        }
 
+        Rect result = new Rect();
+        if (child == parent) {
+            child.getHitRect(result);
+            return result;
+        }
+
+        View tmp = child;
+        Rect tmpRect = new Rect();
+        View decorView = null;
+
+        Context context = child.getContext();
+        if (context instanceof Activity) {
+            decorView = ((Activity) context).getWindow().getDecorView();
+        }
+
+        String noSaveStateFrameLayout = "android.support.v4.app.NoSaveStateFrameLayout";
+        while (tmp != decorView && tmp != parent) {
+            tmp.getHitRect(tmpRect);
+            if (!noSaveStateFrameLayout.equals(tmp.getClass().getName())) {
+                result.left += tmpRect.left;
+                result.top += tmpRect.top;
+            }
+            tmp = (View) tmp.getParent();
+        }
+
+        result.right = result.left + child.getMeasuredWidth();
+        result.bottom = result.top + child.getMeasuredHeight();
+        return result;
+    }
+
+    /*********************** 监听 ************************/
     OnRemoveViewListener onRemoveViewListener;
 
     void setOnRemoveViewListener(OnRemoveViewListener onRemoveViewListener) {
@@ -134,7 +163,7 @@ class HighLightViewHelp {
      * 移出监听
      */
     interface OnRemoveViewListener {
-        void onRemove(HighLightViewHelp highLightViewHelp);
+        void onRemove(HighLightViewPage highLightViewPage);
     }
 
 }
