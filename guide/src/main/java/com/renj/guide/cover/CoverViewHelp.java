@@ -23,9 +23,10 @@ import java.util.List;
  * ======================================================================
  */
 public class CoverViewHelp {
-    private static List<RCoverViewParams> viewArrayList = new ArrayList<>();
+    private List<RCoverViewParams> viewArrayList;
 
     public CoverViewHelp() {
+        viewArrayList = new ArrayList<>();
     }
 
     /**
@@ -57,8 +58,8 @@ public class CoverViewHelp {
         final RCoverViewParams rCoverViewParams = viewArrayList.get(0);
         final FrameLayout rootView = (FrameLayout) getRootView(rCoverViewParams.activity);
         final View coverView = View.inflate(rCoverViewParams.activity, rCoverViewParams.coverLayoutId, null);
-        if (rCoverViewParams.onCoverViewInflateFinish != null) {
-            rCoverViewParams.onCoverViewInflateFinish.onInflateFinish(rCoverViewParams, coverView);
+        if (rCoverViewParams.onCoverViewInflateFinishListener != null) {
+            rCoverViewParams.onCoverViewInflateFinishListener.onInflateFinish(rCoverViewParams, coverView);
         }
         coverView.setOnClickListener(new View.OnClickListener() {
             @Override

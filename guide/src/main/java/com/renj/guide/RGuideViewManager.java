@@ -25,20 +25,19 @@ import java.util.List;
  * ======================================================================
  */
 public class RGuideViewManager {
-    private final static RGuideViewManager instance = new RGuideViewManager();
-    private static HighLightViewHelp highLightViewHelp;
-    private static CoverViewHelp coverViewHelp;
+    private HighLightViewHelp highLightViewHelp;
+    private CoverViewHelp coverViewHelp;
 
     private RGuideViewManager() {
         highLightViewHelp = new HighLightViewHelp();
         coverViewHelp = new CoverViewHelp();
     }
 
-    public static RGuideViewManager getInstance() {
-        return instance;
+    public static RGuideViewManager createInstance() {
+        return new RGuideViewManager();
     }
 
-    /* ------------------------- 高亮显示部分控件类型 ----------------------------- */
+    /* ------------------------- 高亮显示部分 ----------------------------- */
 
     /**
      * 增加一个高亮的布局。调用 {@link #showHighLightView()} 方法开始显示
@@ -74,7 +73,7 @@ public class RGuideViewManager {
         highLightViewHelp.show();
     }
 
-    /* ------------------------- 高亮显示部分控件类型 ----------------------------- */
+    /* ------------------------- 遮罩显示部分 ----------------------------- */
 
     /**
      * 在整个窗体上面增加一层布局，默认点击移除视图。<b>需要调用 {@link #showCoverView()} 方法</b>
@@ -111,13 +110,7 @@ public class RGuideViewManager {
      * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      * 如果移除（clearOtherCoverView值传true），那么该页面就不会在显示遮罩层了，除非再次添加和显示<br/>
      * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     * 如果不移除（false）并且后面还有，那么可以继续调用 {@link #showCoverView()} 方法显示。<br/><br/>
-     * <b>特别注意：当当前页面不在需要显示并且后面还有未显示完的遮罩层时，必须清除其他的遮罩层，<br/>
-     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     * 方式1：该方法的参数{@code clearOtherCoverView} 值传 {@code true}；<br/>
-     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     * 方式2：手动调用 {@link #skipAllCoverView()} 方法跳过当前页面后面所有的遮罩层。<br/>
-     * 如果不试用上述的方法清除遮罩层，那么后面的遮罩层使用(包括当前页或者其他页面)将会出现问题</b>
+     * 如果不移除（false）并且后面还有，那么可以继续调用 {@link #showCoverView()} 方法显示。
      *
      * @param rCoverViewParams    需要移除的 {@link RCoverViewParams} 信息
      * @param coverView           需要移除的遮罩层View

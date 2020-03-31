@@ -31,7 +31,7 @@ public class RCoverViewParams {
     /**
      * 遮罩层布局初始化完成回调
      */
-    OnCoverViewInflateFinish onCoverViewInflateFinish;
+    OnCoverViewInflateFinishListener onCoverViewInflateFinishListener;
     /**
      * 遮罩层布局点击回调
      */
@@ -70,11 +70,11 @@ public class RCoverViewParams {
     /**
      * 遮罩层布局初始化完成回调
      *
-     * @param onCoverViewInflateFinish
+     * @param onCoverViewInflateFinishListener
      * @return
      */
-    public RCoverViewParams setOnCoverViewInflateFinish(OnCoverViewInflateFinish onCoverViewInflateFinish) {
-        this.onCoverViewInflateFinish = onCoverViewInflateFinish;
+    public RCoverViewParams setOnCoverViewInflateFinishListener(OnCoverViewInflateFinishListener onCoverViewInflateFinishListener) {
+        this.onCoverViewInflateFinishListener = onCoverViewInflateFinishListener;
         return this;
     }
 
@@ -99,7 +99,7 @@ public class RCoverViewParams {
     public RCoverViewParams cloneParams() {
         RCoverViewParams cloneCoverViewParams = RCoverViewParams.create(this.activity);
         cloneCoverViewParams.coverLayoutId = this.coverLayoutId;
-        cloneCoverViewParams.onCoverViewInflateFinish = this.onCoverViewInflateFinish;
+        cloneCoverViewParams.onCoverViewInflateFinishListener = this.onCoverViewInflateFinishListener;
         cloneCoverViewParams.onDecorClickListener = this.onDecorClickListener;
         return cloneCoverViewParams;
     }
@@ -107,7 +107,7 @@ public class RCoverViewParams {
     /**
      * 遮罩层布局初始化完成回调
      */
-    public interface OnCoverViewInflateFinish {
+    public interface OnCoverViewInflateFinishListener {
         /**
          * 遮罩层布局初始化完成回调
          *

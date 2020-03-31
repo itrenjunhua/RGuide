@@ -19,12 +19,13 @@ import java.util.List;
  * ======================================================================
  */
 public class HighLightViewHelp {
-    private static List<HighLightViewPage> highLightViewPages = new ArrayList<>();
+    private List<HighLightViewPage> highLightViewPages;
 
     /**
      * 构造函数
      */
     public HighLightViewHelp() {
+        highLightViewPages = new ArrayList<>();
     }
 
     /**

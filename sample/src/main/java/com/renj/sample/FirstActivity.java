@@ -96,9 +96,9 @@ public class FirstActivity extends AppCompatActivity {
             List<RHighLightViewParams> lightBgParams = new ArrayList<>();
             lightBgParams.add(rHighLightViewParams1);
             lightBgParams.add(rHighLightViewParams2);
-            RGuideViewManager.getInstance().addHighLightView(highLightPageParams, lightBgParams).showHighLightView();
+            RGuideViewManager.createInstance().addHighLightView(highLightPageParams, lightBgParams).showHighLightView();
         } else {
-            RGuideViewManager.getInstance()
+            RGuideViewManager.createInstance()
                     .addHighLightView(highLightPageParams, rHighLightViewParams1) // 分开添加，表示分步显示
                     .addHighLightView(highLightPageParams, rHighLightViewParams2)
                     .showHighLightView();
