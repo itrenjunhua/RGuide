@@ -87,9 +87,9 @@ public class RHighLightViewParams {
      */
     //boolean intercept = true;
     /**
-     * 装饰布局初始化完成回调
+     * 装饰布局布局完成完成回调
      */
-    OnDecorViewInflateFinish onDecorViewInflateFinish;
+    OnDecorViewInflateFinishListener onDecorViewInflateFinishListener;
 
     /**
      * 高亮边距信息设置接口
@@ -274,11 +274,11 @@ public class RHighLightViewParams {
     /**
      * 设置装饰布局初始化完成回调
      *
-     * @param onDecorViewInflateFinish
+     * @param onDecorViewInflateFinishListener
      * @return
      */
-    public RHighLightViewParams setOnDecorViewInflateFinish(OnDecorViewInflateFinish onDecorViewInflateFinish) {
-        this.onDecorViewInflateFinish = onDecorViewInflateFinish;
+    public RHighLightViewParams setOnDecorViewInflateFinishListener(OnDecorViewInflateFinishListener onDecorViewInflateFinishListener) {
+        this.onDecorViewInflateFinishListener = onDecorViewInflateFinishListener;
         return this;
     }
 
@@ -317,7 +317,7 @@ public class RHighLightViewParams {
         cloneRHighLightViewParams.intervals = this.intervals;
         cloneRHighLightViewParams.blurShow = this.blurShow;
         cloneRHighLightViewParams.blurSize = this.blurSize;
-        cloneRHighLightViewParams.onDecorViewInflateFinish = this.onDecorViewInflateFinish;
+        cloneRHighLightViewParams.onDecorViewInflateFinishListener = this.onDecorViewInflateFinishListener;
         cloneRHighLightViewParams.onPosCallback = this.onPosCallback;
         //cloneHighLightViewParams.intercept = this.intercept;
         return cloneRHighLightViewParams;
@@ -326,7 +326,7 @@ public class RHighLightViewParams {
     /**
      * 装饰布局初始化完成回调
      */
-    public interface OnDecorViewInflateFinish {
+    public interface OnDecorViewInflateFinishListener {
         /**
          * 装饰布局初始化完成回调
          *
