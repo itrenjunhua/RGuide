@@ -29,6 +29,14 @@ public class RCoverViewParams {
     @LayoutRes
     int coverLayoutId;
     /**
+     * 是否自动移除高亮遮罩，默认true
+     */
+    boolean autoRemoveView = true;
+    /**
+     * 当移除(手动或自动)之后是否自动显示下一个高亮，如果有的话。默认true
+     */
+    boolean autoShowNext = true;
+    /**
      * 遮罩层布局初始化完成回调
      */
     OnCoverViewInflateFinishListener onCoverViewInflateFinishListener;
@@ -36,6 +44,10 @@ public class RCoverViewParams {
      * 遮罩层布局点击回调
      */
     OnDecorClickListener onDecorClickListener;
+    /**
+     * 遮罩层布局
+     */
+    View coverView;
 
     private RCoverViewParams(Activity activity) {
         this.activity = activity;
@@ -64,6 +76,26 @@ public class RCoverViewParams {
         }
 
         this.coverLayoutId = coverLayoutId;
+        return this;
+    }
+
+    /**
+     * 设置点击任意位置是否自动移除高亮遮罩，默认true
+     *
+     * @param autoRemoveView true：移除 false：不移除
+     */
+    public RCoverViewParams setAutoRemoveView(boolean autoRemoveView) {
+        this.autoRemoveView = autoRemoveView;
+        return this;
+    }
+
+    /**
+     * 当移除(手动或自动)之后是否自动显示下一个高亮，如果有的话。默认true
+     *
+     * @param autoShowNext true：自动显示 false：不自动显示
+     */
+    public RCoverViewParams setAutoShowNext(boolean autoShowNext) {
+        this.autoShowNext = autoShowNext;
         return this;
     }
 

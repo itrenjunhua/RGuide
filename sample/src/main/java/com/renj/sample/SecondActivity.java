@@ -60,6 +60,6 @@ public class SecondActivity extends AppCompatActivity {
                     marginInfo.rightMargin = rightMargin;
                     marginInfo.bottomMargin = bottomMargin + view.getHeight();
                 });
-        RGuideViewManager.createInstance().addHighLightView(rHighLightPageParams, rHighLightViewParams).showHighLightView();
+        RGuideViewManager.createHighLightViewHelp().addHighLightView(rHighLightPageParams, rHighLightViewParams).showHighLightView();
     }
 }

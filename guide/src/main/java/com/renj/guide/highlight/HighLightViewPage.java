@@ -29,6 +29,7 @@ class HighLightViewPage {
 
     private List<RHighLightViewParams> highLightViewParams;
     private RHighLightPageParams rHighLightPageParams;
+    private HighLightView highLightView; // 显示的高亮View
 
     /**
      * 构造函数
@@ -64,7 +65,7 @@ class HighLightViewPage {
      * 显示含有高亮区域的页面
      */
     void show() {
-        final HighLightView highLightView = new HighLightView(rHighLightPageParams, highLightViewParams);
+        highLightView = new HighLightView(rHighLightPageParams, highLightViewParams);
         if (rHighLightPageParams.anchor instanceof FrameLayout) {
             ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             ((ViewGroup) rHighLightPageParams.anchor).addView(highLightView, ((ViewGroup) rHighLightPageParams.anchor).getChildCount(), lp);
@@ -79,23 +80,22 @@ class HighLightViewPage {
             frameLayout.addView(highLightView);
         }
 
-//        if (highLightParams.intercept) {
         highLightView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                remove(highLightView);
-                if (rHighLightPageParams.onDecorClickListener != null) {
+                if (rHighLightPageParams.autoRemoveView)
+                    remove();
+
+                if (rHighLightPageParams.onDecorClickListener != null)
                     rHighLightPageParams.onDecorClickListener.onClick();
-                }
             }
         });
-//        }
     }
 
     /**
      * 移除含有高亮区域的页面
      */
-    void remove(HighLightView highLightView) {
+    void remove() {
         if (highLightView == null) return;
         ViewGroup parent = (ViewGroup) highLightView.getParent();
         if (parent instanceof RelativeLayout || parent instanceof FrameLayout) {

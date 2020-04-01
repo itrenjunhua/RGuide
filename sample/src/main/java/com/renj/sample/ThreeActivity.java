@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.renj.guide.RGuideViewManager;
+import com.renj.guide.cover.CoverViewHelp;
 import com.renj.guide.cover.RCoverViewParams;
 
 
@@ -26,7 +27,7 @@ public class ThreeActivity extends AppCompatActivity {
 
     private Button btShow;
     private boolean showFinish = false;
-    private RGuideViewManager rGuideViewManager;
+    private CoverViewHelp coverViewHelp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class ThreeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_three);
         btShow = findViewById(R.id.bt_show);
 
-        rGuideViewManager = RGuideViewManager.createInstance();
+        coverViewHelp = RGuideViewManager.createCoverViewHelp();
         addViewToLayout();
 
         findViewById(R.id.bt_back).setOnClickListener((v) -> {
@@ -46,13 +47,15 @@ public class ThreeActivity extends AppCompatActivity {
                 addViewToLayout();
             } else {
                 // 未显示完成，继续显示
-                rGuideViewManager.showCoverView();
+                coverViewHelp.showCoverView();
             }
         });
     }
 
     private void addViewToLayout() {
         RCoverViewParams rCoverViewParams1 = RCoverViewParams.create(this)
+                .setAutoRemoveView(false)
+                .setAutoShowNext(false)
                 .setCoverLayoutId(R.layout.layout_three1)
                 .setOnCoverViewInflateFinishListener((rCoverViewParams, coverView) -> {
                     Button btSkip = coverView.findViewById(R.id.tv_click_skip);
@@ -62,23 +65,24 @@ public class ThreeActivity extends AppCompatActivity {
                     btSkip.setOnClickListener(v -> {
                         showFinish = true;
                         btShow.setText("重新显示");
-                        rGuideViewManager.removeCoverView(rCoverViewParams, coverView);
+                        coverViewHelp.removeCoverView();
                         // 上面一句相当于以下两句
-                        // rGuideViewManager.removeCoverView(rCoverViewParams, decorLayoutView,false);
-                        // rGuideViewManager.skipAllCoverView();
+                        // coverViewHelp.removeCoverView(rCoverViewParams, decorLayoutView,false);
+                        // coverViewHelp.skipAllCoverView();
                     });
 
                     // 只移除自己
                     btRemove.setOnClickListener((v) -> {
                         showFinish = false;
                         btShow.setText("继续显示");
-                        rGuideViewManager.removeCoverView(rCoverViewParams, coverView, false);
+                        coverViewHelp.removeCoverView(false);
                     });
                 })
-                .setOnDecorClickListener(() ->
-                        Toast.makeText(ThreeActivity.this, "覆盖层1被点击了", Toast.LENGTH_SHORT).show()
+                .setOnDecorClickListener(() -> {
+                            Toast.makeText(ThreeActivity.this, "覆盖层1被点击了", Toast.LENGTH_SHORT).show();
+                            coverViewHelp.showCoverView();
+                        }
                 );
-
 
         RCoverViewParams rCoverViewParams2 = RCoverViewParams.create(this)
                 .setCoverLayoutId(R.layout.layout_three2)
@@ -87,7 +91,7 @@ public class ThreeActivity extends AppCompatActivity {
                     btShow.setText("重新显示");
                     Toast.makeText(ThreeActivity.this, "覆盖层2被点击了", Toast.LENGTH_SHORT).show();
                 });
-        rGuideViewManager
+        coverViewHelp
                 .addCoverView(rCoverViewParams1)
                 .addCoverView(rCoverViewParams2)
                 .showCoverView();

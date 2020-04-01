@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.renj.guide.RGuideViewManager;
+import com.renj.guide.highlight.HighLightViewHelp;
 import com.renj.guide.highlight.RHighLightPageParams;
 import com.renj.guide.highlight.RHighLightViewParams;
 import com.renj.guide.highlight.type.BorderLineType;
@@ -66,8 +67,19 @@ public class FirstActivity extends AppCompatActivity {
     }
 
     private void showHighView(boolean together) {
+        HighLightViewHelp rGuideViewManager = RGuideViewManager.createHighLightViewHelp();
+
         RHighLightPageParams highLightPageParams = RHighLightPageParams.create(this)
-                .setAnchor(findViewById(R.id.id_container)); // 绑定根布局，在Activity中可不写;
+                .setAutoRemoveView(false) // 自动移除
+                .setAutoShowNext(false) // 不自动显示下一个
+                .setAnchor(findViewById(R.id.id_container)) // 绑定根布局，在Activity中可不写;
+                .setOnDecorClickListener(() -> {
+                    // 移除当前正在显示的
+                    // rGuideViewManager.removeHighLightView();
+                    // 点击是继续显示
+                    rGuideViewManager.showHighLightView();
+                });
+
         RHighLightViewParams rHighLightViewParams1 = RHighLightViewParams.create()
                 .setHighView(R.id.id_btn_important)
                 .setDecorLayoutId(R.layout.info_up)
@@ -96,9 +108,9 @@ public class FirstActivity extends AppCompatActivity {
             List<RHighLightViewParams> lightBgParams = new ArrayList<>();
             lightBgParams.add(rHighLightViewParams1);
             lightBgParams.add(rHighLightViewParams2);
-            RGuideViewManager.createInstance().addHighLightView(highLightPageParams, lightBgParams).showHighLightView();
+            rGuideViewManager.addHighLightView(highLightPageParams, lightBgParams).showHighLightView();
         } else {
-            RGuideViewManager.createInstance()
+            rGuideViewManager
                     .addHighLightView(highLightPageParams, rHighLightViewParams1) // 分开添加，表示分步显示
                     .addHighLightView(highLightPageParams, rHighLightViewParams2)
                     .showHighLightView();

@@ -81,11 +81,6 @@ public class RHighLightViewParams {
      * 高亮区域和高亮说明背景左上右下的边距信息对象
      */
     HighLightMarginInfo marginInfo;
-
-    /**
-     * 是否拦截点击事件
-     */
-    //boolean intercept = true;
     /**
      * 装饰布局布局完成完成回调
      */
@@ -259,17 +254,6 @@ public class RHighLightViewParams {
         this.blurSize = blurSize;
         return this;
     }
-
-
-    /**
-     * 设置是否需要拦截点击事件，默认拦截
-     *
-     * @param intercept 是否需要拦截点击事件 true：拦截 false：不拦截
-     */
-//    public HighLightViewParams setIntercept(boolean intercept) {
-//        this.intercept = intercept;
-//        return this;
-//    }
 
     /**
      * 设置装饰布局初始化完成回调

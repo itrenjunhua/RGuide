@@ -30,6 +30,14 @@ public class RHighLightPageParams {
      */
     int maskColor = 0x99000000;
     /**
+     * 是否自动移除高亮遮罩，默认true
+     */
+    boolean autoRemoveView = true;
+    /**
+     * 当移除(手动或自动)之后是否自动显示下一个高亮，如果有的话。默认true
+     */
+    boolean autoShowNext = true;
+    /**
      * 装饰布局点击回调
      */
     OnDecorClickListener onDecorClickListener;
@@ -71,6 +79,26 @@ public class RHighLightPageParams {
     }
 
     /**
+     * 设置点击任意位置是否自动移除高亮遮罩，默认true
+     *
+     * @param autoRemoveView true：移除 false：不移除
+     */
+    public RHighLightPageParams setAutoRemoveView(boolean autoRemoveView) {
+        this.autoRemoveView = autoRemoveView;
+        return this;
+    }
+
+    /**
+     * 当移除(手动或自动)之后是否自动显示下一个高亮，如果有的话。默认true
+     *
+     * @param autoShowNext true：自动显示 false：不自动显示
+     */
+    public RHighLightPageParams setAutoShowNext(boolean autoShowNext) {
+        this.autoShowNext = autoShowNext;
+        return this;
+    }
+
+    /**
      * 设置装饰布局点击回调
      *
      * @param onDecorClickListener
@@ -92,6 +120,7 @@ public class RHighLightPageParams {
         RHighLightPageParams cloneRHighLightPageParams = RHighLightPageParams.create(this.activity);
         cloneRHighLightPageParams.anchor = this.anchor;
         cloneRHighLightPageParams.maskColor = this.maskColor;
+        cloneRHighLightPageParams.autoRemoveView = this.autoRemoveView;
         cloneRHighLightPageParams.onDecorClickListener = this.onDecorClickListener;
         return cloneRHighLightPageParams;
     }
