@@ -160,7 +160,7 @@ public class RHighLightViewParams {
     }
 
     /**
-     * 设置圆角度数。只有当形状为 {@link HighLightShape#RECTANGULAR} 时生效
+     * 设置圆角度数。只有当形状为 {@link HighLightShape#RECTANGULAR} 时生效，单位：dp
      *
      * @param radius 圆角度数
      */
@@ -280,6 +280,133 @@ public class RHighLightViewParams {
         return this;
     }
 
+    /* ------------------ 获取属性方法 ----------------------*/
+
+    /**
+     * 获取需要高亮的View
+     *
+     * @return 方法 {@link #setHighView(View)} 传递的值
+     */
+    public View getHighView() {
+        return highView;
+    }
+
+    /**
+     * 获取需要高亮的View的ID
+     *
+     * @return 方法 {@link #setHighView(int)} 传递的值
+     */
+    public int getHighViewId() {
+        return highViewId;
+    }
+
+    /**
+     * 获取高亮装饰背景布局ID
+     *
+     * @return 方法 {@link #setDecorLayoutId(int)} 传递的值
+     */
+    public int getDecorLayoutId() {
+        return decorLayoutId;
+    }
+
+    /**
+     * 获取高亮形状
+     *
+     * @return 方法 {@link #setHighLightShape(HighLightShape)} 传递的值
+     */
+    public HighLightShape getHighLightShape() {
+        return highLightShape;
+    }
+
+    /**
+     * 获取圆角大小
+     *
+     * @return 方法 {@link #setRadius(int)} 传递的值
+     */
+    public int getRadius() {
+        return radius;
+    }
+
+    /**
+     * 是否显示/绘制边框
+     *
+     * @return true：显示/绘制 false：不显示/不绘制 方法 {@link #setBorderShow(boolean)} 传递的值
+     */
+    public boolean isBorderShow() {
+        return borderShow;
+    }
+
+    /**
+     * 获取边框线颜色
+     *
+     * @return 方法 {@link #setBorderColor(int)} 传递的值
+     */
+    public int getBorderColor() {
+        return borderColor;
+    }
+
+    /**
+     * 获取边框线类型
+     *
+     * @return 方法 {@link #setBorderLineType(BorderLineType)} 传递的值
+     */
+    public BorderLineType getBorderLineType() {
+        return borderLineType;
+    }
+
+    /**
+     * 获取边框宽度
+     *
+     * @return 方法 {@link #setBorderWidth(float)} 传递的值
+     */
+    public float getBorderWidth() {
+        return borderWidth;
+    }
+
+    /**
+     * 获取虚线样式信息
+     *
+     * @return 方法 {@link #setIntervals(float[])} 传递的值
+     */
+    public float[] getIntervals() {
+        return intervals;
+    }
+
+    /**
+     * 是否显示模糊变价
+     *
+     * @return true：显示 false：不显示 方法 {@link #setBorderShow(boolean)} 传递的值
+     */
+    public boolean isBlurShow() {
+        return blurShow;
+    }
+
+    /**
+     * 获取模糊边界宽度
+     *
+     * @return 方法 {@link #setBlurWidth(int)} 传递的值
+     */
+    public int getBlurWidth() {
+        return blurSize;
+    }
+
+    /**
+     * 获取高亮控件在 {@link RHighLightPageParams#setAnchor(View)} 方法设置的根布局中的位置
+     *
+     * @return
+     */
+    public RectF getRectF() {
+        return rectF;
+    }
+
+    /**
+     * 获取高亮区域和高亮装饰相对位置信息
+     *
+     * @return {@link OnPosCallback#decorPosInfo(float, float, RectF, HighLightMarginInfo)} 回调方法设置的信息
+     */
+    public HighLightMarginInfo getMarginInfo() {
+        return marginInfo;
+    }
     /* ------------------ 深度克隆方法 ----------------------*/
 
     /**

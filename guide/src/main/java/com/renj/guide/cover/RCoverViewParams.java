@@ -121,6 +121,44 @@ public class RCoverViewParams {
         return this;
     }
 
+    /* ------------------ 获取属性方法 ----------------------*/
+
+    /**
+     * 获取Activity
+     *
+     * @return 方法 {@link #create(Activity)} 传递的值
+     */
+    public Activity getActivity() {
+        return activity;
+    }
+
+    /**
+     * 获取遮罩布局ID
+     *
+     * @return 方法 {@link #setCoverLayoutId(int)} 传递的值
+     */
+    public int getCoverLayoutId() {
+        return coverLayoutId;
+    }
+
+    /**
+     * 是否自动移除，方法 {@link #setAutoRemoveView(boolean)} 传递的值
+     *
+     * @return true：自动移除 false：不自动移除
+     */
+    public boolean isAutoRemoveView() {
+        return autoRemoveView;
+    }
+
+    /**
+     * 是否自动显示下一个，方法 {@link #setAutoShowNext(boolean)} 传递的值
+     *
+     * @return true：自动显示下一个 false：不自动显示下一个
+     */
+    public boolean isAutoShowNext() {
+        return autoShowNext;
+    }
+
     /* ------------------ 深度克隆方法 ----------------------*/
 
     /**

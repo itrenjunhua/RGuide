@@ -69,7 +69,7 @@ public class RHighLightPageParams {
     }
 
     /**
-     * 设置背景颜色
+     * 设置根布局
      *
      * @param anchor 根布局，Activity中可以不设置
      */
@@ -109,6 +109,52 @@ public class RHighLightPageParams {
         return this;
     }
 
+    /* ------------------ 获取属性方法 ----------------------*/
+
+    /**
+     * 获取Activity
+     *
+     * @return 方法 {@link #create(Activity)} 传递的值
+     */
+    public Activity getActivity() {
+        return activity;
+    }
+
+    /**
+     * 获取根布局
+     *
+     * @return 方法 {@link #setAnchor(View)} 传递的值
+     */
+    public View getAnchor() {
+        return anchor;
+    }
+
+    /**
+     * 获取背景颜色
+     *
+     * @return 方法 {@link #setMaskColor(int)} 传递的值
+     */
+    public int getMaskColor() {
+        return maskColor;
+    }
+
+    /**
+     * 是否自动移除，方法 {@link #setAutoRemoveView(boolean)} 传递的值
+     *
+     * @return true：自动移除 false：不自动移除
+     */
+    public boolean isAutoRemoveView() {
+        return autoRemoveView;
+    }
+
+    /**
+     * 是否自动显示下一个，方法 {@link #setAutoShowNext(boolean)} 传递的值
+     *
+     * @return true：自动显示下一个 false：不自动显示下一个
+     */
+    public boolean isAutoShowNext() {
+        return autoShowNext;
+    }
     /* ------------------ 深度克隆方法 ----------------------*/
 
     /**

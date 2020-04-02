@@ -25,9 +25,19 @@ import java.util.List;
 public class CoverViewHelp {
     private List<RCoverViewParams> viewArrayList;
     private View showCoverView;
+    private OnCoverViewRemoveListener onCoverViewRemoveListener;
 
     public CoverViewHelp() {
         viewArrayList = new ArrayList<>();
+    }
+
+    /**
+     * 设置遮罩移除监听
+     *
+     * @param onCoverViewRemoveListener
+     */
+    public void setOnCoverViewRemoveListener(OnCoverViewRemoveListener onCoverViewRemoveListener) {
+        this.onCoverViewRemoveListener = onCoverViewRemoveListener;
     }
 
     /**
@@ -70,14 +80,20 @@ public class CoverViewHelp {
             @Override
             public void onClick(View view) {
                 if (rCoverViewParams.autoRemoveView) {
+                    // 从集合和父布局中移除
                     viewArrayList.remove(rCoverViewParams);
                     rootView.removeView(rCoverViewParams.coverView);
+                    // 回调移除方法
+                    callBackRemoveListener(viewArrayList.isEmpty(), viewArrayList);
+                    // 修改变量 showCoverView 的值，防止异常现象
                     if (viewArrayList.isEmpty()) showCoverView = null;
                 }
 
+                // 自动显示下一个
                 if (rCoverViewParams.autoShowNext)
                     showNext();
 
+                // 遮罩点击监听
                 if (rCoverViewParams.onDecorClickListener != null) {
                     rCoverViewParams.onDecorClickListener.onClick();
                 }
@@ -117,7 +133,12 @@ public class CoverViewHelp {
 
         showCoverView = null;
 
-        if (clearOtherCoverView) skipAllCoverView();
+        if (clearOtherCoverView) {
+            skipAllCoverView();
+            callBackRemoveListener(false, viewArrayList);
+        } else {
+            callBackRemoveListener(viewArrayList.isEmpty(), viewArrayList);
+        }
     }
 
     /**
@@ -132,6 +153,17 @@ public class CoverViewHelp {
     }
 
     /**
+     * 回调方法
+     *
+     * @param hasCoverView       是否还有已添加，但未显示的遮罩
+     * @param notShownCoverViews 未显示的遮罩参数信息集合，如果 hasCoverView 为false，集合元素为空
+     */
+    private void callBackRemoveListener(boolean hasCoverView, List<RCoverViewParams> notShownCoverViews) {
+        if (onCoverViewRemoveListener != null)
+            onCoverViewRemoveListener.onRemoveCoverView(hasCoverView, notShownCoverViews);
+    }
+
+    /**
      * 获取内容区域根视图
      *
      * @param activity {@link Activity}
@@ -139,5 +171,18 @@ public class CoverViewHelp {
      */
     private ViewGroup getRootView(@NonNull Activity activity) {
         return (ViewGroup) activity.findViewById(android.R.id.content);
+    }
+
+    /**
+     * 遮罩移除监听
+     */
+    public interface OnCoverViewRemoveListener {
+        /**
+         * 遮罩移除监听，如果是手动调用 {@link #skipAllCoverView()} 方法，不会回调该方法
+         *
+         * @param hasCoverView       是否还有已添加，但未显示的遮罩
+         * @param notShownCoverViews 未显示的遮罩参数信息集合，如果 hasCoverView 为false，集合元素为空
+         */
+        void onRemoveCoverView(boolean hasCoverView, List<RCoverViewParams> notShownCoverViews);
     }
 }
