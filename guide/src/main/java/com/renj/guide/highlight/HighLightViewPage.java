@@ -27,8 +27,8 @@ import java.util.List;
  */
 class HighLightViewPage {
 
-    private List<RHighLightViewParams> highLightViewParams;
-    private RHighLightPageParams rHighLightPageParams;
+    List<RHighLightViewParams> highLightViewParams;
+    RHighLightPageParams rHighLightPageParams;
     private HighLightView highLightView; // 显示的高亮View
 
     /**

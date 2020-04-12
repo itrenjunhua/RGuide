@@ -20,6 +20,14 @@ import java.util.List;
  */
 public class HighLightViewHelp {
     private List<HighLightViewPage> highLightViewPages;
+    private OnHighLightViewRemoveListener onHighLightViewRemoveListener;
+
+    /**
+     * 设置移除高亮监听
+     */
+    public void setOnHighLightViewRemoveListener(OnHighLightViewRemoveListener onHighLightViewRemoveListener) {
+        this.onHighLightViewRemoveListener = onHighLightViewRemoveListener;
+    }
 
     /**
      * 构造函数
@@ -45,6 +53,8 @@ public class HighLightViewHelp {
             @Override
             public void onRemove(HighLightViewPage highLightViewPage) {
                 highLightViewPages.remove(highLightViewPage);
+                // 回调移除方法
+                callBackRemoveListener(highLightViewPages.isEmpty(), highLightViewPages);
                 if (rHighLightPageParams.autoShowNext)
                     showNext();
             }
@@ -79,6 +89,8 @@ public class HighLightViewHelp {
             @Override
             public void onRemove(HighLightViewPage highLightViewPage) {
                 highLightViewPages.remove(highLightViewPage);
+                // 回调移除方法
+                callBackRemoveListener(highLightViewPages.isEmpty(), highLightViewPages);
                 if (rHighLightPageParams.autoShowNext)
                     showNext();
             }
@@ -109,10 +121,62 @@ public class HighLightViewHelp {
     }
 
     /**
-     * 移除一个高亮View
+     * 移除指定的高亮Page，默认会同时清除其他的高亮Page，{@link #removeHighLightView(boolean)}
+     *
+     * @see #removeHighLightView(boolean)
+     * @see #skipAllHighLightView()
      */
     public void removeHighLightView() {
+        removeHighLightView(true);
+    }
+
+    /**
+     * 移除指定的高亮Page，并设置是否需要移除其他的高亮Page。<br/>
+     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     * 如果移除（clearOtherCoverView值传true），那么该页面就不会在显示高亮Page了，除非再次添加和显示<br/>
+     * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     * 如果不移除（false）并且后面还有，那么可以继续调用 {@link #showHighLightView()} 方法显示。
+     *
+     * @param clearOtherHighLightView 是否清除其他的高亮Page
+     * @see #removeHighLightView()
+     * @see #skipAllHighLightView()
+     */
+    public void removeHighLightView(boolean clearOtherHighLightView) {
+        if (highLightViewPages.isEmpty()) return;
         highLightViewPages.get(0).remove();
+
+        if (clearOtherHighLightView) {
+            skipAllHighLightView();
+            callBackRemoveListener(false, highLightViewPages);
+        } else {
+            callBackRemoveListener(highLightViewPages.isEmpty(), highLightViewPages);
+        }
+    }
+
+    /**
+     * 移除后面的高亮Page/跳过后面所有的高亮Page
+     *
+     * @see #removeHighLightView()
+     * @see #removeHighLightView(boolean)
+     */
+    public void skipAllHighLightView() {
+        highLightViewPages.clear();
+    }
+
+    /**
+     * 回调方法
+     *
+     * @param hasHighLight           是否还有已添加，但未显示的高亮
+     * @param notShownHighLightViews 未显示的高亮信息集合，如果 hasHighLight 为false，集合元素为空
+     */
+    private void callBackRemoveListener(boolean hasHighLight, List<HighLightViewPage> notShownHighLightViews) {
+        if (onHighLightViewRemoveListener != null) {
+            List<HighLightPageInfo> result = new ArrayList<>();
+            for (HighLightViewPage notShownHighLightView : notShownHighLightViews) {
+                result.add(new HighLightPageInfo(notShownHighLightView.rHighLightPageParams, notShownHighLightView.highLightViewParams));
+            }
+            onHighLightViewRemoveListener.onRemoveHighLightView(hasHighLight, result);
+        }
     }
 
     private void checkHighLightPageParams(RHighLightPageParams rHighLightPageParams) {
@@ -132,6 +196,29 @@ public class HighLightViewHelp {
 
         if (rHighLightViewParams.decorLayoutId == -1) {
             throw new IllegalArgumentException("Params decorLayoutId Exception !");
+        }
+    }
+
+    /**
+     * 遮罩移除监听
+     */
+    public interface OnHighLightViewRemoveListener {
+        /**
+         * 高亮移除监听，如果是手动调用 {@link #skipAllHighLightView()} 方法，不会回调该方法
+         *
+         * @param hasHighLight           是否还有已添加，但未显示的高亮
+         * @param notShownHighLightViews 未显示的高亮信息集合，如果 hasHighLight 为false，集合元素为空
+         */
+        void onRemoveHighLightView(boolean hasHighLight, List<HighLightPageInfo> notShownHighLightViews);
+    }
+
+    public static class HighLightPageInfo {
+        public RHighLightPageParams rHighLightPageParams;
+        public List<RHighLightViewParams> highLightViewParams;
+
+        HighLightPageInfo(RHighLightPageParams rHighLightPageParams, List<RHighLightViewParams> highLightViewParams) {
+            this.rHighLightPageParams = rHighLightPageParams;
+            this.highLightViewParams = highLightViewParams;
         }
     }
 }
