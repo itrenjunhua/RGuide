@@ -97,10 +97,13 @@ public class FirstActivity extends AppCompatActivity {
                 .setHighView(R.id.id_btn_amazing)
                 .setDecorLayoutId(R.layout.info_down)
                 .setBorderLineType(BorderLineType.DASH_LINE)
-                .setIntervals(new float[]{12, 12})
+                .setBorderMargin(4)
+                .setBorderColor(Color.WHITE)
+                .setBorderWidth(2)
+                .setIntervals(new float[]{16, 16})
                 .setOnPosCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {
                     marginInfo.rightMargin = rightMargin + rectF.width() / 2;
-                    marginInfo.bottomMargin = bottomMargin + rectF.height();
+                    marginInfo.bottomMargin = bottomMargin + rectF.height() + 12;
                 });
 
         // 是否一起显示

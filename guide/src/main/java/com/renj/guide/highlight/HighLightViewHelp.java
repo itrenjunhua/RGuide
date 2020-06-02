@@ -91,8 +91,9 @@ public class HighLightViewHelp {
                 highLightViewPages.remove(highLightViewPage);
                 // 回调移除方法
                 callBackRemoveListener(highLightViewPages.isEmpty(), highLightViewPages);
-                if (rHighLightPageParams.autoShowNext)
+                if (rHighLightPageParams.autoShowNext) {
                     showNext();
+                }
             }
         });
         highLightViewPages.add(highLightViewPage);
@@ -104,10 +105,10 @@ public class HighLightViewHelp {
      */
     private void showNext() {
         // 如果有没有移除的高亮布局，就先移除
+        if (highLightViewPages.isEmpty()) return;
         highLightViewPages.get(0).remove();
 
         if (highLightViewPages.isEmpty()) return;
-
         highLightViewPages.get(0).show();
     }
 

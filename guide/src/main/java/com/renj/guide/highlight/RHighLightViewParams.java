@@ -49,6 +49,10 @@ public class RHighLightViewParams {
      */
     boolean borderShow = true;
     /**
+     * 绘制的边框线与高亮区域的边距，单位：dp 默认 0
+     */
+    int borderMargin = 0;
+    /**
      * 边框颜色，默认和背景颜色一样
      */
     int borderColor = 0x99000000;
@@ -176,6 +180,16 @@ public class RHighLightViewParams {
      */
     public RHighLightViewParams setBorderShow(boolean borderShow) {
         this.borderShow = borderShow;
+        return this;
+    }
+
+    /**
+     * 设置绘制的边框线与高亮区域的边距，单位：dp 默认 0
+     *
+     * @param borderMargin 绘制的边框线与高亮区域的边距，单位：dp
+     */
+    public RHighLightViewParams setBorderMargin(int borderMargin) {
+        this.borderMargin = borderMargin;
         return this;
     }
 
@@ -334,6 +348,15 @@ public class RHighLightViewParams {
      */
     public boolean isBorderShow() {
         return borderShow;
+    }
+
+    /**
+     * 获取绘制的边框线与高亮区域的边距，单位：dp 默认 0
+     *
+     * @return 方法 {@link #setBorderMargin(int)} 传递的值
+     */
+    public int getBorderMargin() {
+        return borderMargin;
     }
 
     /**

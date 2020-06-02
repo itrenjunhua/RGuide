@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.RectF;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -228,6 +229,9 @@ import java.util.List;
         paint.setAntiAlias(true);
         paint.setColor(rHighLightViewParams.borderColor);
         Path path = new Path();
+        if (rHighLightViewParams.borderMargin > 0) {
+            radius = radius + dip2px(rHighLightViewParams.borderMargin);
+        }
         path.addCircle(rHighLightViewParams.rectF.right - circle_center1,
                 rHighLightViewParams.rectF.bottom - circle_center2,
                 radius, Path.Direction.CW);
@@ -249,7 +253,12 @@ import java.util.List;
         paint.setAntiAlias(true);
         paint.setColor(rHighLightViewParams.borderColor);
         Path path = new Path();
-        path.addRoundRect(rHighLightViewParams.rectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), Path.Direction.CW);
+        RectF rectF = rHighLightViewParams.rectF;
+        if (rHighLightViewParams.borderMargin > 0) {
+            int borderMargin = dip2px(rHighLightViewParams.borderMargin);
+            rectF.inset(-borderMargin, -borderMargin);
+        }
+        path.addRoundRect(rectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), Path.Direction.CW);
         canvas.drawPath(path, paint);
     }
 
