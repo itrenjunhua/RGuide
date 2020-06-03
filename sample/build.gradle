@@ -29,6 +29,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // support
     implementation rootProject.ext.dependencies["androidSupportV7"]
+    implementation rootProject.ext.dependencies["recyclerView"]
     // test
     testImplementation rootProject.ext.dependencies["junitSupport"]
     androidTestImplementation rootProject.ext.dependencies["supportTestRunner"]

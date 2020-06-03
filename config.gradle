@@ -10,18 +10,19 @@ ext {
     ]
 
     def dependVersion = [
-            androidSupportV7        : "27.1.1",
-            junitSupport            : "4.12",
-            supportTestRunner       : "1.0.1",
-            supportTestEspresso     : "3.0.1",
+            androidSupportV7   : "27.1.1",
+            junitSupport       : "4.12",
+            supportTestRunner  : "1.0.1",
+            supportTestEspresso: "3.0.1",
     ]
 
     dependencies = [
             // support
-            "androidSupportV7"        : "com.android.support:appcompat-v7:${dependVersion.androidSupportV7}",
+            "androidSupportV7"   : "com.android.support:appcompat-v7:${dependVersion.androidSupportV7}",
+            "recyclerView"       : "com.android.support:recyclerview-v7:${dependVersion.androidSupportV7}",
             // test
-            "junitSupport"            : "junit:junit:${dependVersion.junitSupport}",
-            "supportTestRunner"       : "com.android.support.test:runner:${dependVersion.supportTestRunner}",
-            "supportTestEspresso"     : "com.android.support.test.espresso:espresso-core:${dependVersion.supportTestEspresso}",
+            "junitSupport"       : "junit:junit:${dependVersion.junitSupport}",
+            "supportTestRunner"  : "com.android.support.test:runner:${dependVersion.supportTestRunner}",
+            "supportTestEspresso": "com.android.support.test.espresso:espresso-core:${dependVersion.supportTestEspresso}",
     ]
 }

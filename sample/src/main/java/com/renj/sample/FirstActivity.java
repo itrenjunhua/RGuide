@@ -60,6 +60,12 @@ public class FirstActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // 进入列表高亮类型
+        findViewById(R.id.go_list).setOnClickListener(v -> {
+            Intent intent = new Intent(FirstActivity.this, ListActivity.class);
+            startActivity(intent);
+        });
+
         // 返回上一页
         findViewById(R.id.bt_back).setOnClickListener(v -> {
             finish();
