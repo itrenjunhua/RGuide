@@ -65,10 +65,11 @@ public class RCoverViewParams {
     /* ------------------ 设置属性方法 ----------------------*/
 
     /**
-     * 设置覆盖布局
+     * 设置覆盖布局。<b>和方法 {@link #setCoverLayoutView(View)} 二选一即可，两个都设置了，该方法优先级更低</b>
      *
      * @param coverLayoutId 覆盖布局id
      * @return
+     * @see #setCoverLayoutView(View)
      */
     public RCoverViewParams setCoverLayoutId(@LayoutRes int coverLayoutId) {
         if (coverLayoutId == -1) {
@@ -76,6 +77,22 @@ public class RCoverViewParams {
         }
 
         this.coverLayoutId = coverLayoutId;
+        return this;
+    }
+
+    /**
+     * 设置覆盖布局。<b>和方法 {@link #setCoverLayoutId(int)} 二选一即可，两个都设置了，该方法优先级更高</b>
+     *
+     * @param coverView 覆盖布局
+     * @return
+     * @see #setCoverLayoutId(int)
+     */
+    public RCoverViewParams setCoverLayoutView(@NonNull View coverView) {
+        if (coverView == null) {
+            throw new IllegalArgumentException("Params coverView is null !");
+        }
+
+        this.coverView = coverView;
         return this;
     }
 
@@ -142,6 +159,15 @@ public class RCoverViewParams {
     }
 
     /**
+     * 获取遮罩布局
+     *
+     * @return 方法 {@link #setCoverLayoutView(View)}  传递的值
+     */
+    public View getCoverView() {
+        return coverView;
+    }
+
+    /**
      * 是否自动移除，方法 {@link #setAutoRemoveView(boolean)} 传递的值
      *
      * @return true：自动移除 false：不自动移除
@@ -169,6 +195,7 @@ public class RCoverViewParams {
     public RCoverViewParams cloneParams() {
         RCoverViewParams cloneCoverViewParams = RCoverViewParams.create(this.activity);
         cloneCoverViewParams.coverLayoutId = this.coverLayoutId;
+        cloneCoverViewParams.coverView = this.coverView;
         cloneCoverViewParams.onCoverViewInflateFinishListener = this.onCoverViewInflateFinishListener;
         cloneCoverViewParams.onDecorClickListener = this.onDecorClickListener;
         return cloneCoverViewParams;

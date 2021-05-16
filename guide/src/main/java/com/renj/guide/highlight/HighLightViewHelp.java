@@ -195,8 +195,8 @@ public class HighLightViewHelp {
                     "Call the RHighLightViewParams#setOnPosCallback(OnPosCallback) method.");
         }
 
-        if (rHighLightViewParams.decorLayoutId == -1) {
-            throw new IllegalArgumentException("Params decorLayoutId Exception !");
+        if (rHighLightViewParams.decorLayoutId == -1 && rHighLightViewParams.decorLayoutView == null) {
+            throw new IllegalArgumentException("Params Exception: No decorative layout information is highlighted!");
         }
     }
 

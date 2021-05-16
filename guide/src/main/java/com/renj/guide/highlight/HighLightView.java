@@ -87,7 +87,12 @@ import java.util.List;
      */
     private void addViewForTip() {
         for (RHighLightViewParams rHighLightViewParams : rHighLightViewParamsList) {
-            View decorLayoutView = mInflater.inflate(rHighLightViewParams.decorLayoutId, this, false);
+            View decorLayoutView;
+            if (rHighLightViewParams.decorLayoutView != null) {
+                decorLayoutView = rHighLightViewParams.decorLayoutView;
+            } else {
+                decorLayoutView = mInflater.inflate(rHighLightViewParams.decorLayoutId, this, false);
+            }
             FrameLayout.LayoutParams lp = buildTipLayoutParams(decorLayoutView, rHighLightViewParams);
 
             if (lp == null)

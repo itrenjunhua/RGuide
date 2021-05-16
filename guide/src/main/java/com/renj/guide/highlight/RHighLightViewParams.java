@@ -33,9 +33,13 @@ public class RHighLightViewParams {
      */
     int highViewId;
     /**
-     * 高亮背景装饰布局
+     * 高亮背景装饰布局资源id
      */
     int decorLayoutId = -1;
+    /**
+     * 高亮背景装饰布局控件
+     */
+    View decorLayoutView;
     /**
      * 高亮形状，默认矩形
      */
@@ -139,10 +143,26 @@ public class RHighLightViewParams {
     }
 
     /**
-     * 设置高亮背景装饰布局
+     * 设置高亮背景装饰布局。<b>和方法 {@link #setDecorLayoutId(int)} 二选一即可，两个都设置了，该方法优先级更高</b>
+     *
+     * @param decorLayoutView
+     * @return
+     * @see #setDecorLayoutId(int)
+     */
+    public RHighLightViewParams setDecorLayoutView(@NonNull View decorLayoutView) {
+        if (decorLayoutView == null) {
+            throw new IllegalArgumentException("Params decorLayoutView is null !");
+        }
+        this.decorLayoutView = decorLayoutView;
+        return this;
+    }
+
+    /**
+     * 设置高亮背景装饰布局。<b>和方法 {@link #setDecorLayoutView(View)} 二选一即可，若两个都设置了，该方法优先级更低</b>
      *
      * @param decorLayoutId
      * @return
+     * @see #setDecorLayoutView(View)
      */
     public RHighLightViewParams setDecorLayoutId(@LayoutRes int decorLayoutId) {
         if (decorLayoutId == -1) {
@@ -324,6 +344,15 @@ public class RHighLightViewParams {
     }
 
     /**
+     * 获取高亮装饰背景布局控件
+     *
+     * @return 方法 {@link #setDecorLayoutView(View)}  传递的值
+     */
+    public View getDecorLayoutView() {
+        return decorLayoutView;
+    }
+
+    /**
      * 获取高亮形状
      *
      * @return 方法 {@link #setHighLightShape(HighLightShape)} 传递的值
@@ -442,6 +471,7 @@ public class RHighLightViewParams {
         cloneRHighLightViewParams.highView = this.highView;
         cloneRHighLightViewParams.highViewId = this.highViewId;
         cloneRHighLightViewParams.decorLayoutId = this.decorLayoutId;
+        cloneRHighLightViewParams.decorLayoutView = this.decorLayoutView;
         cloneRHighLightViewParams.highLightShape = this.highLightShape;
         cloneRHighLightViewParams.radius = this.radius;
         cloneRHighLightViewParams.borderShow = this.borderShow;
