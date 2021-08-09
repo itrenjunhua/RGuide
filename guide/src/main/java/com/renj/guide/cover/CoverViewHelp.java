@@ -2,9 +2,13 @@ package com.renj.guide.cover;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import com.renj.guide.callback.OnDecorScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +29,7 @@ import java.util.List;
 public class CoverViewHelp {
     private List<RCoverViewParams> viewArrayList;
     private View showCoverView;
+    private int scaledTouchSlop;
     private OnCoverViewRemoveListener onCoverViewRemoveListener;
 
     public CoverViewHelp() {
@@ -77,6 +82,44 @@ public class CoverViewHelp {
         if (rCoverViewParams.onCoverViewInflateFinishListener != null) {
             rCoverViewParams.onCoverViewInflateFinishListener.onInflateFinish(rCoverViewParams, rCoverViewParams.coverView);
         }
+        scaledTouchSlop = ViewConfiguration.get(rCoverViewParams.activity).getScaledTouchSlop();
+        // 触摸监听
+        rCoverViewParams.coverView.setOnTouchListener(new View.OnTouchListener() {
+            /**
+             * 滑动坐标
+             */
+            private float downX, downY;
+            private float moveX, moveY;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        downX = event.getX();
+                        downY = event.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        moveX = event.getX();
+                        moveY = event.getY();
+                        if (rCoverViewParams.onDecorScrollListener != null) {
+                            float offsetX = Math.abs(moveX - downX);
+                            float offsetY = Math.abs(moveY - downY);
+                            if ((offsetX > offsetY) && (offsetX > scaledTouchSlop)) {
+                                int axis = (moveX > downX) ? OnDecorScrollListener.AXIS_POSITIVE : OnDecorScrollListener.AXIS_NEGATIVE;
+                                rCoverViewParams.onDecorScrollListener.onScroll(OnDecorScrollListener.SCROLL_HORIZONTAL, axis);
+                            } else if (offsetY > scaledTouchSlop) {
+                                int axis = (moveY > downY) ? OnDecorScrollListener.AXIS_POSITIVE : OnDecorScrollListener.AXIS_NEGATIVE;
+                                rCoverViewParams.onDecorScrollListener.onScroll(OnDecorScrollListener.SCROLL_VERTICAL, axis);
+                            }
+                        }
+                        downX = moveX;
+                        downY = moveY;
+                        break;
+                }
+                return false;
+            }
+        });
+        // 点击监听
         rCoverViewParams.coverView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -14,9 +14,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.FrameLayout;
 
+import com.renj.guide.callback.OnDecorScrollListener;
 import com.renj.guide.highlight.type.BorderLineType;
 
 import java.util.List;
@@ -59,6 +62,7 @@ import java.util.List;
      * 打气筒
      */
     private LayoutInflater mInflater;
+    private int scaledTouchSlop;
 
     public HighLightView(@NonNull RHighLightPageParams rHighLightPageParams,
                          @NonNull List<RHighLightViewParams> rHighLightViewParamsList) {
@@ -79,6 +83,7 @@ import java.util.List;
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setStrokeWidth(5);
+        scaledTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
         addViewForTip();
     }
 
@@ -271,6 +276,54 @@ import java.util.List;
     protected void onDraw(Canvas canvas) {
         canvas.drawBitmap(mMaskBitmap, 0, 0, null);
         super.onDraw(canvas);
+    }
+
+    /**
+     * 滑动坐标
+     */
+    private float downX, downY;
+    private float moveX, moveY;
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                downX = event.getX();
+                downY = event.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                moveX = event.getX();
+                moveY = event.getY();
+                for (RHighLightViewParams rHighLightViewParams : rHighLightViewParamsList) {
+                    if (rHighLightViewParams.onDecorScrollListener != null) {
+                        float offsetX = Math.abs(moveX - downX);
+                        float offsetY = Math.abs(moveY - downY);
+                        if ((offsetX > offsetY) && (offsetX > scaledTouchSlop)) {
+                            int axis = (moveX > downX) ? OnDecorScrollListener.AXIS_POSITIVE : OnDecorScrollListener.AXIS_NEGATIVE;
+                            rHighLightViewParams.onDecorScrollListener.onScroll(OnDecorScrollListener.SCROLL_HORIZONTAL, axis);
+                        } else if (offsetY > scaledTouchSlop) {
+                            int axis = (moveY > downY) ? OnDecorScrollListener.AXIS_POSITIVE : OnDecorScrollListener.AXIS_NEGATIVE;
+                            rHighLightViewParams.onDecorScrollListener.onScroll(OnDecorScrollListener.SCROLL_VERTICAL, axis);
+                        }
+                    }
+                }
+                downX = moveX;
+                downY = moveY;
+                break;
+            case MotionEvent.ACTION_UP:
+                float upX = event.getX();
+                float upY = event.getY();
+
+                for (RHighLightViewParams rHighLightViewParams : rHighLightViewParamsList) {
+                    if (rHighLightViewParams.onHighLightViewClickListener != null) {
+                        if (rHighLightViewParams.rectF.contains(upX, upY)) {
+                            rHighLightViewParams.onHighLightViewClickListener.onHighLightViewClick(rHighLightViewParams.highView, rHighLightViewParams.highViewId);
+                        }
+                    }
+                }
+                break;
+        }
+        return super.onTouchEvent(event);
     }
 
     public int dip2px(float dpValue) {

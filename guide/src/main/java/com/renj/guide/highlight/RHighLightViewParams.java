@@ -6,6 +6,8 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.View;
 
+import com.renj.guide.callback.OnDecorScrollListener;
+import com.renj.guide.callback.OnHighLightViewClickListener;
 import com.renj.guide.callback.OnPosCallback;
 import com.renj.guide.highlight.type.BorderLineType;
 import com.renj.guide.highlight.type.HighLightShape;
@@ -93,6 +95,15 @@ public class RHighLightViewParams {
      * 装饰布局布局完成完成回调
      */
     OnDecorViewInflateFinishListener onDecorViewInflateFinishListener;
+    /**
+     * 设置高亮控件点击
+     */
+    OnHighLightViewClickListener onHighLightViewClickListener;
+    /**
+     * 装饰布局滑动回调，因为一个页面可能多个高亮分步显示，用的是同一个背景，
+     * 但是并不是所有的高亮都需要背景滑动功能，所以不能作为页面参数
+     */
+    OnDecorScrollListener onDecorScrollListener;
 
     /**
      * 高亮边距信息设置接口
@@ -301,6 +312,25 @@ public class RHighLightViewParams {
     }
 
     /**
+     * 设置高亮布局点击监听
+     *
+     * @param onHighLightViewClickListener
+     */
+    public RHighLightViewParams setOnHighLightViewClickListener(OnHighLightViewClickListener onHighLightViewClickListener) {
+        this.onHighLightViewClickListener = onHighLightViewClickListener;
+        return this;
+    }
+
+    /**
+     * 设置装饰背景滑动监听<br/>
+     * 因为一个页面可能多个高亮分步显示，用的是同一个背景，但是并不是所有的高亮都需要背景滑动功能，所以不能作为页面参数
+     */
+    public RHighLightViewParams setOnDecorScrollListener(OnDecorScrollListener onDecorScrollListener) {
+        this.onDecorScrollListener = onDecorScrollListener;
+        return this;
+    }
+
+    /**
      * 修正高亮控件和它的装饰控件相对位置
      *
      * @param onPosCallback
@@ -482,6 +512,8 @@ public class RHighLightViewParams {
         cloneRHighLightViewParams.blurShow = this.blurShow;
         cloneRHighLightViewParams.blurSize = this.blurSize;
         cloneRHighLightViewParams.onDecorViewInflateFinishListener = this.onDecorViewInflateFinishListener;
+        cloneRHighLightViewParams.onHighLightViewClickListener = this.onHighLightViewClickListener;
+        cloneRHighLightViewParams.onDecorScrollListener = this.onDecorScrollListener;
         cloneRHighLightViewParams.onPosCallback = this.onPosCallback;
         //cloneHighLightViewParams.intercept = this.intercept;
         return cloneRHighLightViewParams;

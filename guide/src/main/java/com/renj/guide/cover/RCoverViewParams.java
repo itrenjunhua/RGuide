@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.renj.guide.callback.OnDecorClickListener;
+import com.renj.guide.callback.OnDecorScrollListener;
 import com.renj.guide.highlight.RHighLightPageParams;
 
 /**
@@ -44,6 +45,10 @@ public class RCoverViewParams {
      * 遮罩层布局点击回调
      */
     OnDecorClickListener onDecorClickListener;
+    /**
+     * 遮罩层布局滑动回调
+     */
+    OnDecorScrollListener onDecorScrollListener;
     /**
      * 遮罩层布局
      */
@@ -135,6 +140,14 @@ public class RCoverViewParams {
      */
     public RCoverViewParams setOnDecorClickListener(OnDecorClickListener onDecorClickListener) {
         this.onDecorClickListener = onDecorClickListener;
+        return this;
+    }
+
+    /**
+     * 设置遮罩层滑动监听
+     */
+    public RCoverViewParams setOnDecorScrollListener(OnDecorScrollListener onDecorScrollListener) {
+        this.onDecorScrollListener = onDecorScrollListener;
         return this;
     }
 
