@@ -190,7 +190,7 @@ public class HighLightViewHelp {
         if (rHighLightViewParams == null) {
             throw new IllegalArgumentException("addHighLightView() params rHighLightViewParams is null!");
         }
-        if (rHighLightViewParams.onPosCallback == null) {
+        if (rHighLightViewParams.onHLDecorPositionCallback == null) {
             throw new IllegalArgumentException("Couldn't find the OnPosCallback." +
                     "Call the RHighLightViewParams#setOnPosCallback(OnPosCallback) method.");
         }

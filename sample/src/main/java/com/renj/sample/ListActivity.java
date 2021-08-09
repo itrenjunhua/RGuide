@@ -103,11 +103,11 @@ public class ListActivity extends AppCompatActivity {
                 .setBorderColor(Color.RED)
                 .setRadius(5)
                 .setHighLightShape(HighLightShape.RECTANGULAR)
-                .setOnDecorViewInflateFinishListener(decorLayoutView -> {
+                .setOnHLDecorInflateListener(decorLayoutView -> {
                     TextView textView = decorLayoutView.findViewById(R.id.tv_empty);
                     textView.setText("高亮条目中的控件");
                 })
-                .setOnPosCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {
+                .setOnHLDecorPositionCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {
                     marginInfo.leftMargin = rectF.left + 60;
                     marginInfo.topMargin = rectF.bottom + 20;
                 });
@@ -119,11 +119,11 @@ public class ListActivity extends AppCompatActivity {
                 .setBorderShow(true)
                 .setBorderColor(Color.RED)
                 .setRadius(0)
-                .setHighLightShape(HighLightShape.RECTANGULAR).setOnDecorViewInflateFinishListener(decorLayoutView -> {
+                .setHighLightShape(HighLightShape.RECTANGULAR).setOnHLDecorInflateListener(decorLayoutView -> {
                     TextView textView = decorLayoutView.findViewById(R.id.tv_empty);
                     textView.setText("高亮整个条目");
                 })
-                .setOnPosCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {
+                .setOnHLDecorPositionCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {
                     marginInfo.leftMargin = rectF.right - rectF.width() / 2 - 80;
                     marginInfo.topMargin = rectF.bottom + 20;
                 });

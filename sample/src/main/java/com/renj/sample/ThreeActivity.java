@@ -57,7 +57,7 @@ public class ThreeActivity extends AppCompatActivity {
                 .setAutoRemoveView(false)
                 .setAutoShowNext(false)
                 .setCoverLayoutId(R.layout.layout_three1)
-                .setOnCoverViewInflateFinishListener((rCoverViewParams, coverView) -> {
+                .setOnCViewInflateListener((rCoverViewParams, coverView) -> {
                     Button btSkip = coverView.findViewById(R.id.tv_click_skip);
                     Button btRemove = coverView.findViewById(R.id.tv_click_remove);
 

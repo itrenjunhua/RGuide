@@ -54,7 +54,7 @@ class HighLightViewPage {
                     "Call the HighLightBgParams#setHighView(View)/ HighLightBgParams#setHighView(int) method.");
         RectF rect = new RectF(getLocationInView(parent, rHighLightViewParams.highView));
         HighLightMarginInfo marginInfo = new HighLightMarginInfo();
-        rHighLightViewParams.onPosCallback.decorPosInfo(parent.getWidth() - rect.right, parent.getHeight() - rect.bottom, rect, marginInfo);
+        rHighLightViewParams.onHLDecorPositionCallback.decorPositionInfo(parent.getWidth() - rect.right, parent.getHeight() - rect.bottom, rect, marginInfo);
         rHighLightViewParams.setRectF(rect);
         rHighLightViewParams.setMarginInfo(marginInfo);
         highLightViewParams.add(rHighLightViewParams);

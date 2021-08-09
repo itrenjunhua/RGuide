@@ -119,8 +119,8 @@ import java.util.List;
             } else {
                 lp.gravity |= Gravity.TOP;
             }
-            if (rHighLightViewParams.onDecorViewInflateFinishListener != null)
-                rHighLightViewParams.onDecorViewInflateFinishListener.onInflateFinish(decorLayoutView);
+            if (rHighLightViewParams.onHLDecorInflateListener != null)
+                rHighLightViewParams.onHLDecorInflateListener.onInflateFinish(decorLayoutView);
             addView(decorLayoutView, lp);
         }
     }
@@ -315,9 +315,9 @@ import java.util.List;
                 float upY = event.getY();
 
                 for (RHighLightViewParams rHighLightViewParams : rHighLightViewParamsList) {
-                    if (rHighLightViewParams.onHighLightViewClickListener != null) {
+                    if (rHighLightViewParams.onHLViewClickListener != null) {
                         if (rHighLightViewParams.rectF.contains(upX, upY)) {
-                            rHighLightViewParams.onHighLightViewClickListener.onHighLightViewClick(rHighLightViewParams.highView, rHighLightViewParams.highViewId);
+                            rHighLightViewParams.onHLViewClickListener.onHighLightViewClick(rHighLightViewParams.highView, rHighLightViewParams.highViewId);
                         }
                     }
                 }

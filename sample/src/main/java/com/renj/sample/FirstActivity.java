@@ -95,7 +95,7 @@ public class FirstActivity extends AppCompatActivity {
                 .setBorderColor(Color.RED)
                 .setRadius(5)
                 .setHighLightShape(HighLightShape.RECTANGULAR)
-                .setOnPosCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {
+                .setOnHLDecorPositionCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {
                     marginInfo.leftMargin = rectF.right - rectF.width() / 2;
                     marginInfo.topMargin = rectF.bottom;
                 });
@@ -107,7 +107,7 @@ public class FirstActivity extends AppCompatActivity {
                 .setBorderColor(Color.WHITE)
                 .setBorderWidth(2)
                 .setIntervals(new float[]{16, 16})
-                .setOnPosCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {
+                .setOnHLDecorPositionCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {
                     marginInfo.rightMargin = rightMargin + rectF.width() / 2;
                     marginInfo.bottomMargin = bottomMargin + rectF.height() + 12;
                 });

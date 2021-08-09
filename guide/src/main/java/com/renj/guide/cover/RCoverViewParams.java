@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.renj.guide.callback.OnDecorClickListener;
 import com.renj.guide.callback.OnDecorScrollListener;
+import com.renj.guide.cover.callback.OnCViewInflateListener;
 import com.renj.guide.highlight.RHighLightPageParams;
 
 /**
@@ -40,7 +41,7 @@ public class RCoverViewParams {
     /**
      * 遮罩层布局初始化完成回调
      */
-    OnCoverViewInflateFinishListener onCoverViewInflateFinishListener;
+    OnCViewInflateListener onCViewInflateListener;
     /**
      * 遮罩层布局点击回调
      */
@@ -124,11 +125,11 @@ public class RCoverViewParams {
     /**
      * 遮罩层布局初始化完成回调
      *
-     * @param onCoverViewInflateFinishListener
+     * @param onCViewInflateListener
      * @return
      */
-    public RCoverViewParams setOnCoverViewInflateFinishListener(OnCoverViewInflateFinishListener onCoverViewInflateFinishListener) {
-        this.onCoverViewInflateFinishListener = onCoverViewInflateFinishListener;
+    public RCoverViewParams setOnCViewInflateListener(OnCViewInflateListener onCViewInflateListener) {
+        this.onCViewInflateListener = onCViewInflateListener;
         return this;
     }
 
@@ -209,21 +210,8 @@ public class RCoverViewParams {
         RCoverViewParams cloneCoverViewParams = RCoverViewParams.create(this.activity);
         cloneCoverViewParams.coverLayoutId = this.coverLayoutId;
         cloneCoverViewParams.coverView = this.coverView;
-        cloneCoverViewParams.onCoverViewInflateFinishListener = this.onCoverViewInflateFinishListener;
+        cloneCoverViewParams.onCViewInflateListener = this.onCViewInflateListener;
         cloneCoverViewParams.onDecorClickListener = this.onDecorClickListener;
         return cloneCoverViewParams;
-    }
-
-    /**
-     * 遮罩层布局初始化完成回调
-     */
-    public interface OnCoverViewInflateFinishListener {
-        /**
-         * 遮罩层布局初始化完成回调
-         *
-         * @param rCoverViewParams 遮罩View信息
-         * @param coverView        遮罩View布局
-         */
-        void onInflateFinish(RCoverViewParams rCoverViewParams, View coverView);
     }
 }

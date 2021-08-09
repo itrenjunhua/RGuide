@@ -1,4 +1,4 @@
-package com.renj.guide.callback;
+package com.renj.guide.highlight.callback;
 
 import android.support.annotation.IdRes;
 import android.view.View;
@@ -16,7 +16,7 @@ import android.view.View;
  * <p>
  * ======================================================================
  */
-public interface OnHighLightViewClickListener {
+public interface OnHLViewClickListener {
     /**
      * 高亮位置点击
      *

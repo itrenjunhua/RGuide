@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.renj.guide.callback.OnDecorScrollListener;
+import com.renj.guide.cover.callback.OnCViewRemoveListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class CoverViewHelp {
     private List<RCoverViewParams> viewArrayList;
     private View showCoverView;
     private int scaledTouchSlop;
-    private OnCoverViewRemoveListener onCoverViewRemoveListener;
+    private OnCViewRemoveListener onCViewRemoveListener;
 
     public CoverViewHelp() {
         viewArrayList = new ArrayList<>();
@@ -39,10 +40,10 @@ public class CoverViewHelp {
     /**
      * 设置遮罩移除监听
      *
-     * @param onCoverViewRemoveListener
+     * @param onCViewRemoveListener
      */
-    public void setOnCoverViewRemoveListener(OnCoverViewRemoveListener onCoverViewRemoveListener) {
-        this.onCoverViewRemoveListener = onCoverViewRemoveListener;
+    public void setOnCViewRemoveListener(OnCViewRemoveListener onCViewRemoveListener) {
+        this.onCViewRemoveListener = onCViewRemoveListener;
     }
 
     /**
@@ -79,8 +80,8 @@ public class CoverViewHelp {
         final FrameLayout rootView = (FrameLayout) getRootView(rCoverViewParams.activity);
         if (rCoverViewParams.coverView == null)
             rCoverViewParams.coverView = View.inflate(rCoverViewParams.activity, rCoverViewParams.coverLayoutId, null);
-        if (rCoverViewParams.onCoverViewInflateFinishListener != null) {
-            rCoverViewParams.onCoverViewInflateFinishListener.onInflateFinish(rCoverViewParams, rCoverViewParams.coverView);
+        if (rCoverViewParams.onCViewInflateListener != null) {
+            rCoverViewParams.onCViewInflateListener.onInflateFinish(rCoverViewParams, rCoverViewParams.coverView);
         }
         scaledTouchSlop = ViewConfiguration.get(rCoverViewParams.activity).getScaledTouchSlop();
         // 触摸监听
@@ -203,8 +204,8 @@ public class CoverViewHelp {
      * @param notShownCoverViews 未显示的遮罩参数信息集合，如果 hasCoverView 为false，集合元素为空
      */
     private void callBackRemoveListener(boolean hasCoverView, List<RCoverViewParams> notShownCoverViews) {
-        if (onCoverViewRemoveListener != null)
-            onCoverViewRemoveListener.onRemoveCoverView(hasCoverView, notShownCoverViews);
+        if (onCViewRemoveListener != null)
+            onCViewRemoveListener.onRemoveCoverView(hasCoverView, notShownCoverViews);
     }
 
     /**
@@ -215,18 +216,5 @@ public class CoverViewHelp {
      */
     private ViewGroup getRootView(@NonNull Activity activity) {
         return (ViewGroup) activity.findViewById(android.R.id.content);
-    }
-
-    /**
-     * 遮罩移除监听
-     */
-    public interface OnCoverViewRemoveListener {
-        /**
-         * 遮罩移除监听，如果是手动调用 {@link #skipAllCoverView()} 方法，不会回调该方法
-         *
-         * @param hasCoverView       是否还有已添加，但未显示的遮罩
-         * @param notShownCoverViews 未显示的遮罩参数信息集合，如果 hasCoverView 为false，集合元素为空
-         */
-        void onRemoveCoverView(boolean hasCoverView, List<RCoverViewParams> notShownCoverViews);
     }
 }

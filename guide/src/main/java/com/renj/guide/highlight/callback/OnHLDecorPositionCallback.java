@@ -1,4 +1,4 @@
-package com.renj.guide.callback;
+package com.renj.guide.highlight.callback;
 
 import android.graphics.RectF;
 
@@ -18,7 +18,7 @@ import com.renj.guide.highlight.RHighLightPageParams;
  * <p>
  * ======================================================================
  */
-public interface OnPosCallback {
+public interface OnHLDecorPositionCallback {
     /**
      * 高亮View的装饰布局与高亮View的相对位置，<br/>
      * 设置时只需要设置 {@link HighLightMarginInfo#leftMargin}和{@link HighLightMarginInfo#topMargin}
@@ -29,5 +29,5 @@ public interface OnPosCallback {
      * @param rectF        高亮控件在{@link RHighLightPageParams#anchor} 中的 {@link RectF} 值
      * @param marginInfo   {@link HighLightMarginInfo} 对象信息
      */
-    void decorPosInfo(float rightMargin, float bottomMargin, RectF rectF, HighLightMarginInfo marginInfo);
+    void decorPositionInfo(float rightMargin, float bottomMargin, RectF rectF, HighLightMarginInfo marginInfo);
 }

@@ -56,7 +56,7 @@ public class SecondActivity extends AppCompatActivity {
                 .setHighLightShape(HighLightShape.CIRCULAR)
                 .setHighView(R.id.iv_hight)
                 .setDecorLayoutId(R.layout.layout_hight)
-                .setOnPosCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {
+                .setOnHLDecorPositionCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {
                     marginInfo.rightMargin = rightMargin;
                     marginInfo.bottomMargin = bottomMargin + view.getHeight();
                 });
