@@ -300,10 +300,12 @@ import java.util.List;
                         float offsetY = Math.abs(moveY - downY);
                         if ((offsetX > offsetY) && (offsetX > scaledTouchSlop)) {
                             int axis = (moveX > downX) ? OnDecorScrollListener.AXIS_POSITIVE : OnDecorScrollListener.AXIS_NEGATIVE;
-                            rHighLightViewParams.onDecorScrollListener.onScroll(OnDecorScrollListener.SCROLL_HORIZONTAL, axis);
+                            rHighLightViewParams.onDecorScrollListener.onScroll(rHighLightViewParams.decorLayoutView,
+                                    OnDecorScrollListener.SCROLL_HORIZONTAL, axis);
                         } else if (offsetY > scaledTouchSlop) {
                             int axis = (moveY > downY) ? OnDecorScrollListener.AXIS_POSITIVE : OnDecorScrollListener.AXIS_NEGATIVE;
-                            rHighLightViewParams.onDecorScrollListener.onScroll(OnDecorScrollListener.SCROLL_VERTICAL, axis);
+                            rHighLightViewParams.onDecorScrollListener.onScroll(rHighLightViewParams.decorLayoutView,
+                                    OnDecorScrollListener.SCROLL_VERTICAL, axis);
                         }
                     }
                 }
@@ -317,7 +319,8 @@ import java.util.List;
                 for (RHighLightViewParams rHighLightViewParams : rHighLightViewParamsList) {
                     if (rHighLightViewParams.onHLViewClickListener != null) {
                         if (rHighLightViewParams.rectF.contains(upX, upY)) {
-                            rHighLightViewParams.onHLViewClickListener.onHighLightViewClick(rHighLightViewParams.highView, rHighLightViewParams.highViewId);
+                            rHighLightViewParams.onHLViewClickListener.onHighLightViewClick(rHighLightViewParams.highView,
+                                    rHighLightViewParams.highViewId);
                         }
                     }
                 }

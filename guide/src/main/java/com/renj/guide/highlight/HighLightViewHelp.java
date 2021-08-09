@@ -2,6 +2,8 @@ package com.renj.guide.highlight;
 
 import android.support.annotation.NonNull;
 
+import com.renj.guide.highlight.callback.OnHLViewRemoveListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,13 +22,13 @@ import java.util.List;
  */
 public class HighLightViewHelp {
     private List<HighLightViewPage> highLightViewPages;
-    private OnHighLightViewRemoveListener onHighLightViewRemoveListener;
+    private OnHLViewRemoveListener onHLViewRemoveListener;
 
     /**
      * 设置移除高亮监听
      */
-    public void setOnHighLightViewRemoveListener(OnHighLightViewRemoveListener onHighLightViewRemoveListener) {
-        this.onHighLightViewRemoveListener = onHighLightViewRemoveListener;
+    public void setOnHLViewRemoveListener(OnHLViewRemoveListener onHLViewRemoveListener) {
+        this.onHLViewRemoveListener = onHLViewRemoveListener;
     }
 
     /**
@@ -47,7 +49,7 @@ public class HighLightViewHelp {
         checkHighLightPageParams(rHighLightPageParams);
         checkHighLightViewParams(rHighLightViewParams);
 
-        HighLightViewPage highLightViewPage = new HighLightViewPage(rHighLightPageParams);
+        HighLightViewPage highLightViewPage = new HighLightViewPage(rHighLightPageParams, this);
         highLightViewPage.addHighLight(rHighLightViewParams);
         highLightViewPage.setOnRemoveViewListener(new HighLightViewPage.OnRemoveViewListener() {
             @Override
@@ -55,8 +57,6 @@ public class HighLightViewHelp {
                 highLightViewPages.remove(highLightViewPage);
                 // 回调移除方法
                 callBackRemoveListener(highLightViewPages.isEmpty(), highLightViewPages);
-                if (rHighLightPageParams.autoShowNext)
-                    showNext();
             }
         });
         highLightViewPages.add(highLightViewPage);
@@ -80,7 +80,7 @@ public class HighLightViewHelp {
         }
         if (rHighLightBgParamsList.isEmpty()) return this;
 
-        HighLightViewPage highLightViewPage = new HighLightViewPage(rHighLightPageParams);
+        HighLightViewPage highLightViewPage = new HighLightViewPage(rHighLightPageParams, this);
         for (RHighLightViewParams rHighLightViewParams : rHighLightBgParamsList) {
             checkHighLightViewParams(rHighLightViewParams);
             highLightViewPage.addHighLight(rHighLightViewParams);
@@ -91,9 +91,6 @@ public class HighLightViewHelp {
                 highLightViewPages.remove(highLightViewPage);
                 // 回调移除方法
                 callBackRemoveListener(highLightViewPages.isEmpty(), highLightViewPages);
-                if (rHighLightPageParams.autoShowNext) {
-                    showNext();
-                }
             }
         });
         highLightViewPages.add(highLightViewPage);
@@ -103,7 +100,7 @@ public class HighLightViewHelp {
     /**
      * 显示下一个高亮布局
      */
-    private void showNext() {
+    void showNext() {
         // 如果有没有移除的高亮布局，就先移除
         if (highLightViewPages.isEmpty()) return;
         highLightViewPages.get(0).remove();
@@ -171,12 +168,12 @@ public class HighLightViewHelp {
      * @param notShownHighLightViews 未显示的高亮信息集合，如果 hasHighLight 为false，集合元素为空
      */
     private void callBackRemoveListener(boolean hasHighLight, List<HighLightViewPage> notShownHighLightViews) {
-        if (onHighLightViewRemoveListener != null) {
-            List<HighLightPageInfo> result = new ArrayList<>();
+        if (onHLViewRemoveListener != null) {
+            List<OnHLViewRemoveListener.HighLightPageInfo> result = new ArrayList<>();
             for (HighLightViewPage notShownHighLightView : notShownHighLightViews) {
-                result.add(new HighLightPageInfo(notShownHighLightView.rHighLightPageParams, notShownHighLightView.highLightViewParams));
+                result.add(new OnHLViewRemoveListener.HighLightPageInfo(notShownHighLightView.rHighLightPageParams, notShownHighLightView.highLightViewParams));
             }
-            onHighLightViewRemoveListener.onRemoveHighLightView(hasHighLight, result);
+            onHLViewRemoveListener.onRemoveHighLightView(hasHighLight, result);
         }
     }
 
@@ -197,29 +194,6 @@ public class HighLightViewHelp {
 
         if (rHighLightViewParams.decorLayoutId == -1 && rHighLightViewParams.decorLayoutView == null) {
             throw new IllegalArgumentException("Params Exception: No decorative layout information is highlighted!");
-        }
-    }
-
-    /**
-     * 遮罩移除监听
-     */
-    public interface OnHighLightViewRemoveListener {
-        /**
-         * 高亮移除监听，如果是手动调用 {@link #skipAllHighLightView()} 方法，不会回调该方法
-         *
-         * @param hasHighLight           是否还有已添加，但未显示的高亮
-         * @param notShownHighLightViews 未显示的高亮信息集合，如果 hasHighLight 为false，集合元素为空
-         */
-        void onRemoveHighLightView(boolean hasHighLight, List<HighLightPageInfo> notShownHighLightViews);
-    }
-
-    public static class HighLightPageInfo {
-        public RHighLightPageParams rHighLightPageParams;
-        public List<RHighLightViewParams> highLightViewParams;
-
-        HighLightPageInfo(RHighLightPageParams rHighLightPageParams, List<RHighLightViewParams> highLightViewParams) {
-            this.rHighLightPageParams = rHighLightPageParams;
-            this.highLightViewParams = highLightViewParams;
         }
     }
 }

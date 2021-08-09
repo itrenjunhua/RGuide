@@ -1,5 +1,7 @@
 package com.renj.guide.callback;
 
+import android.view.View;
+
 /**
  * ======================================================================
  * <p>
@@ -43,8 +45,9 @@ public interface OnDecorScrollListener {
     /**
      * 在装饰背景上滑动
      *
+     * @param decorView   装饰或遮罩布局
      * @param orientation 滑动的方向 水平/垂直 方向 {@link #SCROLL_VERTICAL} 或 {@link #SCROLL_HORIZONTAL}
      * @param axis        往正方向滑动还是往负方向滑动 {@link #AXIS_POSITIVE} 或 {@link #AXIS_NEGATIVE}
      */
-    void onScroll(int orientation, int axis);
+    void onScroll(View decorView, int orientation, int axis);
 }

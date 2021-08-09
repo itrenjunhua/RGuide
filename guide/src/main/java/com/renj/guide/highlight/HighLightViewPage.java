@@ -29,13 +29,15 @@ class HighLightViewPage {
 
     List<RHighLightViewParams> highLightViewParams;
     RHighLightPageParams rHighLightPageParams;
+    private HighLightViewHelp highLightViewHelp;
     private HighLightView highLightView; // 显示的高亮View
 
     /**
      * 构造函数
      */
-    HighLightViewPage(RHighLightPageParams rHighLightPageParams) {
+    HighLightViewPage(RHighLightPageParams rHighLightPageParams, HighLightViewHelp highLightViewHelp) {
         this.rHighLightPageParams = rHighLightPageParams;
+        this.highLightViewHelp = highLightViewHelp;
         highLightViewParams = new ArrayList<>();
     }
 
@@ -85,6 +87,9 @@ class HighLightViewPage {
             public void onClick(View v) {
                 if (rHighLightPageParams.autoRemoveView)
                     remove();
+
+                if (rHighLightPageParams.autoShowNext)
+                    highLightViewHelp.showNext();
 
                 if (rHighLightPageParams.onDecorClickListener != null)
                     rHighLightPageParams.onDecorClickListener.onClick();

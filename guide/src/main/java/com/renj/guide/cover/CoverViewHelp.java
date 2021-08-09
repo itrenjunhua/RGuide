@@ -107,10 +107,12 @@ public class CoverViewHelp {
                             float offsetY = Math.abs(moveY - downY);
                             if ((offsetX > offsetY) && (offsetX > scaledTouchSlop)) {
                                 int axis = (moveX > downX) ? OnDecorScrollListener.AXIS_POSITIVE : OnDecorScrollListener.AXIS_NEGATIVE;
-                                rCoverViewParams.onDecorScrollListener.onScroll(OnDecorScrollListener.SCROLL_HORIZONTAL, axis);
+                                rCoverViewParams.onDecorScrollListener.onScroll(rCoverViewParams.coverView,
+                                        OnDecorScrollListener.SCROLL_HORIZONTAL, axis);
                             } else if (offsetY > scaledTouchSlop) {
                                 int axis = (moveY > downY) ? OnDecorScrollListener.AXIS_POSITIVE : OnDecorScrollListener.AXIS_NEGATIVE;
-                                rCoverViewParams.onDecorScrollListener.onScroll(OnDecorScrollListener.SCROLL_VERTICAL, axis);
+                                rCoverViewParams.onDecorScrollListener.onScroll(rCoverViewParams.coverView,
+                                        OnDecorScrollListener.SCROLL_VERTICAL, axis);
                             }
                         }
                         downX = moveX;

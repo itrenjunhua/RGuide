@@ -54,8 +54,7 @@ public class ThreeActivity extends AppCompatActivity {
 
     private void addViewToLayout() {
         RCoverViewParams rCoverViewParams1 = RCoverViewParams.create(this)
-                .setAutoRemoveView(false)
-                .setAutoShowNext(false)
+                .setAutoRemoveAndShowNextView(false)
                 .setCoverLayoutId(R.layout.layout_three1)
                 .setOnCViewInflateListener((rCoverViewParams, coverView) -> {
                     Button btSkip = coverView.findViewById(R.id.tv_click_skip);

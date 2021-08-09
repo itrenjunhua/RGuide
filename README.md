@@ -21,6 +21,8 @@ Android 应用新手操作引导实现
 	RHighLightPageParams highLightPageParams = RHighLightPageParams.create(@NonNull Activity activity) 
             .setAnchor(findViewById(R.id.id_container)) // 绑定根布局，在Activity中可不写;
             .setMaskColor(int maskColor) // 设置背景颜色
+			.setAutoRemoveView(boolean autoRemoveView) // 设置点击任意位置是否自动移除高亮遮罩，默认true
+			.setAutoShowNext(boolean autoShowNext) // 当移除(手动或自动)之后是否自动显示下一个高亮，如果有的话。默认true
             .setOnDecorClickListener(OnDecorClickListener onDecorClickListener); // 设置装饰布局点击回调
 			
 	// 创建高亮View相关参数
@@ -35,10 +37,13 @@ Android 应用新手操作引导实现
             .setBorderColor(int borderColor) // 设置边框颜色，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}，该方法才能生效
             .setBorderLineType(BorderLineType borderLineType) // 设置边框类型，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}，该方法才能生效
             .setIntervals(@NonNull float[] intervals) // 设置虚线边框的样式，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}并且边框类型为 {@link BorderLineType#DASH_LINE}，该方法才能生效
+			.setBorderMargin(int borderMargin) // 设置绘制的边框线与高亮区域的边距
             .setBlurShow(boolean blurShow) // 设置是否需要模糊化边框，默认不显示
             .setBlurWidth(int blurSize) // 设置模糊边界的宽度，需要调用 {@link #setBlurShow(boolean)} 方法设置为 {@code true}，该方法才能生效，单位dp
-            .setOnDecorViewInflateFinish((decorLayoutView) -> {}) // 设置装饰布局初始化完成回调
-            .setOnPosCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {}); // 修正高亮控件和它的装饰控件相对位置
+            .setOnHLDecorInflateListener((decorLayoutView) -> {}) // 设置装饰布局初始化完成回调
+			.setOnHLViewClickListener((highLightView, highViewId) -> {}) // 设置高亮布局点击监听
+			.setOnDecorScrollListener((decorView, orientation, axis) -> {}) // 设置装饰背景滑动监听
+            .setOnHLDecorPositionCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {}); // 修正高亮控件和它的装饰控件相对位置
 
 	// 添加和显示高亮View
 	RGuideViewManager.getInstance()
@@ -53,7 +58,10 @@ Android 应用新手操作引导实现
 	// 创建覆盖页面类型参数
 	RCoverViewParams rCoverViewParams = RCoverViewParams.create(this)
 	        .setCoverLayoutId(@LayoutRes int coverLayoutId) // 设置覆盖布局
-	        .setOnCoverViewInflateFinish((rCoverViewParams, coverView) -> {}) // 遮罩层布局初始化完成回调
+			.setAutoRemoveView(boolean autoRemoveView) // 设置点击任意位置是否自动移除高亮遮罩，默认true
+			.setAutoShowNext(boolean autoShowNext) // 当移除(手动或自动)之后是否自动显示下一个高亮，如果有的话。默认true
+	        .setOnCViewInflateListener((rCoverViewParams, coverView) -> {}) // 遮罩层布局初始化完成回调
+			.setOnDecorScrollListener((decorView, orientation, axis) -> {}) // 设置装饰背景滑动监听
 	        .setOnDecorClickListener(() ->{}); // 设置遮罩层点击回调
 
 	// 添加和显示遮罩层

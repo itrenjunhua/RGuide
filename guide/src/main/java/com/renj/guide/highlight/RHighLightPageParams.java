@@ -79,7 +79,20 @@ public class RHighLightPageParams {
     }
 
     /**
-     * 设置点击任意位置是否自动移除高亮遮罩，默认true
+     * 设置点击任意位置是否自动移除高亮遮罩并且自动显示下一个高亮，默认true。<br/>
+     * <b>与 {@link #setAutoRemoveView(boolean)} 和 {@link #setAutoShowNext(boolean)} 方法互斥，后设置生效</b>
+     *
+     * @param autoRemoveAndShowNextView true：移除 false：不移除
+     */
+    public RHighLightPageParams setAutoRemoveAndShowNextView(boolean autoRemoveAndShowNextView) {
+        this.setAutoRemoveView(autoRemoveAndShowNextView);
+        this.setAutoShowNext(autoRemoveAndShowNextView);
+        return this;
+    }
+
+    /**
+     * 设置点击任意位置是否自动移除高亮遮罩，默认true<br/>
+     * <b>与 {@link #setAutoRemoveAndShowNextView(boolean)}方法互斥，后设置生效</b>
      *
      * @param autoRemoveView true：移除 false：不移除
      */
@@ -89,7 +102,8 @@ public class RHighLightPageParams {
     }
 
     /**
-     * 当移除(手动或自动)之后是否自动显示下一个高亮，如果有的话。默认true
+     * 当移除(手动或自动)之后是否自动显示下一个高亮，如果有的话。默认true<br/>
+     * <b>与 {@link #setAutoRemoveAndShowNextView(boolean)}方法互斥，后设置生效</b>
      *
      * @param autoShowNext true：自动显示 false：不自动显示
      */
