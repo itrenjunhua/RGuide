@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavadocGenerationManager">
-    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/Desktop/docs" />
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/docs" />
     <option name="OTHER_OPTIONS" value="-encoding utf-8 -charset utf-8  -windowtitle &quot;操作引导(RGuide)文档&quot;" />
   </component>
   <component name="NullableNotNullManager">

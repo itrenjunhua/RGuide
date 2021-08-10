@@ -15,7 +15,7 @@ package com.renj.guide.callback;
  */
 public interface OnDecorClickListener {
     /**
-     * 点击回调方法，要想点击有效果，必须设置intercept为TRUE
+     * 点击回调方法
      */
     void onClick();
 }
