@@ -115,8 +115,8 @@ public class RHighLightPageParams {
     /**
      * 设置装饰布局点击回调
      *
-     * @param onDecorClickListener
-     * @return
+     * @param onDecorClickListener {@link OnDecorClickListener}
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightPageParams setOnDecorClickListener(OnDecorClickListener onDecorClickListener) {
         this.onDecorClickListener = onDecorClickListener;
@@ -168,20 +168,5 @@ public class RHighLightPageParams {
      */
     public boolean isAutoShowNext() {
         return autoShowNext;
-    }
-    /* ------------------ 深度克隆方法 ----------------------*/
-
-    /**
-     * 深度克隆出一个新的 {@link RHighLightPageParams} 对象，可以在继承老的参数之后进行部分修改
-     *
-     * @return
-     */
-    public RHighLightPageParams cloneParams() {
-        RHighLightPageParams cloneRHighLightPageParams = RHighLightPageParams.create(this.activity);
-        cloneRHighLightPageParams.anchor = this.anchor;
-        cloneRHighLightPageParams.maskColor = this.maskColor;
-        cloneRHighLightPageParams.autoRemoveView = this.autoRemoveView;
-        cloneRHighLightPageParams.onDecorClickListener = this.onDecorClickListener;
-        return cloneRHighLightPageParams;
     }
 }

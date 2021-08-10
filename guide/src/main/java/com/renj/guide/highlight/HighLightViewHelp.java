@@ -25,13 +25,6 @@ public class HighLightViewHelp {
     private OnHLViewRemoveListener onHLViewRemoveListener;
 
     /**
-     * 设置移除高亮监听
-     */
-    public void setOnHLViewRemoveListener(OnHLViewRemoveListener onHLViewRemoveListener) {
-        this.onHLViewRemoveListener = onHLViewRemoveListener;
-    }
-
-    /**
      * 构造函数
      */
     public HighLightViewHelp() {
@@ -111,8 +104,6 @@ public class HighLightViewHelp {
 
     /**
      * 显示高亮布局，点击之后自动显示下一个高亮视图，如果有上一个高亮没有移除，会自动移除掉
-     *
-     * @return 当前显示的高亮View
      */
     public void showHighLightView() {
         showNext();
@@ -159,6 +150,13 @@ public class HighLightViewHelp {
      */
     public void skipAllHighLightView() {
         highLightViewPages.clear();
+    }
+
+    /**
+     * 设置移除高亮监听
+     */
+    public void setOnHLViewRemoveListener(OnHLViewRemoveListener onHLViewRemoveListener) {
+        this.onHLViewRemoveListener = onHLViewRemoveListener;
     }
 
     /**

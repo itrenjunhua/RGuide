@@ -190,19 +190,24 @@ import java.util.List;
                 mPaint.setMaskFilter(new BlurMaskFilter(dip2px(rHighLightViewParams.blurSize), BlurMaskFilter.Blur.SOLID));
             else
                 mPaint.setMaskFilter(null);
+
+            RectF drawRectF = new RectF(rHighLightViewParams.rectF.left - dip2px(rHighLightViewParams.highMarginRectRectF.left),
+                    rHighLightViewParams.rectF.top - dip2px(rHighLightViewParams.highMarginRectRectF.top),
+                    rHighLightViewParams.rectF.right + dip2px(rHighLightViewParams.highMarginRectRectF.right),
+                    rHighLightViewParams.rectF.bottom + dip2px(rHighLightViewParams.highMarginRectRectF.bottom));
+
             if (rHighLightViewParams.highLightShape != null) {
                 switch (rHighLightViewParams.highLightShape) {
                     case CIRCULAR:// 圆形
-                        float width = rHighLightViewParams.rectF.width();
-                        float height = rHighLightViewParams.rectF.height();
+                        float width = drawRectF.width();
+                        float height = drawRectF.height();
                         float circle_center1;
                         float circle_center2;
                         double radius = Math.sqrt(Math.pow(width / 2, 2)
                                 + Math.pow(height / 2, 2));
                         circle_center1 = width / 2;
                         circle_center2 = height / 2;
-                        canvas.drawCircle(rHighLightViewParams.rectF.right - circle_center1,
-                                rHighLightViewParams.rectF.bottom - circle_center2,
+                        canvas.drawCircle(drawRectF.right - circle_center1, drawRectF.bottom - circle_center2,
                                 (int) radius, mPaint);
 
                         if (rHighLightViewParams.borderShow)
@@ -210,13 +215,13 @@ import java.util.List;
 
                         break;
                     case RECTANGULAR:
-                        canvas.drawRoundRect(rHighLightViewParams.rectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), mPaint);
+                        canvas.drawRoundRect(drawRectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), mPaint);
                         if (rHighLightViewParams.borderShow)
                             drawRectBorder(rHighLightViewParams, canvas);
                         break;
                 }
             } else {
-                canvas.drawRoundRect(rHighLightViewParams.rectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), mPaint);
+                canvas.drawRoundRect(drawRectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), mPaint);
                 if (rHighLightViewParams.borderShow)
                     drawRectBorder(rHighLightViewParams, canvas);
             }
@@ -239,7 +244,7 @@ import java.util.List;
         paint.setAntiAlias(true);
         paint.setColor(rHighLightViewParams.borderColor);
         Path path = new Path();
-        if (rHighLightViewParams.borderMargin > 0) {
+        if (rHighLightViewParams.borderMargin != 0) {
             radius = radius + dip2px(rHighLightViewParams.borderMargin);
         }
         path.addCircle(rHighLightViewParams.rectF.right - circle_center1,
@@ -264,7 +269,7 @@ import java.util.List;
         paint.setColor(rHighLightViewParams.borderColor);
         Path path = new Path();
         RectF rectF = rHighLightViewParams.rectF;
-        if (rHighLightViewParams.borderMargin > 0) {
+        if (rHighLightViewParams.borderMargin != 0) {
             int borderMargin = dip2px(rHighLightViewParams.borderMargin);
             rectF.inset(-borderMargin, -borderMargin);
         }
@@ -330,6 +335,7 @@ import java.util.List;
     }
 
     public int dip2px(float dpValue) {
+        if (dpValue == 0) return 0;
         final float scale = getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }

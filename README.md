@@ -46,12 +46,28 @@ Android 应用新手操作引导实现
             .setOnHLDecorPositionCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {}); // 修正高亮控件和它的装饰控件相对位置
 
 	// 添加和显示高亮View
-	RGuideViewManager.getInstance()
+	HighLightViewHelp highLightViewHelp = RGuideViewManager.createHighLightViewHelp();
+	highLightViewHelp
 		    .addHighLightView(@NonNull RHighLightPageParams rHighLightPageParams,
 		                      @NonNull RHighLightViewParams rHighLightViewParams) // 分开添加，表示分步显示
 		    .addHighLightView(@NonNull RHighLightPageParams rHighLightPageParams,
 		                      @NonNull List<RHighLightViewParams> rHighLightBgParamsList) // 添加一个集合，表示一个页面同时高亮多个View
 		    .showHighLightView(); // 显示高亮View
+
+#### HighLightViewHelp 其他常用方法
+
+* addHighLightView()：增加一个高亮的布局
+* showHighLightView()：显示高亮布局，点击之后自动显示下一个高亮视图，如果有上一个高亮没有移除，会自动移除掉
+* removeHighLightView()：移除指定的高亮Page
+* skipAllHighLightView()：移除后面的高亮Page/跳过后面所有的高亮Page
+* setOnHLViewRemoveListener()：设置移除高亮监听
+
+
+---
+
+========================================== 分割线 ==========================================
+
+---
 
 ### 覆盖形式
 
@@ -65,24 +81,19 @@ Android 应用新手操作引导实现
 	        .setOnDecorClickListener(() ->{}); // 设置遮罩层点击回调
 
 	// 添加和显示遮罩层
-	RGuideViewManager.getInstance()
+	CoverViewHelp coverViewHelp = RGuideViewManager.createCoverViewHelp();
+	coverViewHelp
             .addCoverView(@NonNull RCoverViewParams rCoverViewParams) // 在整个窗体上面增加一层布局，可以多次添加
             .showCoverView(); // 开始显示覆盖布局
 
-	// 其他方法 通过 RGuideViewManager.getInstance(). 调用
-	removeCoverView(@NonNull RCoverViewParams rCoverViewParams, @NonNull View coverView) // 移除指定的遮罩层，默认会同时清除其他的遮罩层
-	removeCoverView(@NonNull RCoverViewParams rCoverViewParams, @NonNull View coverView, boolean clearOtherCoverView) // 移除指定的遮罩层，并设置是否需要移除其他的遮罩层
-	skipAllCoverView() // 移除后面的遮罩层/跳过后面所有的遮罩层
-	
-	对于 removeCoverView(@NonNull RCoverViewParams rCoverViewParams, @NonNull View coverView, boolean clearOtherCoverView) 方法，详细说明如下：
-     	* 移除指定的遮罩层，并设置是否需要移除其他的遮罩层。
-     		* 如果移除（clearOtherCoverView值传true），那么该页面就不会在显示遮罩层了，除非再次添加和显示
-     		* 如果不移除（clearOtherCoverView值传false）并且后面还有，那么可以继续调用 {@link #showCoverView()} 方法显示。
-     		
-     	* 特别注意：当当前页面不在需要显示并且后面还有未显示完的遮罩层时，必须清除其他的遮罩层，
-     		* 方式1：该方法的参数{@code clearOtherCoverView} 值传 {@code true}
-     		* 方式2：手动调用 {@link #skipAllCoverView()} 方法跳过当前页面后面所有的遮罩层。
-     	* 如果不试用上述的方法清除遮罩层，那么后面的遮罩层使用(包括当前页或者其他页面)将会出现问题
+
+#### CoverViewHelp 其他常用方法
+
+* addCoverView()：在整个窗体上面增加一层布局，默认点击移除视图
+* showCoverView()：显示高亮布局，点击之后自动显示下一个高亮视图
+* removeCoverView()：移除当前的遮罩层
+* skipAllCoverView()：移除后面的遮罩层/跳过后面所有的遮罩层
+* setOnCViewRemoveListener()：设置遮罩移除监听
 
 ## 混淆
 

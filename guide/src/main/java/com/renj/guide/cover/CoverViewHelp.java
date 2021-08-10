@@ -38,15 +38,6 @@ public class CoverViewHelp {
     }
 
     /**
-     * 设置遮罩移除监听
-     *
-     * @param onCViewRemoveListener
-     */
-    public void setOnCViewRemoveListener(OnCViewRemoveListener onCViewRemoveListener) {
-        this.onCViewRemoveListener = onCViewRemoveListener;
-    }
-
-    /**
      * 在整个窗体上面增加一层布局，默认点击移除视图。<b>需要调用 {@link #showCoverView()} 方法</b>
      *
      * @param rCoverViewParams {@link RCoverViewParams} 对象
@@ -151,7 +142,7 @@ public class CoverViewHelp {
     }
 
     /**
-     * 移除指定的遮罩层，默认会同时清除其他的遮罩层，{@link #removeCoverView(boolean)}
+     * 移除当前的遮罩层，默认会同时清除其他的遮罩层，{@link #removeCoverView(boolean)}
      *
      * @see #removeCoverView(boolean)
      * @see #skipAllCoverView()
@@ -161,7 +152,7 @@ public class CoverViewHelp {
     }
 
     /**
-     * 移除指定的遮罩层，并设置是否需要移除其他的遮罩层。<br/>
+     * 移除当前的遮罩层，并设置是否需要移除其他的遮罩层。<br/>
      * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      * 如果移除（clearOtherCoverView值传true），那么该页面就不会在显示遮罩层了，除非再次添加和显示<br/>
      * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -197,6 +188,15 @@ public class CoverViewHelp {
     public void skipAllCoverView() {
         viewArrayList.clear();
         showCoverView = null;
+    }
+
+    /**
+     * 设置遮罩移除监听
+     *
+     * @param onCViewRemoveListener
+     */
+    public void setOnCViewRemoveListener(OnCViewRemoveListener onCViewRemoveListener) {
+        this.onCViewRemoveListener = onCViewRemoveListener;
     }
 
     /**

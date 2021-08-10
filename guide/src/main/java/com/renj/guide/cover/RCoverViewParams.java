@@ -74,7 +74,7 @@ public class RCoverViewParams {
      * 设置覆盖布局。<b>和方法 {@link #setCoverLayoutView(View)} 二选一即可，两个都设置了，该方法优先级更低</b>
      *
      * @param coverLayoutId 覆盖布局id
-     * @return
+     * @return 当前 {@link RCoverViewParams} 对象，方便链式调用
      * @see #setCoverLayoutView(View)
      */
     public RCoverViewParams setCoverLayoutId(@LayoutRes int coverLayoutId) {
@@ -90,7 +90,7 @@ public class RCoverViewParams {
      * 设置覆盖布局。<b>和方法 {@link #setCoverLayoutId(int)} 二选一即可，两个都设置了，该方法优先级更高</b>
      *
      * @param coverView 覆盖布局
-     * @return
+     * @return 当前 {@link RCoverViewParams} 对象，方便链式调用
      * @see #setCoverLayoutId(int)
      */
     public RCoverViewParams setCoverLayoutView(@NonNull View coverView) {
@@ -139,8 +139,8 @@ public class RCoverViewParams {
     /**
      * 遮罩层布局初始化完成回调
      *
-     * @param onCViewInflateListener
-     * @return
+     * @param onCViewInflateListener {@link OnCViewInflateListener}
+     * @return 当前 {@link RCoverViewParams} 对象，方便链式调用
      */
     public RCoverViewParams setOnCViewInflateListener(OnCViewInflateListener onCViewInflateListener) {
         this.onCViewInflateListener = onCViewInflateListener;
@@ -150,8 +150,8 @@ public class RCoverViewParams {
     /**
      * 设置遮罩层点击回调
      *
-     * @param onDecorClickListener
-     * @return
+     * @param onDecorClickListener {@link OnDecorClickListener}
+     * @return 当前 {@link RCoverViewParams} 对象，方便链式调用
      */
     public RCoverViewParams setOnDecorClickListener(OnDecorClickListener onDecorClickListener) {
         this.onDecorClickListener = onDecorClickListener;
@@ -160,6 +160,9 @@ public class RCoverViewParams {
 
     /**
      * 设置遮罩层滑动监听
+     *
+     * @param onDecorScrollListener {@link OnDecorScrollListener}
+     * @return 当前 {@link RCoverViewParams} 对象，方便链式调用
      */
     public RCoverViewParams setOnDecorScrollListener(OnDecorScrollListener onDecorScrollListener) {
         this.onDecorScrollListener = onDecorScrollListener;
@@ -211,21 +214,5 @@ public class RCoverViewParams {
      */
     public boolean isAutoShowNext() {
         return autoShowNext;
-    }
-
-    /* ------------------ 深度克隆方法 ----------------------*/
-
-    /**
-     * 深度克隆出一个新的 {@link RCoverViewParams} 对象，可以在继承老的参数之后进行部分修改
-     *
-     * @return
-     */
-    public RCoverViewParams cloneParams() {
-        RCoverViewParams cloneCoverViewParams = RCoverViewParams.create(this.activity);
-        cloneCoverViewParams.coverLayoutId = this.coverLayoutId;
-        cloneCoverViewParams.coverView = this.coverView;
-        cloneCoverViewParams.onCViewInflateListener = this.onCViewInflateListener;
-        cloneCoverViewParams.onDecorClickListener = this.onDecorClickListener;
-        return cloneCoverViewParams;
     }
 }

@@ -24,7 +24,7 @@ public class RGuideViewManager {
     /**
      * 创建高亮View样式帮助类
      *
-     * @return
+     * @return {@link HighLightViewHelp} 对象
      */
     public static HighLightViewHelp createHighLightViewHelp() {
         return new HighLightViewHelp();
@@ -33,7 +33,7 @@ public class RGuideViewManager {
     /**
      * 创建遮罩样式帮助类
      *
-     * @return
+     * @return {@link CoverViewHelp} 对象
      */
     public static CoverViewHelp createCoverViewHelp() {
         return new CoverViewHelp();

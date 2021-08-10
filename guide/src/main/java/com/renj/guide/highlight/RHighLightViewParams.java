@@ -52,13 +52,17 @@ public class RHighLightViewParams {
      */
     int radius = 6;
     /**
+     * 高亮区域与高亮控件的边距，单位：dp 默认 0
+     */
+    RectF highMarginRectRectF = new RectF(0, 0, 0, 0);
+    /**
      * 是否需要边框，默认显示
      */
     boolean borderShow = true;
     /**
      * 绘制的边框线与高亮区域的边距，单位：dp 默认 0
      */
-    int borderMargin = 0;
+    float borderMargin = 0;
     /**
      * 边框颜色，默认和背景颜色一样
      */
@@ -132,8 +136,8 @@ public class RHighLightViewParams {
     /**
      * 需要高亮的View。<b>和方法 {@link #setHighView(int)} 二选一即可，若两个都设置了，该方法优先级更高</b>
      *
-     * @param highView
-     * @return
+     * @param highView 需要高亮的控件
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      * @see #setHighView(int)
      */
     public RHighLightViewParams setHighView(View highView) {
@@ -144,8 +148,8 @@ public class RHighLightViewParams {
     /**
      * 需要高亮的ViewId。<b>和方法 {@link #setHighView(View)} 二选一即可，两个都设置了，该方法优先级更低</b>
      *
-     * @param highViewId
-     * @return
+     * @param highViewId 需要高亮的控件 Id
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      * @see #setHighView(View)
      */
     public RHighLightViewParams setHighView(@IdRes int highViewId) {
@@ -156,8 +160,8 @@ public class RHighLightViewParams {
     /**
      * 设置高亮背景装饰布局。<b>和方法 {@link #setDecorLayoutId(int)} 二选一即可，两个都设置了，该方法优先级更高</b>
      *
-     * @param decorLayoutView
-     * @return
+     * @param decorLayoutView 高亮装饰布局
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      * @see #setDecorLayoutId(int)
      */
     public RHighLightViewParams setDecorLayoutView(@NonNull View decorLayoutView) {
@@ -171,8 +175,8 @@ public class RHighLightViewParams {
     /**
      * 设置高亮背景装饰布局。<b>和方法 {@link #setDecorLayoutView(View)} 二选一即可，若两个都设置了，该方法优先级更低</b>
      *
-     * @param decorLayoutId
-     * @return
+     * @param decorLayoutId 高亮装饰布局id
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      * @see #setDecorLayoutView(View)
      */
     public RHighLightViewParams setDecorLayoutId(@LayoutRes int decorLayoutId) {
@@ -187,7 +191,7 @@ public class RHighLightViewParams {
      * 设置高亮形状，默认 矩形
      *
      * @param highLightShape {@link HighLightShape}
-     * @return
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightViewParams setHighLightShape(HighLightShape highLightShape) {
         this.highLightShape = highLightShape;
@@ -201,6 +205,19 @@ public class RHighLightViewParams {
      */
     public RHighLightViewParams setRadius(int radius) {
         this.radius = radius;
+        return this;
+    }
+
+    /**
+     * 设置高亮区域与高亮控件的边距，单位：dp
+     *
+     * @param left   左边距
+     * @param top    上边距
+     * @param right  右边距
+     * @param bottom 下边距
+     */
+    public RHighLightViewParams setHighMarginRectRect(float left, float top, float right, float bottom) {
+        this.highMarginRectRectF.set(left, top, right, bottom);
         return this;
     }
 
@@ -219,7 +236,7 @@ public class RHighLightViewParams {
      *
      * @param borderMargin 绘制的边框线与高亮区域的边距，单位：dp
      */
-    public RHighLightViewParams setBorderMargin(int borderMargin) {
+    public RHighLightViewParams setBorderMargin(float borderMargin) {
         this.borderMargin = borderMargin;
         return this;
     }
@@ -303,8 +320,8 @@ public class RHighLightViewParams {
     /**
      * 设置装饰布局初始化完成回调
      *
-     * @param onHLDecorInflateListener
-     * @return
+     * @param onHLDecorInflateListener {@link OnHLDecorInflateListener}
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightViewParams setOnHLDecorInflateListener(OnHLDecorInflateListener onHLDecorInflateListener) {
         this.onHLDecorInflateListener = onHLDecorInflateListener;
@@ -314,7 +331,8 @@ public class RHighLightViewParams {
     /**
      * 设置高亮布局点击监听
      *
-     * @param onHLViewClickListener
+     * @param onHLViewClickListener {@link OnHLViewClickListener}
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightViewParams setOnHLViewClickListener(OnHLViewClickListener onHLViewClickListener) {
         this.onHLViewClickListener = onHLViewClickListener;
@@ -324,6 +342,9 @@ public class RHighLightViewParams {
     /**
      * 设置装饰背景滑动监听<br/>
      * 因为一个页面可能多个高亮分步显示，用的是同一个背景，但是并不是所有的高亮都需要背景滑动功能，所以不能作为页面参数
+     *
+     * @param onDecorScrollListener {@link OnDecorScrollListener}
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightViewParams setOnDecorScrollListener(OnDecorScrollListener onDecorScrollListener) {
         this.onDecorScrollListener = onDecorScrollListener;
@@ -333,8 +354,8 @@ public class RHighLightViewParams {
     /**
      * 修正高亮控件和它的装饰控件相对位置
      *
-     * @param onHLDecorPositionCallback
-     * @return
+     * @param onHLDecorPositionCallback {@link OnHLDecorPositionCallback}
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightViewParams setOnHLDecorPositionCallback(OnHLDecorPositionCallback onHLDecorPositionCallback) {
         if (onHLDecorPositionCallback == null) {
@@ -401,6 +422,15 @@ public class RHighLightViewParams {
     }
 
     /**
+     * 高亮区域与高亮控件的边距，单位：dp 默认 0
+     *
+     * @return 方法 {@link #setHighMarginRectRect(float, float, float, float)} 传递的值
+     */
+    public RectF getHighMarginRectRectF() {
+        return highMarginRectRectF;
+    }
+
+    /**
      * 是否显示/绘制边框
      *
      * @return true：显示/绘制 false：不显示/不绘制 方法 {@link #setBorderShow(boolean)} 传递的值
@@ -412,9 +442,9 @@ public class RHighLightViewParams {
     /**
      * 获取绘制的边框线与高亮区域的边距，单位：dp 默认 0
      *
-     * @return 方法 {@link #setBorderMargin(int)} 传递的值
+     * @return 方法 {@link #setBorderMargin(float)} 传递的值
      */
-    public int getBorderMargin() {
+    public float getBorderMargin() {
         return borderMargin;
     }
 
@@ -475,7 +505,7 @@ public class RHighLightViewParams {
     /**
      * 获取高亮控件在 {@link RHighLightPageParams#setAnchor(View)} 方法设置的根布局中的位置
      *
-     * @return
+     * @return 高亮控件在 {@link RHighLightPageParams#setAnchor(View)} 方法设置的根布局中的位置
      */
     public RectF getRectF() {
         return rectF;
@@ -488,34 +518,5 @@ public class RHighLightViewParams {
      */
     public HighLightMarginInfo getMarginInfo() {
         return marginInfo;
-    }
-    /* ------------------ 深度克隆方法 ----------------------*/
-
-    /**
-     * 深度克隆出一个新的 {@link RHighLightViewParams} 对象，可以在继承老的参数之后进行部分修改
-     *
-     * @return
-     */
-    public RHighLightViewParams cloneParams() {
-        RHighLightViewParams cloneRHighLightViewParams = RHighLightViewParams.create();
-        cloneRHighLightViewParams.highView = this.highView;
-        cloneRHighLightViewParams.highViewId = this.highViewId;
-        cloneRHighLightViewParams.decorLayoutId = this.decorLayoutId;
-        cloneRHighLightViewParams.decorLayoutView = this.decorLayoutView;
-        cloneRHighLightViewParams.highLightShape = this.highLightShape;
-        cloneRHighLightViewParams.radius = this.radius;
-        cloneRHighLightViewParams.borderShow = this.borderShow;
-        cloneRHighLightViewParams.borderWidth = this.borderWidth;
-        cloneRHighLightViewParams.borderColor = this.borderColor;
-        cloneRHighLightViewParams.borderLineType = this.borderLineType;
-        cloneRHighLightViewParams.intervals = this.intervals;
-        cloneRHighLightViewParams.blurShow = this.blurShow;
-        cloneRHighLightViewParams.blurSize = this.blurSize;
-        cloneRHighLightViewParams.onHLDecorInflateListener = this.onHLDecorInflateListener;
-        cloneRHighLightViewParams.onHLViewClickListener = this.onHLViewClickListener;
-        cloneRHighLightViewParams.onDecorScrollListener = this.onDecorScrollListener;
-        cloneRHighLightViewParams.onHLDecorPositionCallback = this.onHLDecorPositionCallback;
-        //cloneHighLightViewParams.intercept = this.intercept;
-        return cloneRHighLightViewParams;
     }
 }
