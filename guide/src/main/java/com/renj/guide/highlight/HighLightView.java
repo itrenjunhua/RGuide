@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -212,17 +213,13 @@ import java.util.List;
                 case CIRCULAR:// 圆形
                     float width = drawRectF.width();
                     float height = drawRectF.height();
-                    float circle_center1;
-                    float circle_center2;
-                    double radius = Math.sqrt(Math.pow(width / 2, 2)
-                            + Math.pow(height / 2, 2));
-                    circle_center1 = width / 2;
-                    circle_center2 = height / 2;
-                    canvas.drawCircle(drawRectF.right - circle_center1, drawRectF.bottom - circle_center2,
-                            (int) radius, mPaint);
+                    float centerX = drawRectF.right - width / 2;
+                    float centerY = drawRectF.bottom - height / 2;
+                    float radius = (float) Math.sqrt(Math.pow(width / 2, 2) + Math.pow(height / 2, 2));
+                    canvas.drawCircle(centerX, centerY, radius, mPaint);
 
                     if (rHighLightViewParams.borderShow)
-                        drawCircleBorder(rHighLightViewParams, canvas, circle_center1, circle_center2, (int) radius);
+                        drawCircleBorder(rHighLightViewParams, canvas, centerX, centerY, radius);
 
                     break;
                 case RECTANGULAR:
@@ -241,7 +238,7 @@ import java.util.List;
     /**
      * 绘制圆形边框
      */
-    private void drawCircleBorder(RHighLightViewParams rHighLightViewParams, Canvas canvas, float circle_center1, float circle_center2, int radius) {
+    private void drawCircleBorder(RHighLightViewParams rHighLightViewParams, Canvas canvas, float centerX, float centerY, float radius) {
         Paint paint = new Paint();
         paint.reset();
         if (rHighLightViewParams.borderLineType == BorderLineType.DASH_LINE) {
@@ -251,13 +248,27 @@ import java.util.List;
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(dip2px(rHighLightViewParams.borderWidth));
         paint.setAntiAlias(true);
-        paint.setColor(rHighLightViewParams.borderColor);
         if (rHighLightViewParams.borderMargin != 0) {
             radius = radius + dip2px(rHighLightViewParams.borderMargin);
         }
-        canvas.drawCircle(rHighLightViewParams.rectF.right - circle_center1,
-                rHighLightViewParams.rectF.bottom - circle_center2,
-                radius, paint);
+        // Shader优先级更高
+        if (rHighLightViewParams.onBorderShader != null) {
+            RectF rectF = rHighLightViewParams.rectF;
+            if (rHighLightViewParams.borderMargin != 0) {
+                int borderMargin = dip2px(rHighLightViewParams.borderMargin);
+                rectF.inset(-borderMargin, -borderMargin);
+            }
+            Shader shader = rHighLightViewParams.onBorderShader.createShader(rectF);
+            // Shader优先级更高
+            if (shader != null) {
+                paint.setShader(shader);
+            } else {
+                paint.setColor(rHighLightViewParams.borderColor);
+            }
+        } else {
+            paint.setColor(rHighLightViewParams.borderColor);
+        }
+        canvas.drawCircle(centerX, centerY, radius, paint);
     }
 
     /**
@@ -273,12 +284,23 @@ import java.util.List;
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(dip2px(rHighLightViewParams.borderWidth));
         paint.setAntiAlias(true);
-        paint.setColor(rHighLightViewParams.borderColor);
 
         RectF rectF = rHighLightViewParams.rectF;
         if (rHighLightViewParams.borderMargin != 0) {
             int borderMargin = dip2px(rHighLightViewParams.borderMargin);
             rectF.inset(-borderMargin, -borderMargin);
+        }
+        // Shader优先级更高
+        if (rHighLightViewParams.onBorderShader != null) {
+            Shader shader = rHighLightViewParams.onBorderShader.createShader(rectF);
+            // Shader优先级更高
+            if (shader != null) {
+                paint.setShader(shader);
+            } else {
+                paint.setColor(rHighLightViewParams.borderColor);
+            }
+        } else {
+            paint.setColor(rHighLightViewParams.borderColor);
         }
         canvas.drawRoundRect(rectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), paint);
     }

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.renj.guide.callback.OnDecorScrollListener;
+import com.renj.guide.highlight.callback.OnBorderShader;
 import com.renj.guide.highlight.callback.OnHLDecorInflateListener;
 import com.renj.guide.highlight.callback.OnHLDecorPositionCallback;
 import com.renj.guide.highlight.callback.OnHLViewClickListener;
@@ -68,6 +69,10 @@ public class RHighLightViewParams {
      * 边框颜色，默认透明
      */
     int borderColor = Color.TRANSPARENT;
+    /**
+     * 高亮边框渐变样式，优先级高于边框颜色 {@link #borderColor}
+     */
+    OnBorderShader onBorderShader;
     /**
      * 边框类型,默认实线 {@link BorderLineType#FULL_LINE}
      */
@@ -274,6 +279,17 @@ public class RHighLightViewParams {
     }
 
     /**
+     * 设置高亮边框渐变样式，优先级高于边框颜色 {@link #setBorderColor(int)}
+     *
+     * @param onBorderShader 用于创建边框渐变对象
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
+     */
+    public RHighLightViewParams setBorderShader(OnBorderShader onBorderShader) {
+        this.onBorderShader = onBorderShader;
+        return this;
+    }
+
+    /**
      * 设置边框类型，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}，该方法才能生效
      *
      * @param borderLineType 边框类型 {@link BorderLineType}
@@ -395,7 +411,7 @@ public class RHighLightViewParams {
     /**
      * 获取需要高亮的View
      *
-     * @return 方法 {@link #setHighView(View)} 传递的值
+     * @return 方法 {@link #setHighView(View)} 设置的值
      */
     public View getHighView() {
         return highView;
@@ -404,7 +420,7 @@ public class RHighLightViewParams {
     /**
      * 获取需要高亮的View的ID
      *
-     * @return 方法 {@link #setHighView(int)} 传递的值
+     * @return 方法 {@link #setHighView(int)} 设置的值
      */
     public int getHighViewId() {
         return highViewId;
@@ -413,7 +429,7 @@ public class RHighLightViewParams {
     /**
      * 获取高亮装饰背景布局ID
      *
-     * @return 方法 {@link #setDecorLayoutId(int)} 传递的值
+     * @return 方法 {@link #setDecorLayoutId(int)} 设置的值
      */
     public int getDecorLayoutId() {
         return decorLayoutId;
@@ -422,7 +438,7 @@ public class RHighLightViewParams {
     /**
      * 获取高亮装饰背景布局控件
      *
-     * @return 方法 {@link #setDecorLayoutView(View)}  传递的值
+     * @return 方法 {@link #setDecorLayoutView(View)}  设置的值
      */
     public View getDecorLayoutView() {
         return decorLayoutView;
@@ -431,7 +447,7 @@ public class RHighLightViewParams {
     /**
      * 获取高亮形状
      *
-     * @return 方法 {@link #setHighLightShape(HighLightShape)} 传递的值
+     * @return 方法 {@link #setHighLightShape(HighLightShape)} 设置的值
      */
     public HighLightShape getHighLightShape() {
         return highLightShape;
@@ -440,7 +456,7 @@ public class RHighLightViewParams {
     /**
      * 获取圆角大小
      *
-     * @return 方法 {@link #setRadius(int)} 传递的值
+     * @return 方法 {@link #setRadius(int)} 设置的值
      */
     public int getRadius() {
         return radius;
@@ -449,7 +465,7 @@ public class RHighLightViewParams {
     /**
      * 高亮区域与高亮控件的边距，单位：dp 默认 0
      *
-     * @return 方法 {@link #setHighMarginRectRect(float, float, float, float)} 传递的值
+     * @return 方法 {@link #setHighMarginRectRect(float, float, float, float)} 设置的值
      */
     public RectF getHighMarginRectRectF() {
         return highMarginRectRectF;
@@ -458,7 +474,7 @@ public class RHighLightViewParams {
     /**
      * 是否显示/绘制边框
      *
-     * @return true：显示/绘制 false：不显示/不绘制 方法 {@link #setBorderShow(boolean)} 传递的值
+     * @return true：显示/绘制 false：不显示/不绘制 方法 {@link #setBorderShow(boolean)} 设置的值
      */
     public boolean isBorderShow() {
         return borderShow;
@@ -467,7 +483,7 @@ public class RHighLightViewParams {
     /**
      * 获取绘制的边框线与高亮区域的边距，单位：dp 默认 0
      *
-     * @return 方法 {@link #setBorderMargin(float)} 传递的值
+     * @return 方法 {@link #setBorderMargin(float)} 设置的值
      */
     public float getBorderMargin() {
         return borderMargin;
@@ -476,16 +492,25 @@ public class RHighLightViewParams {
     /**
      * 获取边框线颜色
      *
-     * @return 方法 {@link #setBorderColor(int)} 传递的值
+     * @return 方法 {@link #setBorderColor(int)} 设置的值
      */
     public int getBorderColor() {
         return borderColor;
     }
 
     /**
+     * 获取高亮边框渐变样式
+     *
+     * @return 方法  {@link #setBorderShader(OnBorderShader)} 设置的值
+     */
+    public OnBorderShader getBorderShader() {
+        return onBorderShader;
+    }
+
+    /**
      * 获取边框线类型
      *
-     * @return 方法 {@link #setBorderLineType(BorderLineType)} 传递的值
+     * @return 方法 {@link #setBorderLineType(BorderLineType)} 设置的值
      */
     public BorderLineType getBorderLineType() {
         return borderLineType;
@@ -494,7 +519,7 @@ public class RHighLightViewParams {
     /**
      * 获取边框宽度
      *
-     * @return 方法 {@link #setBorderWidth(float)} 传递的值
+     * @return 方法 {@link #setBorderWidth(float)} 设置的值
      */
     public float getBorderWidth() {
         return borderWidth;
@@ -503,7 +528,7 @@ public class RHighLightViewParams {
     /**
      * 获取虚线样式信息
      *
-     * @return 方法 {@link #setIntervals(float[])} 传递的值
+     * @return 方法 {@link #setIntervals(float[])} 设置的值
      */
     public float[] getIntervals() {
         return intervals;
@@ -512,7 +537,7 @@ public class RHighLightViewParams {
     /**
      * 是否显示模糊变价
      *
-     * @return true：显示 false：不显示 方法 {@link #setBorderShow(boolean)} 传递的值
+     * @return true：显示 false：不显示 方法 {@link #setBorderShow(boolean)} 设置的值
      */
     public boolean isBlurShow() {
         return blurShow;
@@ -521,7 +546,7 @@ public class RHighLightViewParams {
     /**
      * 获取模糊边界颜色
      *
-     * @return 模糊边界颜色，方法 {@link #setBorderColor(int)} 传递的值
+     * @return 模糊边界颜色，方法 {@link #setBorderColor(int)} 设置的值
      */
     public int getBlurColor() {
         return blurColor;
@@ -530,7 +555,7 @@ public class RHighLightViewParams {
     /**
      * 获取模糊边界宽度
      *
-     * @return 方法 {@link #setBlurWidth(int)} 传递的值
+     * @return 方法 {@link #setBlurWidth(int)} 设置的值
      */
     public int getBlurWidth() {
         return blurSize;

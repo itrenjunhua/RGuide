@@ -174,7 +174,7 @@ public class RCoverViewParams {
     /**
      * 获取Activity
      *
-     * @return 方法 {@link #create(Activity)} 传递的值
+     * @return 方法 {@link #create(Activity)} 设置的值
      */
     public Activity getActivity() {
         return activity;
@@ -183,7 +183,7 @@ public class RCoverViewParams {
     /**
      * 获取遮罩布局ID
      *
-     * @return 方法 {@link #setCoverLayoutId(int)} 传递的值
+     * @return 方法 {@link #setCoverLayoutId(int)} 设置的值
      */
     public int getCoverLayoutId() {
         return coverLayoutId;
@@ -192,14 +192,14 @@ public class RCoverViewParams {
     /**
      * 获取遮罩布局
      *
-     * @return 方法 {@link #setCoverLayoutView(View)}  传递的值
+     * @return 方法 {@link #setCoverLayoutView(View)}  设置的值
      */
     public View getCoverView() {
         return coverView;
     }
 
     /**
-     * 是否自动移除，方法 {@link #setAutoRemoveView(boolean)} 传递的值
+     * 是否自动移除，方法 {@link #setAutoRemoveView(boolean)} 设置的值
      *
      * @return true：自动移除 false：不自动移除
      */
@@ -208,7 +208,7 @@ public class RCoverViewParams {
     }
 
     /**
-     * 是否自动显示下一个，方法 {@link #setAutoShowNext(boolean)} 传递的值
+     * 是否自动显示下一个，方法 {@link #setAutoShowNext(boolean)} 设置的值
      *
      * @return true：自动显示下一个 false：不自动显示下一个
      */

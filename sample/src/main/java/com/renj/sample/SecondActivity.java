@@ -1,5 +1,7 @@
 package com.renj.sample;
 
+import android.graphics.Color;
+import android.graphics.SweepGradient;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -51,8 +53,13 @@ public class SecondActivity extends AppCompatActivity {
         RHighLightViewParams rHighLightViewParams = RHighLightViewParams.create()
                 .setHighView(R.id.id_btn_important)
                 .setDecorLayoutId(R.layout.info_up)
-                .setBlurShow(false)
                 .setBorderShow(true)
+                //.setBorderColor(Color.BLUE)
+                .setBorderWidth(1)
+                .setBorderMargin(4)
+                .setBorderShader(rectF -> new SweepGradient(rectF.right - rectF.width() / 2, rectF.bottom - rectF.height() / 2,
+                        new int[]{Color.RED, Color.GREEN}, null))
+                .setBlurShow(false)
                 .setHighLightShape(HighLightShape.CIRCULAR)
                 .setHighView(R.id.iv_hight)
                 .setDecorLayoutId(R.layout.layout_hight)

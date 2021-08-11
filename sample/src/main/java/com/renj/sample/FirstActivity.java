@@ -2,6 +2,8 @@ package com.renj.sample;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -90,11 +92,13 @@ public class FirstActivity extends AppCompatActivity {
                 .setDecorLayoutId(R.layout.info_up)
                 .setBlurShow(true)
                 .setBlurColor(Color.BLUE)
-                .setBlurWidth(8)
                 .setBorderShow(true)
-                .setBorderColor(Color.RED)
                 .setRadius(5)
+                .setBlurWidth(8)
+                // .setBorderColor(Color.RED)
                 .setHighLightShape(HighLightShape.RECTANGULAR)
+                .setBorderShader(rectF -> new LinearGradient(0, 0, rectF.width(), rectF.height(),
+                        new int[]{Color.RED, Color.GREEN}, null, Shader.TileMode.CLAMP))
                 .setOnHLDecorPositionCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {
                     marginInfo.leftMargin = rectF.right - rectF.width() / 2;
                     marginInfo.topMargin = rectF.bottom;

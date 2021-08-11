@@ -128,7 +128,7 @@ public class RHighLightPageParams {
     /**
      * 获取Activity
      *
-     * @return 方法 {@link #create(Activity)} 传递的值
+     * @return 方法 {@link #create(Activity)} 设置的值
      */
     public Activity getActivity() {
         return activity;
@@ -137,7 +137,7 @@ public class RHighLightPageParams {
     /**
      * 获取根布局
      *
-     * @return 方法 {@link #setAnchor(View)} 传递的值
+     * @return 方法 {@link #setAnchor(View)} 设置的值
      */
     public View getAnchor() {
         return anchor;
@@ -146,14 +146,14 @@ public class RHighLightPageParams {
     /**
      * 获取背景颜色
      *
-     * @return 方法 {@link #setMaskColor(int)} 传递的值
+     * @return 方法 {@link #setMaskColor(int)} 设置的值
      */
     public int getMaskColor() {
         return maskColor;
     }
 
     /**
-     * 是否自动移除，方法 {@link #setAutoRemoveView(boolean)} 传递的值
+     * 是否自动移除，方法 {@link #setAutoRemoveView(boolean)} 设置的值
      *
      * @return true：自动移除 false：不自动移除
      */
@@ -162,7 +162,7 @@ public class RHighLightPageParams {
     }
 
     /**
-     * 是否自动显示下一个，方法 {@link #setAutoShowNext(boolean)} 传递的值
+     * 是否自动显示下一个，方法 {@link #setAutoShowNext(boolean)} 设置的值
      *
      * @return true：自动显示下一个 false：不自动显示下一个
      */

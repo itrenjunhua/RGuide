@@ -28,18 +28,20 @@ Android 应用新手操作引导实现
 	// 创建高亮View相关参数
     RHighLightViewParams rHighLightViewParams = RHighLightViewParams.create()
             .setHighView(View highView) // 需要高亮的View。和方法 {@link #setHighView(int)} 二选一即可，若两个都设置了，该方法优先级更高
-            .setHighView(View highView) // 需要高亮的ViewId。和方法 {@link #setHighView(View)} 二选一即可，两个都设置了，该方法优先级更低
+            .setHighView(int highViewId) // 需要高亮的ViewId。和方法 {@link #setHighView(View)} 二选一即可，两个都设置了，该方法优先级更低
             .setDecorLayoutId(@LayoutRes int decorLayoutId) // 设置高亮背景装饰布局
             .setHighLightShape(HighLightShape highLightShape) // 设置高亮形状，默认 矩形
             .setRadius(int radius) // 设置圆角度数。只有当形状为 {@link HighLightShape#RECTANGULAR} 时生效，单位dp
             .setBorderShow(boolean borderShow) // 设置是否需要边框
             .setBorderWidth(float borderWidth) // 设置边框宽度，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}，单位dp
             .setBorderColor(int borderColor) // 设置边框颜色，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}，该方法才能生效
+            .setBorderShader(OnBorderShader onBorderShader) // 设置高亮边框渐变样式，优先级高于边框颜色 {@link #setBorderColor(int)}
             .setBorderLineType(BorderLineType borderLineType) // 设置边框类型，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}，该方法才能生效
             .setIntervals(@NonNull float[] intervals) // 设置虚线边框的样式，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}并且边框类型为 {@link BorderLineType#DASH_LINE}，该方法才能生效
 			.setBorderMargin(int borderMargin) // 设置绘制的边框线与高亮区域的边距
             .setBlurShow(boolean blurShow) // 设置是否需要模糊化边框，默认不显示
             .setBlurWidth(int blurSize) // 设置模糊边界的宽度，需要调用 {@link #setBlurShow(boolean)} 方法设置为 {@code true}，该方法才能生效，单位dp
+            .setBlurColor(int blurColor) // 设置模糊边界颜色，前提是 {@link #setBlurShow(boolean)} 方法设置值为 {@code true}，默认透明色
             .setOnHLDecorInflateListener((decorLayoutView) -> {}) // 设置装饰布局初始化完成回调
 			.setOnHLViewClickListener((highLightView, highViewId) -> {}) // 设置高亮布局点击监听
 			.setOnDecorScrollListener((decorView, orientation, axis) -> {}) // 设置装饰背景滑动监听
