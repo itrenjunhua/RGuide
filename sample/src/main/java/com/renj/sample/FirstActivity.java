@@ -89,6 +89,7 @@ public class FirstActivity extends AppCompatActivity {
                 .setHighView(R.id.id_btn_important)
                 .setDecorLayoutId(R.layout.info_up)
                 .setBlurShow(true)
+                .setBlurColor(Color.BLUE)
                 .setBlurWidth(8)
                 .setBorderShow(true)
                 .setBorderColor(Color.RED)

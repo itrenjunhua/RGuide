@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
@@ -182,50 +181,60 @@ import java.util.List;
                 getMeasuredHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(mMaskBitmap);
         mPaint.setXfermode(MODE_DST_OUT);
-        mPaint.setColor(Color.parseColor("#00000000"));
+
         canvas.drawColor(rHighLightPageParams.maskColor);
 
         for (RHighLightViewParams rHighLightViewParams : rHighLightViewParamsList) {
-            if (rHighLightViewParams.blurShow)
+            // 如果需要绘制模糊边界，先绘制模糊边界
+            if (rHighLightViewParams.blurShow) {
+                mPaint.setColor(rHighLightViewParams.blurColor);
                 mPaint.setMaskFilter(new BlurMaskFilter(dip2px(rHighLightViewParams.blurSize), BlurMaskFilter.Blur.SOLID));
-            else
-                mPaint.setMaskFilter(null);
-
-            RectF drawRectF = new RectF(rHighLightViewParams.rectF.left - dip2px(rHighLightViewParams.highMarginRectRectF.left),
-                    rHighLightViewParams.rectF.top - dip2px(rHighLightViewParams.highMarginRectRectF.top),
-                    rHighLightViewParams.rectF.right + dip2px(rHighLightViewParams.highMarginRectRectF.right),
-                    rHighLightViewParams.rectF.bottom + dip2px(rHighLightViewParams.highMarginRectRectF.bottom));
-
-            if (rHighLightViewParams.highLightShape != null) {
-                switch (rHighLightViewParams.highLightShape) {
-                    case CIRCULAR:// 圆形
-                        float width = drawRectF.width();
-                        float height = drawRectF.height();
-                        float circle_center1;
-                        float circle_center2;
-                        double radius = Math.sqrt(Math.pow(width / 2, 2)
-                                + Math.pow(height / 2, 2));
-                        circle_center1 = width / 2;
-                        circle_center2 = height / 2;
-                        canvas.drawCircle(drawRectF.right - circle_center1, drawRectF.bottom - circle_center2,
-                                (int) radius, mPaint);
-
-                        if (rHighLightViewParams.borderShow)
-                            drawCircleBorder(rHighLightViewParams, canvas, circle_center1, circle_center2, (int) radius);
-
-                        break;
-                    case RECTANGULAR:
-                        canvas.drawRoundRect(drawRectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), mPaint);
-                        if (rHighLightViewParams.borderShow)
-                            drawRectBorder(rHighLightViewParams, canvas);
-                        break;
-                }
-            } else {
-                canvas.drawRoundRect(drawRectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), mPaint);
-                if (rHighLightViewParams.borderShow)
-                    drawRectBorder(rHighLightViewParams, canvas);
+                reallyHighShape(canvas, rHighLightViewParams);
             }
+            mPaint.setColor(Color.TRANSPARENT);
+            mPaint.setMaskFilter(null);
+            reallyHighShape(canvas, rHighLightViewParams);
 
+        }
+    }
+
+    /**
+     * 真正绘制高亮
+     */
+    private void reallyHighShape(Canvas canvas, RHighLightViewParams rHighLightViewParams) {
+        RectF drawRectF = new RectF(rHighLightViewParams.rectF.left - dip2px(rHighLightViewParams.highMarginRectRectF.left),
+                rHighLightViewParams.rectF.top - dip2px(rHighLightViewParams.highMarginRectRectF.top),
+                rHighLightViewParams.rectF.right + dip2px(rHighLightViewParams.highMarginRectRectF.right),
+                rHighLightViewParams.rectF.bottom + dip2px(rHighLightViewParams.highMarginRectRectF.bottom));
+
+        if (rHighLightViewParams.highLightShape != null) {
+            switch (rHighLightViewParams.highLightShape) {
+                case CIRCULAR:// 圆形
+                    float width = drawRectF.width();
+                    float height = drawRectF.height();
+                    float circle_center1;
+                    float circle_center2;
+                    double radius = Math.sqrt(Math.pow(width / 2, 2)
+                            + Math.pow(height / 2, 2));
+                    circle_center1 = width / 2;
+                    circle_center2 = height / 2;
+                    canvas.drawCircle(drawRectF.right - circle_center1, drawRectF.bottom - circle_center2,
+                            (int) radius, mPaint);
+
+                    if (rHighLightViewParams.borderShow)
+                        drawCircleBorder(rHighLightViewParams, canvas, circle_center1, circle_center2, (int) radius);
+
+                    break;
+                case RECTANGULAR:
+                    canvas.drawRoundRect(drawRectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), mPaint);
+                    if (rHighLightViewParams.borderShow)
+                        drawRectBorder(rHighLightViewParams, canvas);
+                    break;
+            }
+        } else {
+            canvas.drawRoundRect(drawRectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), mPaint);
+            if (rHighLightViewParams.borderShow)
+                drawRectBorder(rHighLightViewParams, canvas);
         }
     }
 
@@ -243,14 +252,12 @@ import java.util.List;
         paint.setStrokeWidth(dip2px(rHighLightViewParams.borderWidth));
         paint.setAntiAlias(true);
         paint.setColor(rHighLightViewParams.borderColor);
-        Path path = new Path();
         if (rHighLightViewParams.borderMargin != 0) {
             radius = radius + dip2px(rHighLightViewParams.borderMargin);
         }
-        path.addCircle(rHighLightViewParams.rectF.right - circle_center1,
+        canvas.drawCircle(rHighLightViewParams.rectF.right - circle_center1,
                 rHighLightViewParams.rectF.bottom - circle_center2,
-                radius, Path.Direction.CW);
-        canvas.drawPath(path, paint);
+                radius, paint);
     }
 
     /**
@@ -267,14 +274,13 @@ import java.util.List;
         paint.setStrokeWidth(dip2px(rHighLightViewParams.borderWidth));
         paint.setAntiAlias(true);
         paint.setColor(rHighLightViewParams.borderColor);
-        Path path = new Path();
+
         RectF rectF = rHighLightViewParams.rectF;
         if (rHighLightViewParams.borderMargin != 0) {
             int borderMargin = dip2px(rHighLightViewParams.borderMargin);
             rectF.inset(-borderMargin, -borderMargin);
         }
-        path.addRoundRect(rectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), Path.Direction.CW);
-        canvas.drawPath(path, paint);
+        canvas.drawRoundRect(rectF, dip2px(rHighLightViewParams.radius), dip2px(rHighLightViewParams.radius), paint);
     }
 
     @Override

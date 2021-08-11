@@ -1,5 +1,6 @@
 package com.renj.guide.highlight;
 
+import android.graphics.Color;
 import android.graphics.RectF;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -8,8 +9,8 @@ import android.view.View;
 
 import com.renj.guide.callback.OnDecorScrollListener;
 import com.renj.guide.highlight.callback.OnHLDecorInflateListener;
-import com.renj.guide.highlight.callback.OnHLViewClickListener;
 import com.renj.guide.highlight.callback.OnHLDecorPositionCallback;
+import com.renj.guide.highlight.callback.OnHLViewClickListener;
 import com.renj.guide.highlight.type.BorderLineType;
 import com.renj.guide.highlight.type.HighLightShape;
 
@@ -64,9 +65,9 @@ public class RHighLightViewParams {
      */
     float borderMargin = 0;
     /**
-     * 边框颜色，默认和背景颜色一样
+     * 边框颜色，默认透明
      */
-    int borderColor = 0x99000000;
+    int borderColor = Color.TRANSPARENT;
     /**
      * 边框类型,默认实线 {@link BorderLineType#FULL_LINE}
      */
@@ -84,6 +85,10 @@ public class RHighLightViewParams {
      * 是否需要模糊边界，默认不需要
      */
     boolean blurShow = false;
+    /**
+     * 设置模糊边界颜色，前提是 {@link #blurShow} 为 {@code true}，默认透明
+     */
+    int blurColor = Color.TRANSPARENT;
     /**
      * 模糊边界大小，默认6dp
      */
@@ -202,6 +207,7 @@ public class RHighLightViewParams {
      * 设置圆角度数。只有当形状为 {@link HighLightShape#RECTANGULAR} 时生效，单位：dp
      *
      * @param radius 圆角度数
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightViewParams setRadius(int radius) {
         this.radius = radius;
@@ -215,6 +221,7 @@ public class RHighLightViewParams {
      * @param top    上边距
      * @param right  右边距
      * @param bottom 下边距
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightViewParams setHighMarginRectRect(float left, float top, float right, float bottom) {
         this.highMarginRectRectF.set(left, top, right, bottom);
@@ -225,6 +232,7 @@ public class RHighLightViewParams {
      * 设置是否需要边框
      *
      * @param borderShow 是否显示边框 true:显示 false:不显示
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightViewParams setBorderShow(boolean borderShow) {
         this.borderShow = borderShow;
@@ -235,6 +243,7 @@ public class RHighLightViewParams {
      * 设置绘制的边框线与高亮区域的边距，单位：dp 默认 0
      *
      * @param borderMargin 绘制的边框线与高亮区域的边距，单位：dp
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightViewParams setBorderMargin(float borderMargin) {
         this.borderMargin = borderMargin;
@@ -246,6 +255,7 @@ public class RHighLightViewParams {
      * 该方法才能生效；不需要转换单位，默认dp
      *
      * @param borderWidth 边框宽度
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightViewParams setBorderWidth(float borderWidth) {
         this.borderWidth = borderWidth;
@@ -256,6 +266,7 @@ public class RHighLightViewParams {
      * 设置边框颜色，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}，该方法才能生效
      *
      * @param borderColor 边框颜色
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightViewParams setBorderColor(int borderColor) {
         this.borderColor = borderColor;
@@ -266,6 +277,7 @@ public class RHighLightViewParams {
      * 设置边框类型，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}，该方法才能生效
      *
      * @param borderLineType 边框类型 {@link BorderLineType}
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightViewParams setBorderLineType(BorderLineType borderLineType) {
         this.borderLineType = borderLineType;
@@ -281,6 +293,7 @@ public class RHighLightViewParams {
      * 再绘制长度8的空白,依次重复
      *
      * @param intervals 虚线边框的样式
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightViewParams setIntervals(@NonNull float[] intervals) {
         if (intervals == null)
@@ -300,7 +313,7 @@ public class RHighLightViewParams {
      * 设置是否需要模糊化边框，默认不显示
      *
      * @param blurShow 是否显示模糊边框 true：显示 false：不显示
-     * @return {@link HighLightViewHelp} 类对象
+     * @return {@link HighLightViewHelp} 类对象，方便链式调用
      */
     public RHighLightViewParams setBlurShow(boolean blurShow) {
         this.blurShow = blurShow;
@@ -308,9 +321,21 @@ public class RHighLightViewParams {
     }
 
     /**
+     * 设置模糊边界颜色，前提是 {@link #setBlurShow(boolean)} 方法设置值为 {@code true}，默认透明色
+     *
+     * @param blurColor 模糊边界颜色
+     * @return {@link HighLightViewHelp} 类对象，方便链式调用
+     */
+    public RHighLightViewParams setBlurColor(int blurColor) {
+        this.blurColor = blurColor;
+        return this;
+    }
+
+    /**
      * 设置模糊边界的宽度，需要调用 {@link #setBlurShow(boolean)} 方法设置为 {@code true}，该方法才能生效，单位dp
      *
      * @param blurSize 模糊边界的宽度 默认6dp
+     * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
     public RHighLightViewParams setBlurWidth(int blurSize) {
         this.blurSize = blurSize;
@@ -491,6 +516,15 @@ public class RHighLightViewParams {
      */
     public boolean isBlurShow() {
         return blurShow;
+    }
+
+    /**
+     * 获取模糊边界颜色
+     *
+     * @return 模糊边界颜色，方法 {@link #setBorderColor(int)} 传递的值
+     */
+    public int getBlurColor() {
+        return blurColor;
     }
 
     /**
