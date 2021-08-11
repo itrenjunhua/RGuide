@@ -110,7 +110,7 @@ public class FirstActivity extends AppCompatActivity {
                 .setBorderMargin(4)
                 .setBorderColor(Color.WHITE)
                 .setBorderWidth(2)
-                .setIntervals(new float[]{16, 16})
+                .setBorderIntervals(new float[]{16, 16})
                 .setOnHLDecorPositionCallback((rightMargin, bottomMargin, rectF, marginInfo) -> {
                     marginInfo.rightMargin = rightMargin + rectF.width() / 2;
                     marginInfo.bottomMargin = bottomMargin + rectF.height() + 12;

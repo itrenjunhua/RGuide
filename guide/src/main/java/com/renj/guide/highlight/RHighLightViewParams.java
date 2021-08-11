@@ -311,7 +311,7 @@ public class RHighLightViewParams {
      * @param intervals 虚线边框的样式
      * @return 当前 {@link RHighLightPageParams} 对象，方便链式调用
      */
-    public RHighLightViewParams setIntervals(@NonNull float[] intervals) {
+    public RHighLightViewParams setBorderIntervals(@NonNull float[] intervals) {
         if (intervals == null)
             throw new IllegalArgumentException("Params intervals is null!");
 
@@ -528,9 +528,9 @@ public class RHighLightViewParams {
     /**
      * 获取虚线样式信息
      *
-     * @return 方法 {@link #setIntervals(float[])} 设置的值
+     * @return 方法 {@link #setBorderIntervals(float[])} 设置的值
      */
-    public float[] getIntervals() {
+    public float[] getBorderIntervals() {
         return intervals;
     }
 

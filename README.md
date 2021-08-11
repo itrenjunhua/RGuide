@@ -37,7 +37,7 @@ Android 应用新手操作引导实现
             .setBorderColor(int borderColor) // 设置边框颜色，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}，该方法才能生效
             .setBorderShader(OnBorderShader onBorderShader) // 设置高亮边框渐变样式，优先级高于边框颜色 {@link #setBorderColor(int)}
             .setBorderLineType(BorderLineType borderLineType) // 设置边框类型，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}，该方法才能生效
-            .setIntervals(@NonNull float[] intervals) // 设置虚线边框的样式，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}并且边框类型为 {@link BorderLineType#DASH_LINE}，该方法才能生效
+            .setBorderIntervals(@NonNull float[] intervals) // 设置虚线边框的样式，需要调用 {@link #setBorderShow(boolean)} 方法设置为 {@code true}并且边框类型为 {@link BorderLineType#DASH_LINE}，该方法才能生效
 			.setBorderMargin(int borderMargin) // 设置绘制的边框线与高亮区域的边距
             .setBlurShow(boolean blurShow) // 设置是否需要模糊化边框，默认不显示
             .setBlurWidth(int blurSize) // 设置模糊边界的宽度，需要调用 {@link #setBlurShow(boolean)} 方法设置为 {@code true}，该方法才能生效，单位dp
