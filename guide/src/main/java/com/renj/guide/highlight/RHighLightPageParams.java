@@ -1,6 +1,7 @@
 package com.renj.guide.highlight;
 
 import android.app.Activity;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.view.View;
 
@@ -28,7 +29,15 @@ public class RHighLightPageParams {
     /**
      * 背景颜色
      */
-    int maskColor = 0x99000000;
+    int maskColor = 0x66000000;
+    /**
+     * 背景是否需要模糊效果，默认不需要
+     */
+    boolean maskIsBlur = false;
+    /**
+     * 模糊半径大小，越大表示越模糊，取值[0,25]
+     */
+    int maskBlurRadius = 18;
     /**
      * 是否自动移除高亮遮罩，默认true
      */
@@ -75,6 +84,44 @@ public class RHighLightPageParams {
      */
     public RHighLightPageParams setAnchor(View anchor) {
         this.anchor = anchor;
+        return this;
+    }
+
+    /**
+     * 设置背景是否需要模糊效果，效果为高斯模糊 {@link #setAnchor(View)} 方法设置的布局，默认大小为 18
+     *
+     * @param maskIsBlur true：需要 false：不需要
+     * @see #setMaskBlur(boolean, int)
+     */
+    public RHighLightPageParams setMaskIsBlur(boolean maskIsBlur) {
+        this.maskIsBlur = maskIsBlur;
+        return this;
+    }
+
+    /**
+     * 设置模糊半径大小，值越大，模糊效果越明显，取值 [0,25]
+     *
+     * @param maskBlurRadius 模糊半径大小，值越大，模糊效果越明显，取值 [0,25]
+     * @see #setMaskBlur(boolean, int)
+     */
+    public RHighLightPageParams setMaskBlurRadius(@IntRange(from = 0, to = 25) int maskBlurRadius) {
+        if (maskBlurRadius < 0) maskBlurRadius = 0;
+        if (maskBlurRadius > 25) maskBlurRadius = 25;
+        this.maskBlurRadius = maskBlurRadius;
+        return this;
+    }
+
+    /**
+     * 设置背景是否需要模糊效果，并且指定模糊大小。效果为高斯模糊 {@link #setAnchor(View)} 方法设置的布局，默认大小为 18
+     *
+     * @param maskIsBlur     true：需要 false：不需要
+     * @param maskBlurRadius 模糊半径大小，值越大，模糊效果越明显，取值 [0,25]
+     * @see #setMaskIsBlur(boolean)
+     * @see #setMaskBlurRadius(int)
+     */
+    public RHighLightPageParams setMaskBlur(boolean maskIsBlur, @IntRange(from = 0, to = 25) int maskBlurRadius) {
+        setMaskIsBlur(maskIsBlur);
+        setMaskBlurRadius(maskBlurRadius);
         return this;
     }
 

@@ -80,6 +80,7 @@ public class FirstActivity extends AppCompatActivity {
         RHighLightPageParams highLightPageParams = RHighLightPageParams.create(this)
                 .setAutoRemoveAndShowNextView(false) // 自动移除并且不自动显示下一个
                 .setAnchor(findViewById(R.id.id_container)) // 绑定根布局，在Activity中可不写;
+                .setMaskBlur(true,20) // 设置背景包含高斯模糊效果
                 .setOnDecorClickListener(() -> {
                     // 移除当前正在显示的
                     // rGuideViewManager.removeHighLightView();
