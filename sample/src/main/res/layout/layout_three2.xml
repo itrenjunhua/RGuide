@@ -10,7 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
-        android:text="我是第二个覆盖层"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:text="我是第二个覆盖层\n背景高斯模糊，值20"
         android:textColor="#fff" />
 
     <ImageView

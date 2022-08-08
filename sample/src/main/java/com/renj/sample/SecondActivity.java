@@ -40,7 +40,7 @@ public class SecondActivity extends AppCompatActivity {
             @Override
             public void onGlobalLayout() {
                 addHighView();
-                view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
 

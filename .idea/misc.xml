@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/renjLibrary/RGuide/sample/src/main/res/layout/activity_first.xml" value="0.346875" />
         <entry key="..\:/renjLibrary/RGuide/sample/src/main/res/layout/activity_main.xml" value="0.16869300911854104" />
+        <entry key="..\:/renjLibrary/RGuide/sample/src/main/res/layout/activity_three.xml" value="0.346875" />
+        <entry key="..\:/renjLibrary/RGuide/sample/src/main/res/layout/layout_three1.xml" value="0.346875" />
+        <entry key="..\:/renjLibrary/RGuide/sample/src/main/res/layout/layout_three2.xml" value="0.346875" />
       </map>
     </option>
   </component>

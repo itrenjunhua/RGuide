@@ -9,6 +9,7 @@ Android 应用新手操作引导实现
 4. 支持多层引导并自动跳转
 5. 覆盖整个页面的引导支持自定义覆盖层事件
 6. 覆盖整个页面的引导支持跳过后面引导或者移除当前引导后重新查看后面引导
+7. 高亮和覆盖效果都支持这是背景高斯模糊效果
 
 ## 效果图
 ![高亮部分控件形式](https://raw.githubusercontent.com/itrenjunhua/RGuide/master/images/highlight.gif)        ![高亮部分控件形式](https://raw.githubusercontent.com/itrenjunhua/RGuide/master/images/coverview.gif)
@@ -23,6 +24,7 @@ Android 应用新手操作引导实现
             .setMaskColor(int maskColor) // 设置背景颜色
 			.setAutoRemoveView(boolean autoRemoveView) // 设置点击任意位置是否自动移除高亮遮罩，默认true
 			.setAutoShowNext(boolean autoShowNext) // 当移除(手动或自动)之后是否自动显示下一个高亮，如果有的话。默认true
+            .setMaskBlur(boolean maskIsBlur, @IntRange(from = 0, to = 25) int maskBlurRadius) // 设置背景包含高斯模糊效果
             .setOnDecorClickListener(OnDecorClickListener onDecorClickListener); // 设置装饰布局点击回调
 			
 	// 创建高亮View相关参数
@@ -78,6 +80,7 @@ Android 应用新手操作引导实现
 	        .setCoverLayoutId(@LayoutRes int coverLayoutId) // 设置覆盖布局
 			.setAutoRemoveView(boolean autoRemoveView) // 设置点击任意位置是否自动移除高亮遮罩，默认true
 			.setAutoShowNext(boolean autoShowNext) // 当移除(手动或自动)之后是否自动显示下一个高亮，如果有的话。默认true
+            .setMaskBlur(boolean maskIsBlur, @IntRange(from = 0, to = 25) int maskBlurRadius) // 设置背景包含高斯模糊效果
 	        .setOnCViewInflateListener((rCoverViewParams, coverView) -> {}) // 遮罩层布局初始化完成回调
 			.setOnDecorScrollListener((decorView, orientation, axis) -> {}) // 设置装饰背景滑动监听
 	        .setOnDecorClickListener(() ->{}); // 设置遮罩层点击回调

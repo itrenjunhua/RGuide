@@ -2,6 +2,7 @@ package com.renj.sample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -36,7 +37,13 @@ public class ThreeActivity extends AppCompatActivity {
         btShow = findViewById(R.id.bt_show);
 
         coverViewHelp = RGuideViewManager.createCoverViewHelp();
-        addViewToLayout();
+        btShow.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                addViewToLayout();
+                btShow.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
 
         findViewById(R.id.bt_back).setOnClickListener((v) -> {
             finish();
@@ -85,6 +92,7 @@ public class ThreeActivity extends AppCompatActivity {
 
         RCoverViewParams rCoverViewParams2 = RCoverViewParams.create(this)
                 .setCoverLayoutId(R.layout.layout_three2)
+                .setMaskBlur(true, 20) // 设置背景包含高斯模糊效果
                 .setOnDecorClickListener(() -> {
                     showFinish = true;
                     btShow.setText("重新显示");

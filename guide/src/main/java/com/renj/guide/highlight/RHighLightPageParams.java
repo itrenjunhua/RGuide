@@ -200,6 +200,24 @@ public class RHighLightPageParams {
     }
 
     /**
+     * 获取背景是否需要模糊效果，默认不需要
+     *
+     * @return 方法 {@link #setMaskIsBlur(boolean)} 或 {@link #setMaskBlur(boolean, int)} 设置的值
+     */
+    public boolean isMaskIsBlur() {
+        return maskIsBlur;
+    }
+
+    /**
+     * 获取糊半径大小，越大表示越模糊，取值[0,25]
+     *
+     * @return 方法 {@link #setMaskBlurRadius(int)} 或 {@link #setMaskBlur(boolean, int)} 设置的值
+     */
+    public int getMaskBlurRadius() {
+        return maskBlurRadius;
+    }
+
+    /**
      * 是否自动移除，方法 {@link #setAutoRemoveView(boolean)} 设置的值
      *
      * @return true：自动移除 false：不自动移除

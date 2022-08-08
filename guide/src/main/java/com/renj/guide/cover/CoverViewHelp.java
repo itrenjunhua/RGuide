@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.renj.guide.callback.OnDecorScrollListener;
 import com.renj.guide.cover.callback.OnCViewRemoveListener;
+import com.renj.guide.utils.RGuideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +123,8 @@ public class CoverViewHelp {
                     // 从集合和父布局中移除
                     viewArrayList.remove(rCoverViewParams);
                     rootView.removeView(rCoverViewParams.coverView);
+                    if (rCoverViewParams.blurView != null)
+                        rootView.removeView(rCoverViewParams.blurView);
                     // 回调移除方法
                     callBackRemoveListener(viewArrayList.isEmpty(), viewArrayList);
                     // 修改变量 showCoverView 的值，防止异常现象
@@ -137,6 +141,13 @@ public class CoverViewHelp {
                 }
             }
         });
+        if (rCoverViewParams.maskIsBlur && rCoverViewParams.maskBlurRadius > 0) {
+            rCoverViewParams.blurView = new ImageView(rCoverViewParams.activity);
+            rCoverViewParams.blurView.setImageBitmap(
+                    RGuideUtils.viewToBlurBitmap(rCoverViewParams.activity, rootView, rCoverViewParams.maskBlurRadius)
+            );
+            rootView.addView(rCoverViewParams.blurView);
+        }
         rootView.addView(rCoverViewParams.coverView);
         showCoverView = rCoverViewParams.coverView;
     }
@@ -168,6 +179,8 @@ public class CoverViewHelp {
         FrameLayout rootView = (FrameLayout) getRootView(rCoverViewParams.activity);
         viewArrayList.remove(rCoverViewParams);
         rootView.removeView(rCoverViewParams.coverView);
+        if (rCoverViewParams.blurView != null)
+            rootView.removeView(rCoverViewParams.blurView);
 
         showCoverView = null;
 

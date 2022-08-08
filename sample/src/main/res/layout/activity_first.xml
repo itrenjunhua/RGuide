@@ -1,5 +1,5 @@
-<RelativeLayout android:id="@+id/id_container"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,8 +7,8 @@
         android:id="@+id/id_btn_amazing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
         android:text="账户信息" />
 
@@ -59,7 +59,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:text="个人中心" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:text="背景高斯模糊，值25"
+        android:textColor="#FF0000"
+        android:textSize="18sp" />
 
 </RelativeLayout>

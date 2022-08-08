@@ -21,7 +21,7 @@ import android.view.View;
  * <p>
  * 创建时间：2022-08-08   14:03
  * <p>
- * 描述：帮助类
+ * 描述：工具类。处理 {@link View} 和 {@link Bitmap}，以及实现图片高斯模糊效果
  * <p>
  * 修订历史：
  * <p>
@@ -77,7 +77,10 @@ public class RGuideUtils {
      * @return 高斯模糊后的 {@link Bitmap}
      */
     public static Bitmap bitmapBlur(Context context, Bitmap source, float radius, float scale) {
-        if (source == null) return null;
+        if (source == null) {
+            RGuideLog.w("source == null");
+            return null;
+        }
 
         int scaleWidth = (int) (source.getWidth() * scale);
         int scaleHeight = (int) (source.getHeight() * scale);
@@ -108,7 +111,10 @@ public class RGuideUtils {
      * @return 转换后的 {@link Bitmap}
      */
     public static Bitmap drawableToBitmap(Drawable drawable) {
-        if (drawable == null) return null;
+        if (drawable == null) {
+            RGuideLog.w("drawable == null");
+            return null;
+        }
 
         Bitmap bitmap;
         if (drawable instanceof BitmapDrawable) {
@@ -137,9 +143,18 @@ public class RGuideUtils {
      * @return 转后后的 {@link Bitmap}
      */
     public static Bitmap viewToBitmap(View view) {
-        if (view == null) return null;
+        if (view == null) {
+            RGuideLog.w("View == null");
+            return null;
+        }
 
-        final Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        int width = view.getWidth();
+        int height = view.getHeight();
+        if (width <= 0 || height <= 0) {
+            RGuideLog.w("参数View的宽或者高等于0");
+            return null;
+        }
+        final Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawColor(Color.WHITE);
         view.draw(canvas);
