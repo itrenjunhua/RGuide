@@ -99,6 +99,7 @@ public class RGuideUtils {
         intrinsicBlur.setRadius(radius);
         intrinsicBlur.forEach(output);
         output.copyTo(inputBitmap);
+        source.recycle();
         renderScript.destroy();
 
         return inputBitmap;
